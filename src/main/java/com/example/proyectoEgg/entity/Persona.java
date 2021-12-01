@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @SQLDelete(sql = "UPDATE Persona p SET p.alta = false WHERE p.id = ?")
+
 public class Persona {
 
     @Id
