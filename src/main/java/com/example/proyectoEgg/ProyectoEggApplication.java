@@ -12,6 +12,4 @@ public class ProyectoEggApplication {
 		SpringApplication.run(ProyectoEggApplication.class, args);
 	}
 
-
-
 }
