@@ -2,9 +2,12 @@ package com.example.proyectoEgg.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -16,42 +19,25 @@ public class Deuda {
     //Lo va a escribir demi
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Integer id;
     @Column(nullable = false)
-    Double montoAPagar;
-    Boolean alta;
+    private Double montoAPagar;
+    private Boolean alta;
+    @CreatedDate
+    @Column(updatable = false, nullable = false)
+    private LocalDate fechaDeCreacion;
+    @LastModifiedDate
+    private LocalDate fechaDeModificacion;
 
-    public Deuda(Integer id, Double montoAPagar, Boolean alta) {
-        this.id = id;
-        this.montoAPagar = montoAPagar;
-        this.alta = alta;
-    }
 
     public Deuda() {
-
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
+    public Deuda(Integer id, Double montoAPagar, Boolean alta, LocalDate fechaDeCreacion, LocalDate fechaDeModificacion) {
         this.id = id;
-    }
-
-    public Double getMontoAPagar() {
-        return montoAPagar;
-    }
-
-    public void setMontoAPagar(Double montoAPagar) {
         this.montoAPagar = montoAPagar;
-    }
-
-    public Boolean getAlta() {
-        return alta;
-    }
-
-    public void setAlta(Boolean alta) {
         this.alta = alta;
+        this.fechaDeCreacion = fechaDeCreacion;
+        this.fechaDeModificacion = fechaDeModificacion;
     }
 }
