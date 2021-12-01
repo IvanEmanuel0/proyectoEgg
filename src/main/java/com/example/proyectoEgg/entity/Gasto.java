@@ -18,14 +18,11 @@ import java.time.LocalDate;
 
 public class Gasto {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
     private Double montoPagado;
-
-    @Column(nullable = false)
-    Categoria categoria;
 
     private Boolean alta;
 
@@ -36,4 +33,14 @@ public class Gasto {
     @LastModifiedDate
     private LocalDate fechaDeModificacion;
 
+    public Gasto() {
+    }
+
+    public Gasto(Integer id, Double montoPagado, Boolean alta, LocalDate fechaDeCreacion, LocalDate fechaDeModificacion) {
+        this.id = id;
+        this.montoPagado = montoPagado;
+        this.alta = alta;
+        this.fechaDeCreacion = fechaDeCreacion;
+        this.fechaDeModificacion = fechaDeModificacion;
+    }
 }

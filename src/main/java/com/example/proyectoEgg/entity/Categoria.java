@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Setter
@@ -19,7 +20,7 @@ public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private integer id;
+    private Integer id;
     @Column(nullable = false)
     private String nombre;
     private List<Gasto> listaDeGastos;
@@ -36,7 +37,7 @@ public class Categoria {
     public Categoria() {
     }
 
-    public Categoria(Integer id, String nombre, List<gasto> listaDeGastos, List<Ingreso> listaDeIngresos, List<Deuda> listaDeDeudas, LocalDate fechdaDeCreacion, LocalDate fechaDeMoficacion){
+    public Categoria(Integer id, String nombre, List<Gasto> listaDeGastos, List<Ingreso> listaDeIngresos, List<Deuda> listaDeDeudas, LocalDate fechaDeCreacion, LocalDate fechaDeModificacion){
         this.id = id;
         this.nombre = nombre;
         this.listaDeGastos = listaDeGastos;
@@ -45,6 +46,5 @@ public class Categoria {
         this.fechaDeCreacion = fechaDeCreacion;
         this.fechaDeModificacion = fechaDeModificacion;
     }
-
-
 }
+

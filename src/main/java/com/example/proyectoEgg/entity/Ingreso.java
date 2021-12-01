@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -19,8 +21,6 @@ public class Ingreso {
     @Column(nullable = false)
     private Double montoIngresado;
     @JoinColumn(nullable = false)
-    @ManyToOne
-    private Categoria categoria;
     private Boolean alta;
     @CreatedDate
     @Column(updatable = false, nullable = false)
@@ -32,10 +32,9 @@ public class Ingreso {
     public Ingreso() {
     }
 
-    public Ingreso(Integer id, Double montoIngresado, Categoria categoria, Boolean alta, LocalDate fechaDeCreacion, LocalDate fechaDeModificacion) {
+    public Ingreso(Integer id, Double montoIngresado, Boolean alta, LocalDate fechaDeCreacion, LocalDate fechaDeModificacion) {
         this.id = id;
         this.montoIngresado = montoIngresado;
-        this.categoria = categoria;
         this.alta = alta;
         this.fechaDeCreacion = fechaDeCreacion;
         this.fechaDeModificacion = fechaDeModificacion;
