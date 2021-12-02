@@ -33,7 +33,6 @@ public class Categoria {
     private LocalDate fechaDeModificacion;
 
 
-
     public Categoria() {
     }
 
