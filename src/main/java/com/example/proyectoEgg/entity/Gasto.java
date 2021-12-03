@@ -23,6 +23,8 @@ public class Gasto {
 
     @Column(nullable = false)
     private Double montoPagado;
+    @Column(nullable = false)
+    private String detalle;
 
     private Boolean alta;
 
@@ -34,13 +36,13 @@ public class Gasto {
     private LocalDate fechaDeModificacion;
 
     public Gasto() {
+        this.alta = true;
     }
 
-    public Gasto(Integer id, Double montoPagado, Boolean alta, LocalDate fechaDeCreacion, LocalDate fechaDeModificacion) {
-        this.id = id;
+    public Gasto(Double montoPagado, String detalle) {
         this.montoPagado = montoPagado;
-        this.alta = alta;
-        this.fechaDeCreacion = fechaDeCreacion;
-        this.fechaDeModificacion = fechaDeModificacion;
+        this.detalle = detalle;
+        this.alta = true;
+
     }
 }
