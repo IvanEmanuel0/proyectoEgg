@@ -2,6 +2,7 @@ package com.example.proyectoEgg.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,12 +15,15 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
+@SQLDelete(sql = "UPDATE Ingreso i SET i.alta = false WHERE i.id = ?")
 public class Ingreso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
     private Double montoIngresado;
+    @Column(nullable = false)
+    private String detalle;
     @JoinColumn(nullable = false)
     private Boolean alta;
     @CreatedDate
@@ -30,13 +34,12 @@ public class Ingreso {
 
 
     public Ingreso() {
+        this.alta = true;
     }
 
-    public Ingreso(Integer id, Double montoIngresado, Boolean alta, LocalDate fechaDeCreacion, LocalDate fechaDeModificacion) {
-        this.id = id;
+    public Ingreso(Double montoIngresado, String detalle) {
         this.montoIngresado = montoIngresado;
-        this.alta = alta;
-        this.fechaDeCreacion = fechaDeCreacion;
-        this.fechaDeModificacion = fechaDeModificacion;
+        this.detalle = detalle;
+        this.alta = true;
     }
 }
