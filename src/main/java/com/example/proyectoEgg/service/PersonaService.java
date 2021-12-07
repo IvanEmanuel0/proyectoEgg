@@ -38,7 +38,7 @@ public class PersonaService {
     @Transactional(readOnly = true)
     public void crear(String nombre, String apellido, Double montoDisponible, String usuario, String clave, List<Categoria> listaDeCategorias, String imagen){
       cuentaService.crear(usuario,clave);
-      //personaRepository.save(new Persona(nombre,apellido, montoDisponible, listaDeCategorias, imagen, cuentaService.buscarPorUsuario(usuario)));
+      personaRepository.save(new Persona(nombre,apellido, montoDisponible, cuentaService.buscarPorUsuario(usuario), listaDeCategorias, imagen));
 
     }
 

@@ -37,14 +37,11 @@ public class Categoria {
     public Categoria() {
     }
 
-    public Categoria(Integer id, String nombre, List<Gasto> listaDeGastos, List<Ingreso> listaDeIngresos, List<Deuda> listaDeDeudas, LocalDate fechaDeCreacion, LocalDate fechaDeModificacion){
-        this.id = id;
+    public Categoria(String nombre, List<Gasto> listaDeGastos, List<Ingreso> listaDeIngresos, List<Deuda> listaDeDeudas){
         this.nombre = nombre;
         this.listaDeGastos = listaDeGastos;
         this.listaDeIngresos = listaDeIngresos;
         this.listaDeDeudas = listaDeDeudas;
-        this.fechaDeCreacion = fechaDeCreacion;
-        this.fechaDeModificacion = fechaDeModificacion;
     }
 }
 

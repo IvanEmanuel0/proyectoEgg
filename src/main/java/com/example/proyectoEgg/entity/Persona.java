@@ -45,15 +45,12 @@ public class Persona {
 
     }
 
-    public Persona(Integer id, String nombre, String apellido, Double montoDisponible, Cuenta cuenta, List<Categoria> listaDeCategorias, LocalDate fechaDeCreacion, LocalDate fechaDeModificacion, String imagen) {
-        this.id = id;
+    public Persona(String nombre, String apellido, Double montoDisponible, Cuenta cuenta, List<Categoria> listaDeCategorias, String imagen) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.montoDisponible = montoDisponible;
         this.cuenta = cuenta;
         this.listaDeCategorias = listaDeCategorias;
-        this.fechaDeCreacion = fechaDeCreacion;
-        this.fechaDeModificacion = fechaDeModificacion;
         this.imagen = imagen;
     }
 }
