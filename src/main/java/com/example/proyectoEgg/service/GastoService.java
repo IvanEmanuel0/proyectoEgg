@@ -41,6 +41,7 @@ public class GastoService {
             gasto.setId(id);
             gasto.setMontoPagado(montoPagado);
             gasto.setDetalle(detalle);
+            gastoRepository.save(gasto);
         }
 
     }
