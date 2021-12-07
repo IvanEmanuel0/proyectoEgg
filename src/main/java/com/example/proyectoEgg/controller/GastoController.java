@@ -24,37 +24,39 @@ public class GastoController {
     @GetMapping()
     public ModelAndView mostrarGastos(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("????");
-        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-       if(flashMap != null){
-            mav.addObject("exito", flashMap.get("exito"));
-            mav.addObject("error", flashMap.get("error"));
-
-        }
-
-
         mav.addObject("accion", "eliminar");
         mav.addObject("gastos", gastoService.buscarHabilitados());
         mav.addObject("titulo", "Lista de gastos");
 
         return mav;
+       /* Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+       if(flashMap != null){
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+
+        }*/
+
+
+
     }
 
     @GetMapping("/desahilitados")
     public ModelAndView gastosDesahilitados(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("???");
-        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-        if(flashMap != null){
-            mav.addObject("exito", flashMap.get("exito"));
-            mav.addObject("error", flashMap.get("error"));
-
-        }
         mav.addObject("gastos", gastoService.BuscarDeshabilitados());
         mav.addObject("accion", "habilitar");
         mav.addObject("titulo", "Lista de gastos deshabilitados");
 
         return mav;
+        /*Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if(flashMap != null){
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+
+        }*/
+
 
     }
 
