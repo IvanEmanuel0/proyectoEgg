@@ -42,7 +42,7 @@ public class Persona {
     private Boolean alta;
 
     public Persona(){
-
+        this.alta = true;
     }
 
     public Persona(String nombre, String apellido, Double montoDisponible, Cuenta cuenta, List<Categoria> listaDeCategorias, String imagen) {

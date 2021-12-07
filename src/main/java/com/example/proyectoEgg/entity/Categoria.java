@@ -35,6 +35,7 @@ public class Categoria {
 
 
     public Categoria() {
+        this.alta = true;
     }
 
     public Categoria(String nombre, List<Gasto> listaDeGastos, List<Ingreso> listaDeIngresos, List<Deuda> listaDeDeudas){
