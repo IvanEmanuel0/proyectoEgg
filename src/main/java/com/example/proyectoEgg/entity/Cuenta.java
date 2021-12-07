@@ -32,6 +32,7 @@ public class Cuenta {
     Boolean alta;
 
     public Cuenta() {
+        this.alta = true;
     }
 
     public Cuenta(String usuario, String clave) {

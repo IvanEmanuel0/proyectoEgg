@@ -28,9 +28,9 @@ public class Persona {
     private String apellido;
     @Column(nullable = false)
     private Double montoDisponible;
-    @ManyToOne
+    @OneToOne
     private Cuenta cuenta;
-    @OneToMany
+    @OneToMany(mappedBy = "Persona")
     private List<Categoria> listaDeCategorias;
     @CreatedDate
     @Column(updatable = false, nullable = false)
@@ -52,5 +52,6 @@ public class Persona {
         this.cuenta = cuenta;
         this.listaDeCategorias = listaDeCategorias;
         this.imagen = imagen;
+        this.alta = true;
     }
 }

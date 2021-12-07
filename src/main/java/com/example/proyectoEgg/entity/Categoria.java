@@ -23,8 +23,11 @@ public class Categoria {
     private Integer id;
     @Column(nullable = false)
     private String nombre;
+    @OneToMany(mappedBy = "Categoria")
     private List<Gasto> listaDeGastos;
+    @OneToMany(mappedBy = "Categoria")
     private List<Ingreso> listaDeIngresos;
+    @OneToMany(mappedBy = "Categoria")
     private List<Deuda> listaDeDeudas;
     private Boolean alta;
     @CreatedDate
@@ -43,6 +46,7 @@ public class Categoria {
         this.listaDeGastos = listaDeGastos;
         this.listaDeIngresos = listaDeIngresos;
         this.listaDeDeudas = listaDeDeudas;
+        this.alta = true;
     }
 }
 
