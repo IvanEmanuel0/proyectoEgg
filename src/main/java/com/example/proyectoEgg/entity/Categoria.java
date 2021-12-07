@@ -26,6 +26,7 @@ public class Categoria {
     private List<Gasto> listaDeGastos;
     private List<Ingreso> listaDeIngresos;
     private List<Deuda> listaDeDeudas;
+    private Boolean alta;
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDate fechaDeCreacion;
