@@ -24,7 +24,7 @@ public class IngresoController {
 
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView(""); //COMPLETAR
+        ModelAndView mav = new ModelAndView("/ingreso-lista"); //COMPLETAR
         List<Ingreso> ingresos = ingresoService.buscarHabilitados();
         mav.addObject("ingresos", ingresos); //CHECK
 
@@ -47,7 +47,7 @@ public class IngresoController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView(""); //COMPLETAR
+        ModelAndView mav = new ModelAndView("/ingresos"); //COMPLETAR
         List<Ingreso> ingresos = ingresoService.buscarDeshabilitados();
         mav.addObject("ingresos", ingresos); //CHECK
 
@@ -74,7 +74,7 @@ public class IngresoController {
 
     @GetMapping("/crear")
     public ModelAndView crearIngreso(){
-        ModelAndView mav = new ModelAndView(""); //COMPLETAR
+        ModelAndView mav = new ModelAndView("/ingreso-formulario"); //COMPLETAR
 
         mav.addObject("ingreso", new Ingreso()); //CHECK
         mav.addObject("titulo", "Crear Ingreso");
@@ -85,7 +85,7 @@ public class IngresoController {
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarIngreso(@PathVariable Integer id){
-        ModelAndView mav = new ModelAndView("");//COMPLETAR
+        ModelAndView mav = new ModelAndView("/ingreso-formulario");//COMPLETAR
 
         mav.addObject("ingreso", ingresoService.buscarPorId(id));//CHECK
         mav.addObject("titulo", "Editar Ingreso");
@@ -99,25 +99,25 @@ public class IngresoController {
     @PostMapping("/guardar")
     public RedirectView guardarIngreso(@RequestParam Double montoIngresado, @RequestParam String detalle){
             ingresoService.crear(montoIngresado, detalle);
-            return new RedirectView("COMPLETAR"); //COMPLETAR
+            return new RedirectView("/ingresos"); //COMPLETAR
     }
 
     @PostMapping("/modificar")
     public RedirectView modificarIngreso(@RequestParam Integer id, @RequestParam Double montoIngresado, @RequestParam String detalle){
         ingresoService.modificar(id, montoIngresado, detalle);
-        return new RedirectView("COMPLETAR"); //COMPLETAR
+        return new RedirectView("/ingresos"); //COMPLETAR
     }
 
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminarIngreso(@PathVariable Integer id){
         ingresoService.eliminar(id);
-        return new RedirectView("COMPLETAR"); //COMPLETAR
+        return new RedirectView("/ingresos"); //COMPLETAR
     }
 
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitarIngreso(@PathVariable Integer id){
         ingresoService.habilitar(id);
-        return new RedirectView("COMPLETAR"); //COMPLETAR
+        return new RedirectView("/ingresos/deshabilitados"); //COMPLETAR
     }
 
 
