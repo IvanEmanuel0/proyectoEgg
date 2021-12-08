@@ -10,10 +10,10 @@ import java.util.List;
 @Repository
 public interface DeudaRepository extends JpaRepository<Deuda, Integer> {
 
-    @Query("SELECT d FROM Deuda WHERE d.alta=true")
+    @Query("SELECT d FROM Deuda d WHERE d.alta=true")
     List<Deuda> deudasDeAlta();
 
-    @Query("SELECT d FROM Deuda WHERE d.alta=false")
+    @Query("SELECT d FROM Deuda d WHERE d.alta=false")
     List<Deuda> daudasDeBaja();
 
 }

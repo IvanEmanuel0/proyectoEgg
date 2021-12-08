@@ -9,10 +9,10 @@ import java.util.List;
 
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Integer> {
-    @Query("SELECT p FROM PERSONA p WHERE p.alta=true")
+    @Query("SELECT p FROM Persona p WHERE p.alta=true")
     List<Persona> personasDeAlta();
 
-    @Query("SELECT p FROM PERSONA p WHERE p.alta=false")
+    @Query("SELECT p FROM Persona p WHERE p.alta=false")
     List<Persona> personasDeBaja();
 
 

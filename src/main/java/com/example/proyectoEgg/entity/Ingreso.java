@@ -26,6 +26,8 @@ public class Ingreso {
     private String detalle;
     @JoinColumn(nullable = false)
     private Boolean alta;
+    @ManyToOne
+    private Categoria categoria;
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDate fechaDeCreacion;

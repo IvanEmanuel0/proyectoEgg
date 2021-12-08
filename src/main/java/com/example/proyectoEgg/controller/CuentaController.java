@@ -1,5 +1,6 @@
 package com.example.proyectoEgg.controller;
 
+import com.example.proyectoEgg.entity.Cuenta;
 import com.example.proyectoEgg.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +32,7 @@ public class CuentaController {
         return mav;
     }
 
-    @GetMapping
+    @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -44,6 +45,12 @@ public class CuentaController {
         return mav;
     }
 
-
+    @GetMapping("/crear")
+    public ModelAndView crearCuenta() {
+        ModelAndView mav = new ModelAndView("");
+        mav.addObject("cuenta", new Cuenta());
+        mav.addObject("accion", "guardar");
+        return mav;
+    }
 
 }

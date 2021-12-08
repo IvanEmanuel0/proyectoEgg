@@ -24,6 +24,8 @@ public class Deuda {
     private Double montoAPagar;
     private String detalle;
     private Boolean alta;
+    @ManyToOne
+    private Categoria categoria;
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDate fechaDeCreacion;

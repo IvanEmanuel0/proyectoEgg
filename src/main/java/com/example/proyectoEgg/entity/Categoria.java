@@ -23,13 +23,15 @@ public class Categoria {
     private Integer id;
     @Column(nullable = false)
     private String nombre;
-    @OneToMany(mappedBy = "Categoria")
+    @OneToMany(mappedBy = "categoria")
     private List<Gasto> listaDeGastos;
-    @OneToMany(mappedBy = "Categoria")
+    @OneToMany(mappedBy = "categoria")
     private List<Ingreso> listaDeIngresos;
-    @OneToMany(mappedBy = "Categoria")
+    @OneToMany(mappedBy = "categoria")
     private List<Deuda> listaDeDeudas;
     private Boolean alta;
+    @ManyToOne
+    private Persona persona;
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDate fechaDeCreacion;

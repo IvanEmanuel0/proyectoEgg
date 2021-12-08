@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 
-    @Query("SELECT d FROM Categoria WHERE d.alta=true")
+    @Query("SELECT c FROM Categoria c WHERE c.alta=true")
     List<Categoria> categoriasDeAlta();
 
-    @Query("SELECT d FROM Categoria WHERE d.alta=false")
+    @Query("SELECT c FROM Categoria c WHERE c.alta=false")
     List<Categoria> categoriasDeBaja();
 }

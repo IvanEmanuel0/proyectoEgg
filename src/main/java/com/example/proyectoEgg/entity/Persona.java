@@ -30,7 +30,7 @@ public class Persona {
     private Double montoDisponible;
     @OneToOne
     private Cuenta cuenta;
-    @OneToMany(mappedBy = "Persona")
+    @OneToMany(mappedBy = "persona")
     private List<Categoria> listaDeCategorias;
     @CreatedDate
     @Column(updatable = false, nullable = false)

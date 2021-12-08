@@ -25,7 +25,8 @@ public class Gasto {
     private Double montoPagado;
     @Column(nullable = false)
     private String detalle;
-
+    @ManyToOne
+    private Categoria categoria;
     private Boolean alta;
 
     @CreatedDate
