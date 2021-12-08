@@ -32,7 +32,6 @@ public class IngresoService {
         return ingresoRepository.IngresosDeBaja();
     }
 
-    @Transactional(readOnly = true)
     public void crear(Double montoIngresado, String detalle){
         Ingreso i = new Ingreso();
 

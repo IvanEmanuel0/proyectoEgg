@@ -24,7 +24,7 @@ public class IngresoController {
 
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("/ingreso-lista"); //COMPLETAR
+        ModelAndView mav = new ModelAndView("ingreso-lista"); //COMPLETAR
         List<Ingreso> ingresos = ingresoService.buscarHabilitados();
         mav.addObject("ingresos", ingresos); //CHECK
 
@@ -47,7 +47,7 @@ public class IngresoController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("/ingresos"); //COMPLETAR
+        ModelAndView mav = new ModelAndView("ingresos"); //COMPLETAR
         List<Ingreso> ingresos = ingresoService.buscarDeshabilitados();
         mav.addObject("ingresos", ingresos); //CHECK
 
@@ -74,7 +74,7 @@ public class IngresoController {
 
     @GetMapping("/crear")
     public ModelAndView crearIngreso(){
-        ModelAndView mav = new ModelAndView("/ingreso-formulario"); //COMPLETAR
+        ModelAndView mav = new ModelAndView("ingreso-formulario"); //COMPLETAR
 
         mav.addObject("ingreso", new Ingreso()); //CHECK
         mav.addObject("titulo", "Crear Ingreso");
@@ -85,7 +85,7 @@ public class IngresoController {
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarIngreso(@PathVariable Integer id){
-        ModelAndView mav = new ModelAndView("/ingreso-formulario");//COMPLETAR
+        ModelAndView mav = new ModelAndView("ingreso-formulario");//COMPLETAR
 
         mav.addObject("ingreso", ingresoService.buscarPorId(id));//CHECK
         mav.addObject("titulo", "Editar Ingreso");

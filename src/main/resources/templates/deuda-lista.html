@@ -39,7 +39,7 @@
             <td th:text="${d.detalle}"></td>
             <td th:text="${d.alta}"></td>
             <td th:text="${d.fechaDeCreacion}"></td>
-            <td th:text="${d.fechaDeMoficiacion}"></td>
+            <td th:text="${d.fechaDeModificacion}"></td>
 
             <td><a th:if="${accion == 'eliminar'}" class="btn btn-secondary btn-sm" th:href="@{/deudas/editar/__${d.id}__}">Editar</a>
                 <form method="post" th:action="@{/deudas/__${accion}__/__${d.id}__}">

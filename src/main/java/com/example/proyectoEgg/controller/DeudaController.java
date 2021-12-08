@@ -39,7 +39,7 @@ public class DeudaController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("/deudas");
+        ModelAndView mav = new ModelAndView("deudas");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
@@ -57,8 +57,8 @@ public class DeudaController {
 
     @GetMapping("/crear")
     public ModelAndView crearDeuda() {
-        ModelAndView mav = new ModelAndView("/deuda-formulario");
-        mav.addObject("Deuda", new Deuda());
+        ModelAndView mav = new ModelAndView("deuda-formulario");
+        mav.addObject("deuda", new Deuda());
         mav.addObject("titulo", "Crear Deuda");
         mav.addObject("accion", "guardar");
         return mav;
@@ -66,7 +66,7 @@ public class DeudaController {
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarDeuda(@PathVariable Integer id) {
-        ModelAndView mav = new ModelAndView("/deuda-formulario");
+        ModelAndView mav = new ModelAndView("deuda-formulario");
         mav.addObject("deuda", deudaService.buscarPorId(id));
         mav.addObject("titulo", "Editar Deuda");
         mav.addObject("accion", "modificar");
