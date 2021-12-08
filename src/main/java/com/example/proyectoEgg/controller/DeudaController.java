@@ -22,7 +22,7 @@ public class DeudaController {
 
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("deuda-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
@@ -39,7 +39,7 @@ public class DeudaController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("/deudas");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
@@ -57,7 +57,7 @@ public class DeudaController {
 
     @GetMapping("/crear")
     public ModelAndView crearDeuda() {
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("/deuda-formulario");
         mav.addObject("Deuda", new Deuda());
         mav.addObject("titulo", "Crear Deuda");
         mav.addObject("accion", "guardar");
@@ -66,7 +66,7 @@ public class DeudaController {
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarDeuda(@PathVariable Integer id) {
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("/deuda-formulario");
         mav.addObject("deuda", deudaService.buscarPorId(id));
         mav.addObject("titulo", "Editar Deuda");
         mav.addObject("accion", "modificar");
@@ -75,7 +75,7 @@ public class DeudaController {
 
     @PostMapping("/guardar")
     public RedirectView guardar(@RequestParam Double montoAPagar, @RequestParam String detalle, RedirectAttributes redirectAttributes) {
-        RedirectView rv = new RedirectView("");
+        RedirectView rv = new RedirectView("/deudas");
         deudaService.crear(montoAPagar, detalle);
         return rv;
     }
@@ -83,19 +83,19 @@ public class DeudaController {
     @PostMapping("/modificar")
     public RedirectView modificar(@RequestParam Integer id, @RequestParam Double montoAPagar, @RequestParam String detalle, RedirectAttributes redirectAttributes) {
         deudaService.modificar(id, montoAPagar, detalle);
-        return new RedirectView("");
+        return new RedirectView("/deudas");
     }
 
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminar(@PathVariable Integer id) {
         deudaService.eliminar(id);
-        return new RedirectView("");
+        return new RedirectView("/deudas");
     }
 
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         deudaService.habilitar(id);
-        return new RedirectView("");
+        return new RedirectView("/deudas/deshabilitados");
     }
 
 }
