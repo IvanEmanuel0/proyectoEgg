@@ -13,8 +13,8 @@
 </head>
 <body>
 
-  <form th:action="@{/ingresos/__${accion}__}" th:field="*{id}" th:object="${ingreso}" method="post">
-
+  <form th:action="@{/ingresos/__${accion}__}" th:object="${ingreso}" method="post">
+    <input th:field="*{id}" type="hidden"/>
     <div>
       <label for="montoIngresado">Ingreso:</label>
       <input type="text" id="montoIngresado" th:field="*{montoIngresado}">

@@ -13,8 +13,8 @@
 </head>
 <body>
 
-  <form th:action="@{/deudas/__${accion}__}" th:field="*{id}" th:object="${deuda}" method="post">
-
+  <form th:action="@{/deudas/__${accion}__}" th:object="${deuda}" method="post">
+    <input th:field="*{id}" type="hidden"/>
     <div>
       <label for="montoAPagar">Deuda:</label>
       <input type="text" id="montoAPagar" th:field="*{montoAPagar}">
