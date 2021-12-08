@@ -47,7 +47,7 @@ public class IngresoController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("ingresos"); //COMPLETAR
+        ModelAndView mav = new ModelAndView("ingreso-lista"); //COMPLETAR
         List<Ingreso> ingresos = ingresoService.buscarDeshabilitados();
 
         mav.addObject("ingresos", ingresos); //CHECK

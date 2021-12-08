@@ -42,8 +42,8 @@ public class GastoController {
     }
 
     @GetMapping("/deshabilitados")
-    public ModelAndView gastosDesahilitados(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("gastos");
+    public ModelAndView gastosDeshabilitados(HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("gasto-lista");
         mav.addObject("gastos", gastoService.BuscarDeshabilitados());
         mav.addObject("accion", "habilitar");
         mav.addObject("titulo", "Lista de gastos deshabilitados");

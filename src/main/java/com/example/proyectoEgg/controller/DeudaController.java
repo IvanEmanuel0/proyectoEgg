@@ -39,7 +39,7 @@ public class DeudaController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("deudas");
+        ModelAndView mav = new ModelAndView("deuda-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
