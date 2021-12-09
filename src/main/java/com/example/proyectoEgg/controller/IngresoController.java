@@ -74,7 +74,7 @@ public class IngresoController {
 
     @GetMapping("/crear")
     public ModelAndView crearIngreso(){
-        ModelAndView mav = new ModelAndView("/ingreso-formulario"); //COMPLETAR
+        ModelAndView mav = new ModelAndView("ingreso-formulario"); //COMPLETAR
 
         mav.addObject("ingreso", new Ingreso()); //CHECK
         mav.addObject("titulo", "Crear Ingreso");
@@ -85,7 +85,7 @@ public class IngresoController {
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarIngreso(@PathVariable Integer id){
-        ModelAndView mav = new ModelAndView("/ingreso-formulario");//COMPLETAR
+        ModelAndView mav = new ModelAndView("ingreso-formulario");//COMPLETAR
 
         mav.addObject("ingreso", ingresoService.buscarPorId(id));//CHECK
         mav.addObject("titulo", "Editar Ingreso");
