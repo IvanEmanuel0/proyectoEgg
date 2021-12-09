@@ -24,7 +24,7 @@ public class IngresoController {
 
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("/ingreso-lista"); //COMPLETAR
+        ModelAndView mav = new ModelAndView("ingreso-lista"); //COMPLETAR
         List<Ingreso> ingresos = ingresoService.buscarHabilitados();
         mav.addObject("ingresos", ingresos); //CHECK
 
@@ -39,7 +39,7 @@ public class IngresoController {
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
         }
-        mav.addObject("accion", "Eliminar");
+        mav.addObject("accion", "eliminar");
         mav.addObject("titulo", "Lista de Ingresos");
         return mav;
 */
@@ -47,12 +47,13 @@ public class IngresoController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("/ingresos"); //COMPLETAR
+        ModelAndView mav = new ModelAndView("ingreso-lista"); //COMPLETAR
         List<Ingreso> ingresos = ingresoService.buscarDeshabilitados();
-        mav.addObject("ingresos", ingresos); //CHECK
 
-        mav.addObject("accion", "eliminar");
+        mav.addObject("ingresos", ingresos); //CHECK
+        mav.addObject("accion", "habilitar");
         mav.addObject("titulo", "Lista de Ingresos deshabilitados");
+
 
         return mav;
 

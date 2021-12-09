@@ -13,16 +13,16 @@
 </head>
 <body>
 
-  <form th:action="@{/gastos/guardar}">
-
+  <form th:action="@{/gastos/__${accion}__}" th:object="${gasto}" method="post">
+    <input th:field="*{id}" type="hidden"/>
     <div>
       <label for="montoPagado">Gasto:</label>
-      <input type="text" id="montoPagado">
+      <input type="text" id="montoPagado" th:field="*{montoPagado}">
     </div>
 
     <div>
       <label for="detalle">Detalle:</label>
-      <input type="text" id="detalle">
+      <input type="text" id="detalle" th:field="*{detalle}">
     </div>
     <button th:text="${accion == 'guardar'} ? 'Crear Gasto' : 'Guardar cambios'" type="submit"></button>
   </form>

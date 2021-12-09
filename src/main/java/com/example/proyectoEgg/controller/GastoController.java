@@ -42,8 +42,8 @@ public class GastoController {
     }
 
     @GetMapping("/deshabilitados")
-    public ModelAndView gastosDesahilitados(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("/gastos");
+    public ModelAndView gastosDeshabilitados(HttpServletRequest request){
+        ModelAndView mav = new ModelAndView("gasto-lista");
         mav.addObject("gastos", gastoService.BuscarDeshabilitados());
         mav.addObject("accion", "habilitar");
         mav.addObject("titulo", "Lista de gastos deshabilitados");
@@ -63,7 +63,7 @@ public class GastoController {
     @GetMapping("/crear")
     public ModelAndView crearGasto(){
         ModelAndView mav = new ModelAndView("gasto-formulario");
-        mav.addObject("gasto" , new Gasto());
+        mav.addObject("gasto", new Gasto());
         mav.addObject("titulo", "Crear Gasto");
         mav.addObject("accion", "guardar");
         return mav;
@@ -72,9 +72,8 @@ public class GastoController {
     @GetMapping("/editar/{id}")
     public ModelAndView editarGasto(@PathVariable Integer id){
             ModelAndView mav = new ModelAndView("gasto-formulario");
-            Gasto gasto = gastoService.buscarPorId(id);
-            mav.addObject("gasto", gasto);
-            mav.addObject("titulo", "Editar gasto");
+            mav.addObject("gasto", gastoService.buscarPorId(id));
+            mav.addObject("titulo", "Editar Gasto");
             mav.addObject("accion", "modificar");
             return mav;
 
@@ -95,7 +94,7 @@ public class GastoController {
     }
 
     @PostMapping("/eliminar/{id}")
-    public RedirectView eliminarGasto(@RequestParam Integer id, RedirectAttributes redirectAttributes){
+    public RedirectView eliminarGasto(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         gastoService.eliminar(id);
         return new RedirectView("/gastos");
     }
