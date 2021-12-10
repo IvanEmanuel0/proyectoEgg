@@ -47,7 +47,7 @@ public class CuentaController {
 
     @GetMapping("/crear")
     public ModelAndView crearCuenta() {
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("cuenta-formulario");
         mav.addObject("cuenta", new Cuenta());
         mav.addObject("accion", "guardar");
         return mav;

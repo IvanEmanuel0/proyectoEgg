@@ -50,6 +50,7 @@ public class CategoriaService {
         i.setListaDeDeudas(listaDeDeudas);
         categoriaRepository.save(i);
     }
+
     @Transactional
     public void eliminar(Integer id){
         Categoria categoria = buscarPorId(id);

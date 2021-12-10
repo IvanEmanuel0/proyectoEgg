@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div >
+    <div >
+        <div th:if="${error}" >
+            <div th:text="${error}" ></div>
+        </div>
+        <div th:if="${logout}" >
+            <div th:text="${logout}" ></div>
+        </div>
+        <div >
+            <form th:action="@{/logincheck}" method="POST" class="col-12">
+                <input class="col-12 form-control my-2" type="text" placeholder="Username" name="username"/>
+                <input class="col-12 form-control my-2" type="password" placeholder="Clave" name="password"/>
+                <button class="form-control my-2 btn btn-success" type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
