@@ -72,8 +72,9 @@ public class IngresoService {
     public void agregarIngreso(Categoria categoria, Double montoIngresado, String detalle){
 
         Categoria c = categoriaService.buscarPorId(categoria.getId());
-
-        c.getListaDeIngresos().add(crear(montoIngresado, detalle));
+        List<Ingreso> ingresos = c.getListaDeIngresos();
+        ingresos.add(crear(montoIngresado, detalle));
+        c.setListaDeIngresos(ingresos);
         categoriaService.guardar(c);
 
     }

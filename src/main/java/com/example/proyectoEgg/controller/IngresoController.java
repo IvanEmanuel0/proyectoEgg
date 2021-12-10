@@ -4,7 +4,7 @@ import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Ingreso;
 import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.IngresoService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

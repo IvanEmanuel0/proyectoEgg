@@ -50,5 +50,8 @@ public class Categoria {
         this.listaDeDeudas = listaDeDeudas;
         this.alta = true;
     }
+
+    public void setListaDeIngresos(List<Ingreso> add) {
+    }
 }
 
