@@ -23,7 +23,7 @@ public class CategoriaController {
 
     @GetMapping()
     public ModelAndView mostrarCategorias(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("????");
+        ModelAndView mav = new ModelAndView("categoria-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null){
@@ -36,9 +36,9 @@ public class CategoriaController {
         return mav;
     }
 
-    @GetMapping("/desahilitados")
+    @GetMapping("/deshabilitados")
     public ModelAndView categoriasDesahilitados(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("???");
+        ModelAndView mav = new ModelAndView("categoria-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null){
@@ -52,7 +52,7 @@ public class CategoriaController {
     }
     @GetMapping("/crear")
     public ModelAndView crear(){
-        ModelAndView mav = new ModelAndView("????");
+        ModelAndView mav = new ModelAndView("categoria-formulario");
         mav.addObject("categoria" , new Categoria());
         mav.addObject("titulo", "Crear Categoria");
         mav.addObject("accion", "guardar");
@@ -61,7 +61,7 @@ public class CategoriaController {
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarCategoria(@PathVariable Integer id){
-        ModelAndView mav = new ModelAndView("???");
+        ModelAndView mav = new ModelAndView("categoria-formulario");
         Categoria categoria = categoriaService.buscarPorId(id);
         mav.addObject("categoria", categoria);
         mav.addObject("titulo", "Editar categoria");
@@ -69,28 +69,28 @@ public class CategoriaController {
         return mav;
     }
     @PostMapping("/guardar")
-    public RedirectView guardarCategoria(@RequestParam String nombre, @RequestParam List listaDeGastos, @RequestParam List listaDeIngresos, @RequestParam List listaDeDeudas, RedirectAttributes redirectAttributes){
-        RedirectView redirectView = new RedirectView("???");
-        categoriaService.crear(nombre,listaDeGastos,listaDeIngresos,listaDeDeudas);
+    public RedirectView guardarCategoria(@RequestParam String nombre, RedirectAttributes redirectAttributes){
+        RedirectView redirectView = new RedirectView("/categorias");
+        categoriaService.crear(nombre);
         return redirectView;
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificarCategoria(@RequestParam Integer id,@RequestParam String nombre, @RequestParam List listaDeGastos, @RequestParam List listaDeIngresos, @RequestParam List listaDeDeudas, RedirectAttributes redirectAttributes){
-        categoriaService.modificar(id, nombre,listaDeGastos,listaDeIngresos,listaDeDeudas);
-        return new RedirectView("???");
+    public RedirectView modificarCategoria(@RequestParam Integer id,@RequestParam String nombre, RedirectAttributes redirectAttributes){
+        categoriaService.modificar(id, nombre);
+        return new RedirectView("/categorias");
     }
     @PostMapping("/eliminar/{id}")
-    public RedirectView eliminarCategoria(@RequestParam Integer id, RedirectAttributes redirectAttributes){
+    public RedirectView eliminarCategoria(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         categoriaService.eliminar(id);
-        return new RedirectView("??");
+        return new RedirectView("/categorias");
     }
 
 
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         categoriaService.habilitar(id);
-        return new RedirectView("???");
+        return new RedirectView("/categorias");
     }
 
 }

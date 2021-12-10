@@ -1,6 +1,7 @@
 package com.example.proyectoEgg.service;
 
 import com.example.proyectoEgg.entity.Categoria;
+import com.example.proyectoEgg.entity.Ingreso;
 import com.example.proyectoEgg.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,23 +32,16 @@ public class CategoriaService {
     }
     ///---------
 
-    @Transactional(readOnly = true)
-    public void crear(String nombre, List listaDeGastos, List listaDeIngresos,List listaDeDeudas){
+    public void crear(String nombre){
         Categoria i = new Categoria();
         i.setNombre(nombre);
-        i.setListaDeGastos(listaDeGastos);
-        i.setListaDeIngresos(listaDeIngresos);
-        i.setListaDeDeudas(listaDeDeudas);
         categoriaRepository.save(i);
     }
     @Transactional
-    public void modificar(Integer id, String nombre,List listaDeGastos, List listaDeIngresos,List listaDeDeudas){
+    public void modificar(Integer id, String nombre){
         Categoria i = buscarPorId(id);
 
         i.setNombre(nombre);
-        i.setListaDeGastos(listaDeGastos);
-        i.setListaDeIngresos(listaDeIngresos);
-        i.setListaDeDeudas(listaDeDeudas);
         categoriaRepository.save(i);
     }
     @Transactional
@@ -65,5 +59,12 @@ public class CategoriaService {
 
         categoriaRepository.save(i);
     }
+
+    @Transactional
+    public void guardar(Categoria categoria){
+        categoriaRepository.save(categoria);
+    }
+
+
 
 }

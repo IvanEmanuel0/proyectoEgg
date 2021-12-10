@@ -1,5 +1,6 @@
 package com.example.proyectoEgg.service;
 
+import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Ingreso;
 import com.example.proyectoEgg.repository.IngresoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class IngresoService {
 
     @Autowired
     private IngresoRepository ingresoRepository;
+
+    @Autowired
+    private CategoriaService categoriaService;
 
     @Transactional
     public Ingreso buscarPorId(Integer id){
@@ -33,12 +37,14 @@ public class IngresoService {
     }
 
     @Transactional
-    public void crear(Double montoIngresado, String detalle){
+    public Ingreso crear(Double montoIngresado, String detalle){
         Ingreso i = new Ingreso();
 
         i.setMontoIngresado(montoIngresado);
         i.setDetalle(detalle);
         ingresoRepository.save(i);
+
+        return i;
     }
 
     @Transactional
@@ -60,6 +66,16 @@ public class IngresoService {
         Ingreso i = buscarPorId(id);
         i.setAlta(true);
         ingresoRepository.save(i);
+    }
+
+    @Transactional
+    public void agregarIngreso(Categoria categoria, Double montoIngresado, String detalle){
+
+        Categoria c = categoriaService.buscarPorId(categoria.getId());
+
+        c.getListaDeIngresos().add(crear(montoIngresado, detalle));
+        categoriaService.guardar(c);
+
     }
 
 }
