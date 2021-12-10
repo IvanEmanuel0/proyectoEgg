@@ -1,14 +1,16 @@
 package com.example.proyectoEgg.controller;
 
 import com.example.proyectoEgg.entity.Cuenta;
+import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -22,7 +24,7 @@ public class CuentaController {
 
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("cuenta-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
         if(flashMap != null) {
             mav.addObject("exito", flashMap.get("exito"));
@@ -34,7 +36,7 @@ public class CuentaController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("cuenta-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
@@ -47,10 +49,47 @@ public class CuentaController {
 
     @GetMapping("/crear")
     public ModelAndView crearCuenta() {
-        ModelAndView mav = new ModelAndView("");
+        ModelAndView mav = new ModelAndView("cuenta-formulario");
         mav.addObject("cuenta", new Cuenta());
         mav.addObject("accion", "guardar");
         return mav;
+    }
+
+    @GetMapping("/editar/{id}")
+    public ModelAndView editarCuenta(@PathVariable Integer id){
+        ModelAndView mav = new ModelAndView("cuenta-formulario");
+
+        mav.addObject("cuenta", cuentaService.buscarPorId(id));
+        mav.addObject("titulo", "Editar Cuenta");
+        mav.addObject("accion", "modificar");
+
+
+        return mav;
+    }
+
+    @PostMapping("/guardar")
+    public RedirectView guardar(@RequestParam String usuario, @RequestParam String clave, RedirectAttributes redirectAttributes){
+        RedirectView rv = new RedirectView("/cuentas");
+        cuentaService.crear(usuario, clave);
+        return rv;
+    }
+
+    @PostMapping("/modificar")
+    public RedirectView modificar(@RequestParam Integer id, @RequestParam String usuario, @RequestParam String clave, RedirectAttributes redirectAttributes) {
+        cuentaService.modificar(id, usuario, clave);
+        return new RedirectView("/cuentas");
+    }
+
+    @PostMapping("eliminar/{id}")
+    public RedirectView eliminar(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        cuentaService.eliminar(id);
+        return new RedirectView("/cuentas");
+    }
+
+    @PostMapping("/habilitar/{id}")
+    public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        cuentaService.habilitar(id);
+        return new RedirectView("/cuentas/deshabilitados");
     }
 
 }
