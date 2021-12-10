@@ -42,7 +42,7 @@ public class PersonaController {
 
     }
 
-    @GetMapping("/desahilitados")
+    @GetMapping("/deshabilitados")
     public ModelAndView personasDesahilitadas(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("???");
         mav.addObject("personas", personaService.buscarDeshabilitados());
@@ -96,7 +96,7 @@ public class PersonaController {
     }
 
     @PostMapping("/eliminar/{id}")
-    public RedirectView eliminar(@RequestParam Integer id, RedirectAttributes redirectAttributes){
+    public RedirectView eliminar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         personaService.eliminar(id);
         return new RedirectView("??");
     }

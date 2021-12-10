@@ -1,7 +1,10 @@
 package com.example.proyectoEgg.controller;
 
+import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Ingreso;
+import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.IngresoService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,9 @@ public class IngresoController {
 
     @Autowired
     private IngresoService ingresoService;
+
+    @Autowired
+    private CategoriaService categoriaService;
 
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request){
@@ -78,6 +84,7 @@ public class IngresoController {
         ModelAndView mav = new ModelAndView("ingreso-formulario"); //COMPLETAR
 
         mav.addObject("ingreso", new Ingreso()); //CHECK
+        mav.addObject("categorias", categoriaService.buscarHabilitados());
         mav.addObject("titulo", "Crear Ingreso");
         mav.addObject("accion", "guardar");
 
@@ -95,11 +102,12 @@ public class IngresoController {
         return mav;
     }
 
+
     ////////////////////////////////////////POST////////////////////////////////////////
 
     @PostMapping("/guardar")
-    public RedirectView guardarIngreso(@RequestParam Double montoIngresado, @RequestParam String detalle){
-            ingresoService.crear(montoIngresado, detalle);
+    public RedirectView guardarIngreso(@RequestParam Categoria categoria, @RequestParam Double montoIngresado, @RequestParam String detalle){
+            ingresoService.agregarIngreso(categoria, montoIngresado, detalle);
             return new RedirectView("/ingresos"); //COMPLETAR
     }
 
