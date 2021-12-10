@@ -81,7 +81,7 @@ public class CategoriaController {
         return new RedirectView("???");
     }
     @PostMapping("/eliminar/{id}")
-    public RedirectView eliminarCategoria(@RequestParam Integer id, RedirectAttributes redirectAttributes){
+    public RedirectView eliminarCategoria(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         categoriaService.eliminar(id);
         return new RedirectView("??");
     }
