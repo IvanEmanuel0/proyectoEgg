@@ -1,6 +1,8 @@
 package com.example.proyectoEgg.controller;
 
+import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Gasto;
+import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.GastoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ public class GastoController {
 
     @Autowired
     private GastoService gastoService;
+
+    @Autowired
+    private CategoriaService categoriaService;
 
     @GetMapping()
     public ModelAndView mostrarGastos(HttpServletRequest request){
@@ -64,6 +69,7 @@ public class GastoController {
     public ModelAndView crearGasto(){
         ModelAndView mav = new ModelAndView("gasto-formulario");
         mav.addObject("gasto", new Gasto());
+        mav.addObject("categorias", categoriaService.buscarHabilitados());
         mav.addObject("titulo", "Crear Gasto");
         mav.addObject("accion", "guardar");
         return mav;
@@ -80,10 +86,10 @@ public class GastoController {
         }
 
     @PostMapping("/guardar")
-    public RedirectView guardarGasto(@RequestParam Double montoPagado, @RequestParam String detalle, RedirectAttributes redirectAttributes){
+    public RedirectView guardarGasto(@RequestParam Categoria categoria, @RequestParam Double montoPagado, @RequestParam String detalle, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/gastos");
 
-        gastoService.crear(montoPagado, detalle);
+        gastoService.crear(categoria, montoPagado, detalle);
         return redirectView;
     }
 

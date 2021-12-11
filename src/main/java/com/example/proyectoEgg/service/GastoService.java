@@ -1,5 +1,6 @@
 package com.example.proyectoEgg.service;
 
+import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Gasto;
 import com.example.proyectoEgg.repository.GastoRepository;
 
@@ -20,9 +21,9 @@ public class GastoService {
 
 
     @Transactional
-    public void crear(Double montoPagado, String detalle){
+    public void crear(Categoria categoria, Double montoPagado, String detalle){
         Gasto gasto = new Gasto();
-
+        gasto.setCategoria(categoria);
         gasto.setMontoPagado(montoPagado);
         gasto.setDetalle(detalle);
         gastoRepository.save(gasto);

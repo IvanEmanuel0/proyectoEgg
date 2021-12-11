@@ -24,6 +24,12 @@
       <label for="detalle">Detalle:</label>
       <input type="text" id="detalle" th:field="*{detalle}">
     </div>
+
+    <select aria-label="Seleccionar categoria" class="form-select" th:field="*{categoria}" id="categoria">
+      <option selected value="">Seleccionar categoria</option>
+      <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+  </select>
+  
     <button th:text="${accion == 'guardar'} ? 'Crear Gasto' : 'Guardar cambios'" type="submit"></button>
   </form>
 
