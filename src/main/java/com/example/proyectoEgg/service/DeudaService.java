@@ -1,5 +1,6 @@
 package com.example.proyectoEgg.service;
 
+import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Deuda;
 import com.example.proyectoEgg.repository.DeudaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,12 @@ public class DeudaService {
     }
 
     @Transactional
-    public void crear(Double montoAPagar, String detalle) {
-        deudaRepository.save(new Deuda(montoAPagar, detalle));
+    public void crear(Categoria categoria, Double montoAPagar, String detalle) {
+        Deuda d = new Deuda();
+        d.setCategoria(categoria);
+        d.setMontoAPagar(montoAPagar);
+        d.setDetalle(detalle);
+        deudaRepository.save(d);
     }
 
     @Transactional

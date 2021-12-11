@@ -1,6 +1,8 @@
 package com.example.proyectoEgg.controller;
 
+import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Deuda;
+import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.DeudaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,9 @@ public class DeudaController {
 
     @Autowired
     private DeudaService deudaService;
+
+    @Autowired
+    private CategoriaService categoriaService;
 
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request) {
@@ -58,6 +63,7 @@ public class DeudaController {
     public ModelAndView crearDeuda() {
         ModelAndView mav = new ModelAndView("deuda-formulario");
         mav.addObject("deuda", new Deuda());
+        mav.addObject("categorias", categoriaService.buscarHabilitados());
         mav.addObject("titulo", "Crear Deuda");
         mav.addObject("accion", "guardar");
         return mav;
@@ -73,9 +79,9 @@ public class DeudaController {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam Double montoAPagar, @RequestParam String detalle, RedirectAttributes redirectAttributes) {
+    public RedirectView guardar(@RequestParam Categoria categoria, @RequestParam Double montoAPagar, @RequestParam String detalle, RedirectAttributes redirectAttributes) {
         RedirectView rv = new RedirectView("/deudas");
-        deudaService.crear(montoAPagar, detalle);
+        deudaService.crear(categoria, montoAPagar, detalle);
         return rv;
     }
 
