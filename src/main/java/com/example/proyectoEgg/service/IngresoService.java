@@ -37,14 +37,12 @@ public class IngresoService {
     }
 
     @Transactional
-    public Ingreso crear(Double montoIngresado, String detalle){
+    public void crear(Categoria categoria, Double montoIngresado, String detalle){
         Ingreso i = new Ingreso();
-
+        i.setCategoria(categoria);
         i.setMontoIngresado(montoIngresado);
         i.setDetalle(detalle);
         ingresoRepository.save(i);
-
-        return i;
     }
 
     @Transactional
@@ -68,7 +66,7 @@ public class IngresoService {
         ingresoRepository.save(i);
     }
 
-    @Transactional
+    /*@Transactional
     public void agregarIngreso(Categoria categoria, Double montoIngresado, String detalle){
 
         Categoria c = categoriaService.buscarPorId(categoria.getId());
@@ -77,6 +75,6 @@ public class IngresoService {
         c.setListaDeIngresos(ingresos);
         categoriaService.guardar(c);
 
-    }
+    }*/
 
 }

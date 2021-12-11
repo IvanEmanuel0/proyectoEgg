@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,18 +41,19 @@ public class Categoria {
 
 
     public Categoria() {
+        this.listaDeGastos = new ArrayList<>();
+        this.listaDeIngresos = new ArrayList<>();
+        this.listaDeDeudas = new ArrayList<>();
         this.alta = true;
     }
 
-    public Categoria(String nombre, List<Gasto> listaDeGastos, List<Ingreso> listaDeIngresos, List<Deuda> listaDeDeudas){
+    public Categoria(String nombre){
         this.nombre = nombre;
-        this.listaDeGastos = listaDeGastos;
-        this.listaDeIngresos = listaDeIngresos;
-        this.listaDeDeudas = listaDeDeudas;
+        this.listaDeGastos = new ArrayList<>();
+        this.listaDeIngresos = new ArrayList<>();
+        this.listaDeDeudas = new ArrayList<>();
         this.alta = true;
     }
 
-    public void setListaDeIngresos(List<Ingreso> add) {
-    }
 }
 

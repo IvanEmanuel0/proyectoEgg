@@ -107,7 +107,7 @@ public class IngresoController {
 
     @PostMapping("/guardar")
     public RedirectView guardarIngreso(@RequestParam Categoria categoria, @RequestParam Double montoIngresado, @RequestParam String detalle){
-            ingresoService.agregarIngreso(categoria, montoIngresado, detalle);
+            ingresoService.crear(categoria, montoIngresado, detalle);
             return new RedirectView("/ingresos"); //COMPLETAR
     }
 
