@@ -17,8 +17,6 @@ public class IngresoService {
     @Autowired
     private IngresoRepository ingresoRepository;
 
-    @Autowired
-    private CategoriaService categoriaService;
 
     @Transactional
     public Ingreso buscarPorId(Integer id){
@@ -65,16 +63,5 @@ public class IngresoService {
         i.setAlta(true);
         ingresoRepository.save(i);
     }
-
-    /*@Transactional
-    public void agregarIngreso(Categoria categoria, Double montoIngresado, String detalle){
-
-        Categoria c = categoriaService.buscarPorId(categoria.getId());
-        List<Ingreso> ingresos = c.getListaDeIngresos();
-        ingresos.add(crear(montoIngresado, detalle));
-        c.setListaDeIngresos(ingresos);
-        categoriaService.guardar(c);
-
-    }*/
 
 }
