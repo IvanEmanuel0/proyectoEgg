@@ -69,7 +69,7 @@ public class CuentaController {
 
     @PostMapping("/guardar")
     public RedirectView guardar(@RequestParam String usuario, @RequestParam String clave, RedirectAttributes redirectAttributes){
-        RedirectView rv = new RedirectView("/cuentas");
+        RedirectView rv = new RedirectView("/login");
         cuentaService.crear(usuario, clave);
         return rv;
     }

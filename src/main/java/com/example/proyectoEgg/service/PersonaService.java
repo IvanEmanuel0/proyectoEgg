@@ -35,31 +35,28 @@ public class PersonaService {
         return optionalPersona.orElse(null);
     }
 
-    @Transactional(readOnly = true)
-    public void crear(String nombre, String apellido, Double montoDisponible, String usuario, String clave, List<Categoria> listaDeCategorias, String imagen){
+    @Transactional
+    public void crear(String nombre, String apellido, String usuario, String clave){
       cuentaService.crear(usuario,clave);
-      personaRepository.save(new Persona(nombre,apellido, montoDisponible, cuentaService.buscarPorUsuario(usuario), listaDeCategorias, imagen));
+      personaRepository.save(new Persona(nombre,apellido, cuentaService.buscarPorUsuario(usuario)));
 
     }
 
-    @Transactional(readOnly = true)
-    public void modificar(Integer id, String nombre, String apellido, Double montoDisponible, List<Categoria> listaDeCategorias, String imagen) {
+    @Transactional
+    public void modificar(Integer id, String nombre, String apellido) {
         Persona persona = buscarPorId(id);
         if (persona != null) {
             persona.setNombre(nombre);
             persona.setApellido(apellido);
-            persona.setMontoDisponible(montoDisponible);
-            persona.setListaDeCategorias(listaDeCategorias);
-            persona.setImagen(imagen);
             personaRepository.save(persona);
         }
     }
-    @Transactional(readOnly = true)
+    @Transactional
     public void eliminar(Integer id){
              personaRepository.deleteById(id);
         }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void habilitar(Integer id){
         Persona persona = buscarPorId(id);
         persona.setAlta(true);

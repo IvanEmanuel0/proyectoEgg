@@ -24,7 +24,7 @@ public class PersonaController {
 
     @GetMapping
     public ModelAndView mostrarPersonas(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("????");
+        ModelAndView mav = new ModelAndView("persona-lista");
         mav.addObject("accion", "eliminar");
         mav.addObject("personas", personaService.buscarHabilitados());
         mav.addObject("titulo", "Lista de Personas");
@@ -63,8 +63,8 @@ public class PersonaController {
 
     @GetMapping("/crear")
     public ModelAndView crearPersonas(){
-        ModelAndView mav = new ModelAndView("????");
-        mav.addObject("persona" , new Persona());
+        ModelAndView mav = new ModelAndView("persona-formulario");
+        //mav.addObject("persona" , new Persona());
         mav.addObject("titulo", "Crear Persona");
         mav.addObject("accion", "guardar");
         return mav;
@@ -82,16 +82,15 @@ public class PersonaController {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardarPersona(@RequestParam String nombre, @RequestParam String apellido,@RequestParam  Double montoDisponible, @RequestParam String usuario, @RequestParam String clave,@RequestParam  List<Categoria> listaDeCategorias,@RequestParam  String imagen, RedirectAttributes redirectAttributes){
-        RedirectView redirectView = new RedirectView("???");
-
-        personaService.crear(nombre, apellido, montoDisponible, usuario, clave, listaDeCategorias, imagen);
+    public RedirectView guardarPersona(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String usuario, @RequestParam String clave, RedirectAttributes redirectAttributes){
+        RedirectView redirectView = new RedirectView("/personas");
+        personaService.crear(nombre, apellido, usuario, clave);
         return redirectView;
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificarPersona(@RequestParam Integer id,@RequestParam String nombre,@RequestParam String apellido,@RequestParam Double montoDisponible, @RequestParam List<Categoria> listaDeCategorias, @RequestParam String imagen, RedirectAttributes redirectAttributes){
-        personaService.modificar(id, nombre, apellido, montoDisponible, listaDeCategorias,imagen);
+    public RedirectView modificarPersona(@RequestParam Integer id,@RequestParam String nombre,@RequestParam String apellido, RedirectAttributes redirectAttributes){
+        personaService.modificar(id, nombre, apellido);
         return new RedirectView("???");
     }
 

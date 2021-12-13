@@ -24,6 +24,9 @@ public class Cuenta {
     String usuario;
     @Column(nullable = false)
     String clave;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Rol rol;
     @CreatedDate
     @Column(updatable = false, nullable = false)
     private LocalDate fechaDeCreacion;

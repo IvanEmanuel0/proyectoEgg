@@ -16,21 +16,21 @@
           <div class="fo rm-floating">
             <input placeholder="Usuario" th:field="*{usuario}" class="form-control" id="usuario" type="text">
             <label for="usuario"></label>
-            <div class="invalid-feedback">El username es obligatorio</div>
+
           </div>
         </div>
         <div class="col-6">
           <div class="fo rm-floating">
-            <input placeholder="Contraseña" th:field="*{clave}" class="form-control" id="clave" type="text">
+            <input placeholder="Contraseña" th:field="*{clave}" class="form-control" id="clave" type="password">
             <label for="clave"></label>
-            <div class="invalid-feedback">La clave es obligatoria</div>
+
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-xl-3">
           <button class="btn btn-success"
-                  type="submit" th:text="${accion == 'guardar'} ? 'Crear autor' : 'Guardar cambios'"></button>
+                  type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
         </div>
       </div>
     </div>

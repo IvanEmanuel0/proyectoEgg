@@ -26,7 +26,6 @@ public class Persona {
     private String nombre;
     @Column(nullable = false)
     private String apellido;
-    @Column(nullable = false)
     private Double montoDisponible;
     @OneToOne
     private Cuenta cuenta;
@@ -38,20 +37,21 @@ public class Persona {
     @LastModifiedDate
     private LocalDate fechaDeModificacion;
     private String imagen;
+
     @Column(nullable = false)
     private Boolean alta;
+
+
 
     public Persona(){
         this.alta = true;
     }
 
-    public Persona(String nombre, String apellido, Double montoDisponible, Cuenta cuenta, List<Categoria> listaDeCategorias, String imagen) {
+    public Persona(String nombre, String apellido, Cuenta cuenta) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.montoDisponible = montoDisponible;
+        this.montoDisponible = 0.0;
         this.cuenta = cuenta;
-        this.listaDeCategorias = listaDeCategorias;
-        this.imagen = imagen;
         this.alta = true;
     }
 }

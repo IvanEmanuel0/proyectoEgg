@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="col-12 p-5 bg-contenido">
+    <h1>Registro</h1>
+    <form method="POST" th:action="@{/personas/__${accion}__}">
+        <input th:value="${id}" type="hidden">
+        <div th:if="${error != null}" th:text="${error}" ></div>
+
+
+        <input placeholder="Nombre" required name="nombre" th:value="${nombre}" class="form-control" id="nombre" type="text">
+        <label for="nombre"></label>
+
+        <input placeholder="Apellido" required name="apellido" th:value="${apellido}" class="form-control" id="apellido" type="text">
+        <label for="apellido"></label>
+
+        <h2>Datos de la cuenta</h2>
+
+        <input placeholder="Usuario" name="usuario" class="form-control" id="usuario" type="text">
+        <label for="usuario"></label>
+
+        <input placeholder="Contraseña" name="clave" class="form-control" id="clave" type="password">
+        <label for="clave"></label>
+
+        <button class="btn btn-success" th:text="${action == 'guardar'} ? 'Registrar' : 'Guardar cambios'"
+        type="submit"></button>
+
+    </form>
+
+</div>
+</body>
+</html>
