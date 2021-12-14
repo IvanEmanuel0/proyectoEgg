@@ -78,7 +78,7 @@ public class GastoController {
     @GetMapping("/editar/{id}")
     public ModelAndView editarGasto(@PathVariable Integer id){
             ModelAndView mav = new ModelAndView("gasto-formulario");
-            mav.addObject("gasto", gastoService.buscarPorId(id));
+           // mav.addObject("gasto", gastoService.buscarPorId(id));
             mav.addObject("titulo", "Editar Gasto");
             mav.addObject("accion", "modificar");
             return mav;
@@ -89,26 +89,26 @@ public class GastoController {
     public RedirectView guardarGasto(@RequestParam Categoria categoria, @RequestParam Double montoPagado, @RequestParam String detalle, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/gastos");
 
-        gastoService.crear(categoria, montoPagado, detalle);
+       // gastoService.crear(categoria, montoPagado, detalle);
         return redirectView;
     }
 
     @PostMapping("/modificar")
     public RedirectView modificarGasto(@RequestParam Integer id, @RequestParam Double montoPagado, @RequestParam String detalle, RedirectAttributes redirectAttributes){
-        gastoService.modificar(id, montoPagado, detalle);
+       // gastoService.modificar(id, montoPagado, detalle);
         return new RedirectView("/gastos");
     }
 
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminarGasto(@PathVariable Integer id, RedirectAttributes redirectAttributes){
-        gastoService.eliminar(id);
+      //  gastoService.eliminar(id);
         return new RedirectView("/gastos");
     }
 
 
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
-          gastoService.habilitar(id);
+       //   gastoService.habilitar(id);
           return new RedirectView("/gastos/deshabilitados");
     }
 
