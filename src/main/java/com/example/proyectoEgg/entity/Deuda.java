@@ -37,7 +37,8 @@ public class Deuda {
         this.alta = true;
     }
 
-    public Deuda(Double montoAPagar, String detalle) {
+    public Deuda(Categoria categoria, Double montoAPagar, String detalle) {
+        this.categoria = categoria;
         this.montoAPagar = montoAPagar;
         this.detalle = detalle;
         this.alta = true;
