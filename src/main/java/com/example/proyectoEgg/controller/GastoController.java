@@ -129,7 +129,7 @@ public class GastoController {
     public RedirectView eliminarGasto(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         try {
             gastoService.eliminar(id);
-            redirectAttributes.addFlashAttribute("éxito", "El gasto se dió correctamente.");
+            redirectAttributes.addFlashAttribute("éxito", "El gasto se dió de baja correctamente.");
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
