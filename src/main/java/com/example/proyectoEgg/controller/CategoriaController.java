@@ -2,6 +2,7 @@ package com.example.proyectoEgg.controller;
 
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.service.CategoriaService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,9 @@ public class CategoriaController {
         mav.addObject("titulo", "Lista de categorias deshabilitados");
         return mav;
     }
+
     @GetMapping("/crear")
+    @PreAuthorize("hasRole('USERPRO')")
     public ModelAndView crear(){
         ModelAndView mav = new ModelAndView("categoria-formulario");
         mav.addObject("categoria" , new Categoria());
@@ -60,6 +63,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/editar/{id}")
+    @PreAuthorize("hasRole('USERPRO')")
     public ModelAndView editarCategoria(@PathVariable Integer id){
         ModelAndView mav = new ModelAndView("categoria-formulario");
         Categoria categoria = categoriaService.buscarPorId(id);
@@ -68,7 +72,9 @@ public class CategoriaController {
         mav.addObject("accion", "modificar");
         return mav;
     }
+
     @PostMapping("/guardar")
+    @PreAuthorize("hasRole('USERPRO')")
     public RedirectView guardarCategoria(@RequestParam String nombre, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/categorias");
         categoriaService.crear(nombre);
@@ -76,11 +82,14 @@ public class CategoriaController {
     }
 
     @PostMapping("/modificar")
+    @PreAuthorize("hasRole('USERPRO')")
+
     public RedirectView modificarCategoria(@RequestParam Integer id,@RequestParam String nombre, RedirectAttributes redirectAttributes){
         categoriaService.modificar(id, nombre);
         return new RedirectView("/categorias");
     }
     @PostMapping("/eliminar/{id}")
+    @PreAuthorize("hasRole('USERPRO')")
     public RedirectView eliminarCategoria(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         categoriaService.eliminar(id);
         return new RedirectView("/categorias");
@@ -88,6 +97,7 @@ public class CategoriaController {
 
 
     @PostMapping("/habilitar/{id}")
+    @PreAuthorize("hasRole('USERPRO')")
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         categoriaService.habilitar(id);
         return new RedirectView("/categorias");

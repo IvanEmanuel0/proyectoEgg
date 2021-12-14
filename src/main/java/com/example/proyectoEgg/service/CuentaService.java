@@ -5,6 +5,8 @@ import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.CuentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,7 +34,10 @@ public class CuentaService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
         Cuenta cuenta = cuentaRepository.findByUsuario(usuario).orElseThrow(() -> new UsernameNotFoundException(String.format(MENSAJE, usuario)));
-        return new User(cuenta.getUsuario(), cuenta.getClave(), Collections.emptyList());
+
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + cuenta.getRol().getNombre());
+
+        return new User(cuenta.getUsuario(), cuenta.getClave(), Collections.singletonList(authority));
     }
 
     @Transactional(readOnly = true)
