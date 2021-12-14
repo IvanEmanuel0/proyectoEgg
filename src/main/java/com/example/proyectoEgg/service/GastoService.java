@@ -2,8 +2,10 @@ package com.example.proyectoEgg.service;
 
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Gasto;
+import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.GastoRepository;
 
+import com.example.proyectoEgg.utilities.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,34 +23,56 @@ public class GastoService {
 
 
     @Transactional
-    public void crear(Categoria categoria, Double montoPagado, String detalle){
-        Gasto gasto = new Gasto();
-        gasto.setCategoria(categoria);
-        gasto.setMontoPagado(montoPagado);
-        gasto.setDetalle(detalle);
-        gastoRepository.save(gasto);
+    public void crear(Categoria categoria, Double montoPagado, String detalle) throws MiException {
+
+        try {
+            Util.esNumero(Double.toString(montoPagado));
+            gastoRepository.save(new Gasto(categoria, montoPagado, detalle));
+        } catch (MiException e){
+            throw e;
+        } catch (Exception e){
+            throw e;
+        }
     }
 
     @Transactional
-    public void eliminar(Integer id){
-        gastoRepository.deleteById(id);
+    public void eliminar(Integer id) throws MiException{
+        try {
+            Util.esNumero(Integer.toString(id));
+            gastoRepository.deleteById(id);
+
+        } catch (MiException e){
+            throw e;
+        }
     }
 
 
     @Transactional
-    public void modificar(Integer id, Double montoPagado, String detalle ){
-        Gasto gasto = buscarPorId(id);
-        if(gasto != null){
-            gasto.setId(id);
-            gasto.setMontoPagado(montoPagado);
-            gasto.setDetalle(detalle);
-            gastoRepository.save(gasto);
+    public void modificar(Integer id, Double montoPagado, String detalle ) throws MiException{
+        try {
+            Util.esNumero(Double.toString(montoPagado));
+            Gasto gasto = buscarPorId(id);
+            if(gasto != null){
+                gasto.setId(id);
+                gasto.setMontoPagado(montoPagado);
+                gasto.setDetalle(detalle);
+                gastoRepository.save(gasto);
+            }
+        }catch (MiException e){
+            throw e;
+        }catch (Exception e){
+            throw e;
         }
 
     }
 
     @Transactional(readOnly = true)
-    public Gasto buscarPorId(Integer id){
+    public Gasto buscarPorId(Integer id)throws MiException{
+        try {
+            Util.esNumero(Integer.toString(id));
+        } catch (MiException e){
+            throw e;
+        }
         Optional<Gasto> optionalGasto = gastoRepository.findById(id);
         return optionalGasto.orElse(null);
     }
@@ -68,15 +92,15 @@ public class GastoService {
     }
 
     @Transactional
-    public void habilitar(Integer id) {
-
-        Gasto gasto = buscarPorId(id);
-        gasto.setAlta(true);
-        gastoRepository.save(gasto);
-
+    public void habilitar(Integer id) throws MiException {
+        try {
+            Util.esNumero(Integer.toString(id));
+            Gasto gasto = buscarPorId(id);
+            gasto.setAlta(true);
+            gastoRepository.save(gasto);
+        } catch (MiException e) {
+            throw e;
+        }
     }
-
-
-
-
 }
+

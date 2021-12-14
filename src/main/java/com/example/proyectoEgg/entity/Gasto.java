@@ -42,9 +42,10 @@ public class Gasto {
         this.alta = true;
     }
 
-    public Gasto(Double montoPagado, String detalle) {
+    public Gasto(Categoria categoria, Double montoPagado, String detalle) {
         this.montoPagado = montoPagado;
         this.detalle = detalle;
+        this.categoria = categoria;
         this.alta = true;
 
     }
