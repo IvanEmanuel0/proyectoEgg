@@ -1,6 +1,7 @@
 package com.example.proyectoEgg.controller;
 
 import com.example.proyectoEgg.entity.Cuenta;
+import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CuentaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,14 +69,14 @@ public class CuentaController {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam String usuario, @RequestParam String clave, RedirectAttributes redirectAttributes){
+    public RedirectView guardar(@RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes){
         RedirectView rv = new RedirectView("/login");
-        cuentaService.crear(usuario, clave);
+        cuentaService.crear(usuario, clave, rol);
         return rv;
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam Integer id, @RequestParam String usuario, @RequestParam String clave, RedirectAttributes redirectAttributes) {
+    public RedirectView modificar(@RequestParam Integer id, @RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes) {
         cuentaService.modificar(id, usuario, clave);
         return new RedirectView("/cuentas");
     }

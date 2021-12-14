@@ -1,6 +1,7 @@
 package com.example.proyectoEgg.service;
 
 import com.example.proyectoEgg.entity.Cuenta;
+import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.CuentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,8 @@ public class CuentaService implements UserDetailsService {
     }
 
     @Transactional
-    public void crear(String usuario, String clave) {
-        cuentaRepository.save(new Cuenta(usuario, encoder.encode(clave)));
+    public void crear(String usuario, String clave, Rol rol) {
+        cuentaRepository.save(new Cuenta(usuario, encoder.encode(clave), rol));
     }
 
     @Transactional

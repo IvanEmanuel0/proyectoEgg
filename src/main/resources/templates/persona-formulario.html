@@ -26,6 +26,11 @@
         <input placeholder="Contraseña" name="clave" class="form-control" id="clave" type="password">
         <label for="clave"></label>
 
+        <select id="rol" name="rol">
+            <option selected value="">Elegir rol</option>
+            <option th:each="rol : ${roles}" th:text="${rol.nombre}"  th:value="${rol.id}"></option>
+        </select>
+
         <button class="btn btn-success" th:text="${action == 'guardar'} ? 'Registrar' : 'Guardar cambios'"
         type="submit"></button>
 

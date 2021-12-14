@@ -3,6 +3,7 @@ package com.example.proyectoEgg.service;
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Cuenta;
 import com.example.proyectoEgg.entity.Persona;
+import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,8 +37,8 @@ public class PersonaService {
     }
 
     @Transactional
-    public void crear(String nombre, String apellido, String usuario, String clave){
-      cuentaService.crear(usuario,clave);
+    public void crear(String nombre, String apellido, String usuario, String clave, Rol rol){
+      cuentaService.crear(usuario,clave, rol);
       personaRepository.save(new Persona(nombre,apellido, cuentaService.buscarPorUsuario(usuario)));
 
     }

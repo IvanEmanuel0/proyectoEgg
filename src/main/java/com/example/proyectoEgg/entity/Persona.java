@@ -42,7 +42,6 @@ public class Persona {
     private Boolean alta;
 
 
-
     public Persona(){
         this.alta = true;
     }

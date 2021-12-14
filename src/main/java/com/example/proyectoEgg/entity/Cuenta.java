@@ -38,9 +38,10 @@ public class Cuenta {
         this.alta = true;
     }
 
-    public Cuenta(String usuario, String clave) {
+    public Cuenta(String usuario, String clave, Rol rol) {
         this.usuario = usuario;
         this.clave = clave;
+        this.rol = rol;
         this.alta = true;
     }
 

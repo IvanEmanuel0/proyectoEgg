@@ -3,7 +3,9 @@ package com.example.proyectoEgg.controller;
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Gasto;
 import com.example.proyectoEgg.entity.Persona;
+import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.service.PersonaService;
+import com.example.proyectoEgg.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +21,12 @@ import java.util.Map;
 @Controller
 @RequestMapping("/personas")
 public class PersonaController {
+
     @Autowired
     private PersonaService personaService;
+
+    @Autowired
+    private RolService rolService;
 
     @GetMapping
     public ModelAndView mostrarPersonas(HttpServletRequest request){
@@ -65,6 +71,7 @@ public class PersonaController {
     public ModelAndView crearPersonas(){
         ModelAndView mav = new ModelAndView("persona-formulario");
         //mav.addObject("persona" , new Persona());
+        mav.addObject("roles", rolService.buscarTodos());
         mav.addObject("titulo", "Crear Persona");
         mav.addObject("accion", "guardar");
         return mav;
@@ -82,9 +89,9 @@ public class PersonaController {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardarPersona(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String usuario, @RequestParam String clave, RedirectAttributes redirectAttributes){
+    public RedirectView guardarPersona(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/personas");
-        personaService.crear(nombre, apellido, usuario, clave);
+        personaService.crear(nombre, apellido, usuario, clave, rol);
         return redirectView;
     }
 
