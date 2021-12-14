@@ -2,6 +2,7 @@ package com.example.proyectoEgg.controller;
 
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Gasto;
+import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.GastoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +30,19 @@ public class GastoController {
     @GetMapping()
     public ModelAndView mostrarGastos(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("gasto-lista");
-        mav.addObject("accion", "eliminar");
-        mav.addObject("gastos", gastoService.buscarHabilitados());
-        mav.addObject("titulo", "Lista de Gastos");
-
-        return mav;
-       /* Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        /* Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
        if(flashMap != null){
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
 
         }*/
+        mav.addObject("accion", "eliminar");
+        mav.addObject("gastos", gastoService.buscarHabilitados());
+        mav.addObject("titulo", "Lista de Gastos");
+
+        return mav;
+
 
 
 
@@ -49,12 +51,7 @@ public class GastoController {
     @GetMapping("/deshabilitados")
     public ModelAndView gastosDeshabilitados(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("gasto-lista");
-        mav.addObject("gastos", gastoService.BuscarDeshabilitados());
-        mav.addObject("accion", "habilitar");
-        mav.addObject("titulo", "Lista de gastos deshabilitados");
-
-        return mav;
-        /*Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+         /*Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null){
             mav.addObject("exito", flashMap.get("exito"));
@@ -62,12 +59,19 @@ public class GastoController {
 
         }*/
 
+        mav.addObject("gastos", gastoService.BuscarDeshabilitados());
+        mav.addObject("accion", "habilitar");
+        mav.addObject("titulo", "Lista de gastos deshabilitados");
+
+        return mav;
+
 
     }
 
     @GetMapping("/crear")
     public ModelAndView crearGasto(){
         ModelAndView mav = new ModelAndView("gasto-formulario");
+
         mav.addObject("gasto", new Gasto());
         mav.addObject("categorias", categoriaService.buscarHabilitados());
         mav.addObject("titulo", "Crear Gasto");
@@ -78,7 +82,13 @@ public class GastoController {
     @GetMapping("/editar/{id}")
     public ModelAndView editarGasto(@PathVariable Integer id){
             ModelAndView mav = new ModelAndView("gasto-formulario");
-            mav.addObject("gasto", gastoService.buscarPorId(id));
+        try {
+            Gasto gasto = gastoService.buscarPorId(id);
+            mav.addObject("gasto", gasto);
+        } catch(MiException e) {
+            mav.addObject("error", e.getMessage());
+        }
+
             mav.addObject("titulo", "Editar Gasto");
             mav.addObject("accion", "modificar");
             return mav;
@@ -88,27 +98,54 @@ public class GastoController {
     @PostMapping("/guardar")
     public RedirectView guardarGasto(@RequestParam Categoria categoria, @RequestParam Double montoPagado, @RequestParam String detalle, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/gastos");
+         try {
+             gastoService.crear(categoria, montoPagado, detalle);
+             redirectAttributes.addFlashAttribute("éxito", "El gasto se registró correctatamente.");
 
-        gastoService.crear(categoria, montoPagado, detalle);
+         }catch (MiException e){
+             redirectAttributes.addFlashAttribute("categoria", categoria);
+             redirectAttributes.addFlashAttribute("montoPagado", montoPagado);
+             redirectAttributes.addFlashAttribute("detalle", detalle);
+             redirectAttributes.addFlashAttribute("error", e.getMessage());
+             redirectView.setUrl("/gastos/crear");
+
+
+         }
         return redirectView;
     }
 
     @PostMapping("/modificar")
     public RedirectView modificarGasto(@RequestParam Integer id, @RequestParam Double montoPagado, @RequestParam String detalle, RedirectAttributes redirectAttributes){
-        gastoService.modificar(id, montoPagado, detalle);
+        try {
+            gastoService.modificar(id, montoPagado, detalle);
+            redirectAttributes.addAttribute("éxito", "El gasto se modificó correctamente.");
+        }catch (MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
         return new RedirectView("/gastos");
     }
 
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminarGasto(@PathVariable Integer id, RedirectAttributes redirectAttributes){
-        gastoService.eliminar(id);
+        try {
+            gastoService.eliminar(id);
+            redirectAttributes.addFlashAttribute("éxito", "El gasto se dió correctamente.");
+        }catch (MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
         return new RedirectView("/gastos");
     }
 
 
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
-          gastoService.habilitar(id);
+        try {
+            gastoService.habilitar(id);
+            redirectAttributes.addFlashAttribute("éxito", "El gasto se dió de alta correctamente.");
+        }catch (MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
           return new RedirectView("/gastos/deshabilitados");
     }
 
