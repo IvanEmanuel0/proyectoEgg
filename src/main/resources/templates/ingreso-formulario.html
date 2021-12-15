@@ -14,6 +14,7 @@
 <body>
 
   <form th:action="@{/ingresos/__${accion}__}" th:object="${ingreso}" method="post">
+
     <input th:field="*{id}" type="hidden"/>
     <div>
       <label for="montoIngresado">Ingreso:</label>
