@@ -50,7 +50,7 @@ public class GastoService {
     @Transactional
     public void modificar(Integer id, Double montoPagado, String detalle ) throws MiException{
         try {
-            Util.esNumero(Double.toString(montoPagado));
+            Util.esNumero(Integer.toString(id));
             Gasto gasto = buscarPorId(id);
             if(gasto != null){
                 gasto.setId(id);
