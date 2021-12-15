@@ -55,7 +55,7 @@ public class DeudaService {
     @Transactional
     public void modificar(Integer id, Double montoAPagar, String detalle) throws MiException {
         try {
-            Util.esNumero(Double.toString(montoAPagar));
+            Util.esNumero(Integer.toString(id));
             Deuda deuda = buscarPorId(id);
             if(deuda != null){
                 deuda.setId(id);

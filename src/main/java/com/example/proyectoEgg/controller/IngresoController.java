@@ -10,13 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.annotation.ModelAndViewResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -42,21 +40,6 @@ public class IngresoController {
         mav.addObject("ingresos", ingresoService.buscarHabilitados());
         mav.addObject("titulo", "Lista de Ingresos");
         return mav;
-        /*
-
-        List<Ingreso> ingresos = ingresoService.buscarHabilitados();
-        mav.addObject("ingresos", ingresos);
-
-        mav.addObject("accion", "eliminar");
-        mav.addObject("titulo", "Lista de Ingresos");
-
-        return mav;
-
-         */
-
-
-
-
 
     }
 
@@ -73,15 +56,6 @@ public class IngresoController {
         mav.addObject("accion", "habilitar");
         mav.addObject("titulo", "Lista de Ingresos deshabilitados");
         return mav;
-
-         /*
-        List<Ingreso> ingresos = ingresoService.buscarDeshabilitados();
-
-        mav.addObject("ingresos", ingresos); //CHECK
-        mav.addObject("accion", "habilitar");
-        mav.addObject("titulo", "Lista de Ingresos deshabilitados");
-
-          */
 
     }
 
@@ -128,7 +102,7 @@ public class IngresoController {
             redirectView.setUrl("/ingresos/crear");
         }
 
-            return new RedirectView("/ingresos");
+            return redirectView;
     }
 
     @PostMapping("/modificar")
