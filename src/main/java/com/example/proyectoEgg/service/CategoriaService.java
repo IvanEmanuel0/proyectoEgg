@@ -2,7 +2,9 @@ package com.example.proyectoEgg.service;
 
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Ingreso;
+import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.CategoriaRepository;
+import com.example.proyectoEgg.utilities.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +17,13 @@ public class CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     @Transactional
-    public Categoria buscarPorId(Integer id){
+    public Categoria buscarPorId(Integer id) throws MiException{
+
+        try{
+            Util.esNumero(Integer.toString(id));
+        }catch(MiException e){
+            throw e;
+        }
         Optional<Categoria> categoriaOptional = categoriaRepository.findById(id);
         return categoriaOptional.orElse(null);
     }
@@ -32,39 +40,67 @@ public class CategoriaService {
     }
     ///---------
 
-    public void crear(String nombre){
-        Categoria i = new Categoria();
-        i.setNombre(nombre);
-        categoriaRepository.save(i);
-    }
-    @Transactional
-    public void modificar(Integer id, String nombre){
-        Categoria i = buscarPorId(id);
-
-        i.setNombre(nombre);
-        categoriaRepository.save(i);
-    }
-
-    @Transactional
-    public void eliminar(Integer id){
-        Categoria categoria = buscarPorId(id);
-        if(categoria != null) {
-            categoriaRepository.deleteById(id);
+    public void crear(String nombre) throws MiException{
+        try{
+        Util.sonLetras(nombre);
+            Categoria c = new Categoria();
+            c.setNombre(nombre);
+            categoriaRepository.save(c);
+        }catch(MiException e){
+            throw e;
         }
+
     }
 
     @Transactional
-    public void habilitar(Integer id){
-        Categoria i = buscarPorId(id);
-        i.setAlta(true);
+    public void modificar(Integer id, String nombre) throws MiException{
+        try{
+            Util.esNumero(Integer.toString(id));
+            Util.sonLetras(nombre);
+            Categoria c = buscarPorId(id);
+            c.setNombre(nombre);
+            categoriaRepository.save(c);
+        }catch(MiException e){
+            throw e;
+        }
 
-        categoriaRepository.save(i);
+
+
     }
 
+    @Transactional
+    public void eliminar(Integer id) throws MiException{
+        try{
+            Util.esNumero(Integer.toString(id));
+            categoriaRepository.deleteById(id);
+        }catch(MiException e){
+            throw e;
+        }
+
+
+    }
+
+    @Transactional
+    public void habilitar(Integer id) throws MiException{
+
+        try{
+            Util.esNumero(Integer.toString(id));
+            Categoria i = buscarPorId(id);
+            i.setAlta(true);
+            categoriaRepository.save(i);
+        }catch(MiException e){
+            throw e;
+        }
+
+
+    }
+
+    /*
     @Transactional
     public void guardar(Categoria categoria){
         categoriaRepository.save(categoria);
     }
+    */
 
 
 

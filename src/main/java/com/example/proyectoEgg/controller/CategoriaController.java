@@ -1,6 +1,7 @@
 package com.example.proyectoEgg.controller;
 
 import com.example.proyectoEgg.entity.Categoria;
+import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -66,8 +66,13 @@ public class CategoriaController {
     @PreAuthorize("hasRole('USERPRO')")
     public ModelAndView editarCategoria(@PathVariable Integer id){
         ModelAndView mav = new ModelAndView("categoria-formulario");
-        Categoria categoria = categoriaService.buscarPorId(id);
-        mav.addObject("categoria", categoria);
+        try{
+            Categoria categoria = categoriaService.buscarPorId(id);
+            mav.addObject("categoria", categoria);
+        }catch(MiException e){
+            mav.addObject("error", e.getMessage());
+        }
+
         mav.addObject("titulo", "Editar categoria");
         mav.addObject("accion", "modificar");
         return mav;
@@ -77,21 +82,39 @@ public class CategoriaController {
     @PreAuthorize("hasRole('USERPRO')")
     public RedirectView guardarCategoria(@RequestParam String nombre, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/categorias");
-        categoriaService.crear(nombre);
+        try{
+            categoriaService.crear(nombre);
+            redirectAttributes.addFlashAttribute("exito", "Categoria creada correctamente.");
+        }catch(MiException e){
+            redirectAttributes.addFlashAttribute("nombre", nombre);
+        }
+
         return redirectView;
     }
 
     @PostMapping("/modificar")
     @PreAuthorize("hasRole('USERPRO')")
-
     public RedirectView modificarCategoria(@RequestParam Integer id,@RequestParam String nombre, RedirectAttributes redirectAttributes){
-        categoriaService.modificar(id, nombre);
+        try{
+            categoriaService.modificar(id, nombre);
+            redirectAttributes.addFlashAttribute("exito", "La categoria se modificó correctamente.");
+        }catch(MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return new RedirectView("/categorias");
     }
+
     @PostMapping("/eliminar/{id}")
     @PreAuthorize("hasRole('USERPRO')")
     public RedirectView eliminarCategoria(@PathVariable Integer id, RedirectAttributes redirectAttributes){
-        categoriaService.eliminar(id);
+        try{
+            categoriaService.eliminar(id);
+            redirectAttributes.addFlashAttribute("exito", "La categoria se elimino correctamente.");
+        }catch(MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return new RedirectView("/categorias");
     }
 
@@ -99,7 +122,13 @@ public class CategoriaController {
     @PostMapping("/habilitar/{id}")
     @PreAuthorize("hasRole('USERPRO')")
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
-        categoriaService.habilitar(id);
+        try{
+            categoriaService.habilitar(id);
+            redirectAttributes.addFlashAttribute("exito", "La categoria se dio de alta correctamente.");
+        }catch(MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return new RedirectView("/categorias");
     }
 
