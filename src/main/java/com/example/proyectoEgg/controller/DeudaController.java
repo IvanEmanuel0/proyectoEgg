@@ -29,12 +29,12 @@ public class DeudaController {
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("deuda-lista");
-        /*Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
             mav.addObject("exito",flashMap.get("exito"));
             mav.addObject("error",flashMap.get("error"));
-        }*/
+        }
 
         mav.addObject("accion", "eliminar");
         mav.addObject("titulo", "Lista de Deudas");
@@ -46,12 +46,12 @@ public class DeudaController {
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("deuda-lista");
-        /*Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
-        }*/
+        }
         mav.addObject("accion", "habilitar");
         mav.addObject("titulo", "Libros de Baja");
         mav.addObject("deudas", deudaService.buscarDeshabilitados());
@@ -89,8 +89,7 @@ public class DeudaController {
         RedirectView redirectView = new RedirectView("/deudas");
         try {
             deudaService.crear(categoria, montoAPagar, detalle);
-            redirectAttributes.addFlashAttribute("éxito", "La deuda se registró correctatamente.");
-
+            redirectAttributes.addFlashAttribute("exito", "La deuda se registró correctatamente.");
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("categoria", categoria);
             redirectAttributes.addFlashAttribute("montoAPagar", montoAPagar);
@@ -105,7 +104,7 @@ public class DeudaController {
     public RedirectView modificar(@RequestParam Integer id, @RequestParam Double montoAPagar, @RequestParam String detalle, RedirectAttributes redirectAttributes) {
         try {
             deudaService.modificar(id, montoAPagar, detalle);
-            redirectAttributes.addAttribute("éxito", "La deuda se modificó correctamente.");
+            redirectAttributes.addFlashAttribute("exito", "La deuda se modificó correctamente.");
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -117,7 +116,7 @@ public class DeudaController {
     public RedirectView eliminar(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         try {
             deudaService.eliminar(id);
-            redirectAttributes.addFlashAttribute("éxito", "El gasto se dió de baja correctamente.");
+            redirectAttributes.addFlashAttribute("exito", "El gasto se dió de baja correctamente.");
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -128,7 +127,7 @@ public class DeudaController {
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         try {
             deudaService.habilitar(id);
-            redirectAttributes.addFlashAttribute("éxito", "La deuda se dió de alta correctamente.");
+            redirectAttributes.addFlashAttribute("exito", "La deuda se dió de alta correctamente.");
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
