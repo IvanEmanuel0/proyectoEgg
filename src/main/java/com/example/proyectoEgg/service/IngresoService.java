@@ -5,7 +5,6 @@ import com.example.proyectoEgg.entity.Ingreso;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.IngresoRepository;
 import com.example.proyectoEgg.utilities.Util;
-import javafx.scene.chart.ScatterChart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

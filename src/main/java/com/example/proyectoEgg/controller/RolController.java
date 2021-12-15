@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/roles")
-//@PreAuthorize("hasRole('SUPER')")
+@PreAuthorize("hasRole('ADMIN')")
 public class RolController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class RolController {
     private CuentaService cuentaService;
 
     @GetMapping("/crear")
-  //  @PreAuthorize("hasRole('SUPER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView crearRol(HttpServletRequest request)  {
         ModelAndView mav = new ModelAndView("rol-formulario");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
@@ -47,7 +47,7 @@ public class RolController {
     }
 
     @PostMapping("/guardar")
-    //@PreAuthorize("hasRole('SUPER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public RedirectView guardar(@RequestParam String nombre) {
         rolService.crear(nombre);
         return new RedirectView("/ingresos");
