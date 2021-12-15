@@ -9,7 +9,7 @@ public class Util {
 
     public static void esNumero(String numero) throws MiException{
         noEsVacio(numero);
-        if(!numero.matches("[+-]?([0-9]*[.])?[0-9]+\n")) throw new MiException("Solo se de deben ingresar números");
+        if(!numero.matches("[+-]?([0-9]*[.])?[0-9]+$")) throw new MiException("Solo se de deben ingresar números");
 
     }
 
