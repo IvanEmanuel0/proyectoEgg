@@ -4,6 +4,7 @@ import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Gasto;
 import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.entity.Rol;
+import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.PersonaService;
 import com.example.proyectoEgg.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +32,20 @@ public class PersonaController {
     @GetMapping
     public ModelAndView mostrarPersonas(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("persona-lista");
-        mav.addObject("accion", "eliminar");
-        mav.addObject("personas", personaService.buscarHabilitados());
-        mav.addObject("titulo", "Lista de Personas");
-
-        return mav;
-        /*Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null){
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
 
-        }*/
+        }
+        mav.addObject("accion", "eliminar");
+        mav.addObject("personas", personaService.buscarHabilitados());
+        mav.addObject("titulo", "Lista de Personas");
 
+
+
+        return mav;
 
 
     }
@@ -51,19 +53,20 @@ public class PersonaController {
     @GetMapping("/deshabilitados")
     public ModelAndView personasDesahilitadas(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("???");
+         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        if(flashMap != null){
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+
+        }
+
         mav.addObject("personas", personaService.buscarDeshabilitados());
         mav.addObject("accion", "habilitar");
         mav.addObject("titulo", "Lista de gastos deshabilitados");
 
         return mav;
 
-       /* Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
-
-        if(flashMap != null){
-            mav.addObject("exito", flashMap.get("exito"));
-            mav.addObject("error", flashMap.get("error"));
-
-        }*/
 
     }
 
@@ -80,8 +83,11 @@ public class PersonaController {
     @GetMapping("/editar/{id}")
     public ModelAndView editarPersona(@PathVariable Integer id){
         ModelAndView mav = new ModelAndView("???");
-        Persona persona = personaService.buscarPorId(id);
-        mav.addObject("persona", persona);
+        try{
+            mav.addObject("persona", personaService.buscarPorId(id));
+        }catch(MiException e){
+            mav.addObject("error", e.getMessage());
+        }
         mav.addObject("titulo", "Editar persona");
         mav.addObject("accion", "modificar");
         return mav;
@@ -91,26 +97,55 @@ public class PersonaController {
     @PostMapping("/guardar")
     public RedirectView guardarPersona(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/personas");
-        personaService.crear(nombre, apellido, usuario, clave, rol);
+        try {
+            personaService.crear(nombre, apellido, usuario, clave,rol);
+            redirectAttributes.addFlashAttribute("éxito", "La persona se registró correctatamente.");
+
+        }catch (MiException e){
+            redirectAttributes.addFlashAttribute("nombre", nombre);
+            redirectAttributes.addFlashAttribute("apellido", apellido);
+            redirectAttributes.addFlashAttribute("rol", rol);
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            redirectView.setUrl("/persona/crear");
+        }
+
         return redirectView;
     }
 
     @PostMapping("/modificar")
     public RedirectView modificarPersona(@RequestParam Integer id,@RequestParam String nombre,@RequestParam String apellido, RedirectAttributes redirectAttributes){
-        personaService.modificar(id, nombre, apellido);
+        try {
+            personaService.modificar(id, nombre, apellido);
+            redirectAttributes.addFlashAttribute("exito", "La persona se modificó correctamente.");
+        } catch (MiException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return new RedirectView("???");
     }
 
     @PostMapping("/eliminar/{id}")
     public RedirectView eliminar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
-        personaService.eliminar(id);
+        try{
+            personaService.eliminar(id);
+            redirectAttributes.addFlashAttribute("exito", "La persona se eliminó correctamente.");
+        }catch(MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return new RedirectView("??");
     }
 
 
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
-        personaService.habilitar(id);
+        try{
+            personaService.habilitar(id);
+            redirectAttributes.addFlashAttribute("exito", "La persona se dió de alta correctamente.");
+        }catch(MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return new RedirectView("???");
     }
 

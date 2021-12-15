@@ -1,9 +1,11 @@
 package com.example.proyectoEgg.service;
 
 import com.example.proyectoEgg.entity.Cuenta;
+import com.example.proyectoEgg.entity.Gasto;
 import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.CuentaRepository;
+import com.example.proyectoEgg.utilities.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,39 +36,89 @@ public class CuentaService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException {
         Cuenta cuenta = cuentaRepository.findByUsuario(usuario).orElseThrow(() -> new UsernameNotFoundException(String.format(MENSAJE, usuario)));
-
+        //Cuenta cuenta = cuentaRepository.buscarCuentaPorUsuario(usuario);
+        //if(cuenta == null) throw new UsernameNotFoundException(String.format(MENSAJE, usuario));
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + cuenta.getRol().getNombre());
 
         return new User(cuenta.getUsuario(), cuenta.getClave(), Collections.singletonList(authority));
     }
 
     @Transactional(readOnly = true)
-    public Cuenta buscarPorId(Integer id) {
+    public Cuenta buscarPorId(Integer id) throws MiException{
+        try{
+            Util.esNumero(Integer.toString(id));
+        }catch(MiException e){
+            throw e;
+        }
         Optional<Cuenta> cuentaOptional = cuentaRepository.findById(id);
         return cuentaOptional.orElse(null);
     }
 
     @Transactional
-    public void crear(String usuario, String clave, Rol rol) {
-        cuentaRepository.save(new Cuenta(usuario, encoder.encode(clave), rol));
+    public void crear(String usuario, String clave, Rol rol) throws MiException {
+        try {
+            Util.sonLetras(usuario); //modificar
+            Util.sonLetras(clave);
+            cuentaRepository.save(new Cuenta(usuario, encoder.encode(clave), rol));
+        } catch (MiException e){
+            throw e;
+        } catch (Exception e){
+            throw e;
+        }
+
+
     }
 
     @Transactional
-    public void eliminar(Integer id) {
-        cuentaRepository.deleteById(id);
+    public void eliminar(Integer id) throws MiException {
+        try {
+            Util.esNumero(Integer.toString(id));
+            cuentaRepository.deleteById(id);
+
+        } catch (MiException e){
+            throw e;
+        }
+
     }
 
-    public void habilitar(Integer id) {
-        Cuenta cuenta = buscarPorId(id);
-        cuenta.setAlta(true);
-        cuentaRepository.save(cuenta);
+    public void habilitar(Integer id) throws MiException{
+        try {
+            Util.esNumero(Integer.toString(id));
+            Cuenta cuenta = buscarPorId(id);
+            cuenta.setAlta(true);
+            cuentaRepository.save(cuenta);
+        } catch (MiException e) {
+            throw e;
+        }
     }
 
-    public void modificar(Integer id, String usuario, String clave) {
-        Cuenta cuenta = buscarPorId(id);
-        cuenta.setUsuario(usuario);
-        cuenta.setClave(encoder.encode(clave));
-        cuentaRepository.save(cuenta);
+    public void modificar(Integer id, String usuario, String clave) throws MiException {
+        try {
+            Util.sonLetras(usuario); //modificar
+            Util.sonLetras(clave);
+            Cuenta cuenta = buscarPorId(id);
+            if(cuenta != null){
+                cuenta.setId(id);
+                cuenta.setUsuario(usuario);
+                cuenta.setClave(encoder.encode(clave));
+                cuentaRepository.save(cuenta);
+            }
+        }catch (MiException e){
+            throw e;
+        }catch (Exception e){
+            throw e;
+        }
+
+        /*try {
+            Util.esNumero(Integer.toString(id));
+            Cuenta cuenta = buscarPorId(id);
+            cuenta.setUsuario(usuario);
+            cuenta.setClave(encoder.encode(clave));
+            cuentaRepository.save(cuenta);
+        } catch (MiException e) {
+            throw e;
+        }*/
+
     }
 
     public List<Cuenta> buscarHabilitados() {

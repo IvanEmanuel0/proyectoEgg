@@ -46,7 +46,7 @@ public class Persona {
         this.alta = true;
     }
 
-    public Persona(String nombre, String apellido, Cuenta cuenta) {
+    public Persona(String nombre, String apellido, Cuenta cuenta, Rol rol) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.montoDisponible = 0.0;

@@ -30,13 +30,13 @@ public class GastoController {
     @GetMapping()
     public ModelAndView mostrarGastos(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("gasto-lista");
-        /* Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
        if(flashMap != null){
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
 
-        }*/
+        }
         mav.addObject("accion", "eliminar");
         mav.addObject("gastos", gastoService.buscarHabilitados());
         mav.addObject("titulo", "Lista de Gastos");
@@ -51,13 +51,13 @@ public class GastoController {
     @GetMapping("/deshabilitados")
     public ModelAndView gastosDeshabilitados(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("gasto-lista");
-         /*Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null){
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
 
-        }*/
+        }
 
         mav.addObject("gastos", gastoService.BuscarDeshabilitados());
         mav.addObject("accion", "habilitar");
@@ -92,7 +92,6 @@ public class GastoController {
             mav.addObject("titulo", "Editar Gasto");
             mav.addObject("accion", "modificar");
             return mav;
-
         }
 
     @PostMapping("/guardar")
@@ -100,7 +99,7 @@ public class GastoController {
         RedirectView redirectView = new RedirectView("/gastos");
          try {
              gastoService.crear(categoria, montoPagado, detalle);
-             redirectAttributes.addFlashAttribute("éxito", "El gasto se registró correctatamente.");
+             redirectAttributes.addFlashAttribute("éxito", "El gasto se registró correctamente.");
 
          }catch (MiException e){
              redirectAttributes.addFlashAttribute("categoria", categoria);
@@ -148,8 +147,6 @@ public class GastoController {
 
           return new RedirectView("/gastos/deshabilitados");
     }
-
-
     }
 
 

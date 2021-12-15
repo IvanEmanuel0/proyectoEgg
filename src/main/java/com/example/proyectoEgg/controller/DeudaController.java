@@ -29,12 +29,12 @@ public class DeudaController {
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("deuda-lista");
-        /*Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
             mav.addObject("exito",flashMap.get("exito"));
             mav.addObject("error",flashMap.get("error"));
-        }*/
+        }
 
         mav.addObject("accion", "eliminar");
         mav.addObject("titulo", "Lista de Deudas");
@@ -46,12 +46,12 @@ public class DeudaController {
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("deuda-lista");
-        /*Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
-        }*/
+        }
         mav.addObject("accion", "habilitar");
         mav.addObject("titulo", "Libros de Baja");
         mav.addObject("deudas", deudaService.buscarDeshabilitados());
@@ -105,7 +105,7 @@ public class DeudaController {
     public RedirectView modificar(@RequestParam Integer id, @RequestParam Double montoAPagar, @RequestParam String detalle, RedirectAttributes redirectAttributes) {
         try {
             deudaService.modificar(id, montoAPagar, detalle);
-            redirectAttributes.addAttribute("éxito", "La deuda se modificó correctamente.");
+            redirectAttributes.addFlashAttribute("éxito", "La deuda se modificó correctamente.");
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }

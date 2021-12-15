@@ -59,10 +59,15 @@ public class CuentaController {
     @GetMapping("/editar/{id}")
     public ModelAndView editarCuenta(@PathVariable Integer id){
         ModelAndView mav = new ModelAndView("cuenta-formulario");
+        try {
+            Cuenta cuenta = cuentaService.buscarPorId(id);
+            mav.addObject("cuenta", cuenta);
+        } catch (MiException e) {
+            mav.addObject("error", e.getMessage());
+        }
 
-        mav.addObject("cuenta", cuentaService.buscarPorId(id));
-        mav.addObject("titulo", "Editar Cuenta");
-        mav.addObject("accion", "modificar");
+        // mav.addObject("titulo", "Editar Cuenta");
+        // mav.addObject("accion", "modificar");
 
 
         return mav;
@@ -70,26 +75,52 @@ public class CuentaController {
 
     @PostMapping("/guardar")
     public RedirectView guardar(@RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes){
-        RedirectView rv = new RedirectView("/login");
-        cuentaService.crear(usuario, clave, rol);
-        return rv;
+        RedirectView redirectView = new RedirectView("/login");
+        try {
+            cuentaService.crear(usuario, clave, rol);
+            redirectAttributes.addFlashAttribute("exito", "La cuenta fue creada correctamente.");
+        } catch(MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+            redirectAttributes.addFlashAttribute("cuenta", usuario);
+            redirectView.setUrl("/cuentas/crear");
+        }
+
+        return redirectView;
     }
 
     @PostMapping("/modificar")
     public RedirectView modificar(@RequestParam Integer id, @RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes) {
-        cuentaService.modificar(id, usuario, clave);
+        try {
+            cuentaService.modificar(id, usuario, clave);
+            redirectAttributes.addFlashAttribute("exito", "La cuenta se modifico correctamente.");
+        } catch (MiException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return new RedirectView("/cuentas");
     }
 
     @PostMapping("eliminar/{id}")
     public RedirectView eliminar(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
-        cuentaService.eliminar(id);
+        try {
+            cuentaService.eliminar(id);
+            redirectAttributes.addFlashAttribute("exito", "La cuenta fue eliminada correctamente.");
+        } catch (MiException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return new RedirectView("/cuentas");
     }
 
     @PostMapping("/habilitar/{id}")
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
-        cuentaService.habilitar(id);
+        try {
+            cuentaService.habilitar(id);
+            redirectAttributes.addFlashAttribute("exito", "La cuenta se reactivo correctamente.");
+        } catch (MiException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
         return new RedirectView("/cuentas/deshabilitados");
     }
 
