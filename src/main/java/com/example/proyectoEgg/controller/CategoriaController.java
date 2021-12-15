@@ -53,7 +53,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/crear")
-    @PreAuthorize("hasRole('USERPRO')")
+    @PreAuthorize("hasAnyRole('USERPRO', 'ADMIN')")
     public ModelAndView crear(){
         ModelAndView mav = new ModelAndView("categoria-formulario");
         mav.addObject("categoria" , new Categoria());
@@ -63,7 +63,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/editar/{id}")
-    @PreAuthorize("hasRole('USERPRO')")
+    @PreAuthorize("hasAnyRole('USERPRO', 'ADMIN')")
     public ModelAndView editarCategoria(@PathVariable Integer id){
         ModelAndView mav = new ModelAndView("categoria-formulario");
         Categoria categoria = categoriaService.buscarPorId(id);
@@ -74,7 +74,7 @@ public class CategoriaController {
     }
 
     @PostMapping("/guardar")
-    @PreAuthorize("hasRole('USERPRO')")
+    @PreAuthorize("hasAnyRole('USERPRO', 'ADMIN')")
     public RedirectView guardarCategoria(@RequestParam String nombre, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/categorias");
         categoriaService.crear(nombre);
@@ -82,14 +82,14 @@ public class CategoriaController {
     }
 
     @PostMapping("/modificar")
-    @PreAuthorize("hasRole('USERPRO')")
+    @PreAuthorize("hasAnyRole('USERPRO', 'ADMIN')")
 
     public RedirectView modificarCategoria(@RequestParam Integer id,@RequestParam String nombre, RedirectAttributes redirectAttributes){
         categoriaService.modificar(id, nombre);
         return new RedirectView("/categorias");
     }
     @PostMapping("/eliminar/{id}")
-    @PreAuthorize("hasRole('USERPRO')")
+    @PreAuthorize("hasAnyRole('USERPRO', 'ADMIN')")
     public RedirectView eliminarCategoria(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         categoriaService.eliminar(id);
         return new RedirectView("/categorias");
@@ -97,7 +97,7 @@ public class CategoriaController {
 
 
     @PostMapping("/habilitar/{id}")
-    @PreAuthorize("hasRole('USERPRO')")
+    @PreAuthorize("hasAnyRole('USERPRO', 'ADMIN')")
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         categoriaService.habilitar(id);
         return new RedirectView("/categorias");
