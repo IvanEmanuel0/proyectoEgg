@@ -106,7 +106,7 @@ public class PersonaController {
             redirectAttributes.addFlashAttribute("apellido", apellido);
             redirectAttributes.addFlashAttribute("rol", rol);
             redirectAttributes.addFlashAttribute("error", e.getMessage());
-            redirectView.setUrl("/persona/crear");
+            redirectView.setUrl("/personas/crear");
         }
 
         return redirectView;
