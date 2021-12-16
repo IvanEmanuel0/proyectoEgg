@@ -6,6 +6,7 @@ import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.CuentaRepository;
 import com.example.proyectoEgg.utilities.Util;
+import com.sun.security.ntlm.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +17,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +43,12 @@ public class CuentaService implements UserDetailsService {
         //Cuenta cuenta = cuentaRepository.buscarCuentaPorUsuario(usuario);
         //if(cuenta == null) throw new UsernameNotFoundException(String.format(MENSAJE, usuario));
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + cuenta.getRol().getNombre());
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+        HttpSession session = attributes.getRequest().getSession(true);
+
+        session.setAttribute("idSession", cuenta.getId());
 
         return new User(cuenta.getUsuario(), cuenta.getClave(), Collections.singletonList(authority));
     }
