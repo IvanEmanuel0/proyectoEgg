@@ -1,12 +1,11 @@
 package com.example.proyectoEgg.service;
 
 import com.example.proyectoEgg.entity.Cuenta;
-import com.example.proyectoEgg.entity.Gasto;
+
 import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.CuentaRepository;
 import com.example.proyectoEgg.utilities.Util;
-import com.sun.security.ntlm.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -45,7 +44,6 @@ public class CuentaService implements UserDetailsService {
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + cuenta.getRol().getNombre());
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
         HttpSession session = attributes.getRequest().getSession(true);
 
         session.setAttribute("idSession", cuenta.getId());

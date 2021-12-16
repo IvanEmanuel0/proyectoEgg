@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<h1 th:text="| La cuenta conectada tiene el id: ${sesion} |"> </h1>
 <a th:href="@{/logout}" class="btn btn-secondary">Cerrar Sesión</a><br>
 <a th:href="@{/personas/crear}" class="btn btn-secondary">Crear persona</a><br>
 <a th:href="@{/personas}" class="btn btn-secondary">Lista personas</a><br>
