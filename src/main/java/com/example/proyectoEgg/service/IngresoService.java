@@ -51,6 +51,7 @@ public class IngresoService {
             i.setMontoIngresado(montoIngresado);
             i.setDetalle(detalle);
             ingresoRepository.save(i);
+
         }catch(MiException e){
             throw e;
         }
@@ -101,4 +102,6 @@ public class IngresoService {
 
     }
 
-}
+    }
+
+
