@@ -26,12 +26,12 @@ public class Util {
 
     public static void validarClave(String clave) throws MiException{
         esNumero(clave);
-        if(!clave.matches("^\\w{10,13}+$")) throw new MiException("La clave debe tener entre 8 y 10 dígitos");
+        if(!clave.matches("(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S{8,16}$")) throw new MiException("La clave debe tener entre 8 y 16 carácteres, al menos un dígito,  al menos una minúscula, y al menos una mayúscula.");
     }
 
     public static void validarUsuario(String usuario) throws MiException{
         esNumero(usuario);
-        if(!usuario.matches("^\\w{10,13}+$")) throw new MiException("La clave debe tener entre 10 y 13 dígitos");
+        if(!usuario.matches("^ [A-Za-z] \\\\ w {5,29} $")) throw new MiException("La clave debe tener entre 6 y 15 carácteres alfanúmericos. La primer letra debe ser alfábetica.");
     }
 
 

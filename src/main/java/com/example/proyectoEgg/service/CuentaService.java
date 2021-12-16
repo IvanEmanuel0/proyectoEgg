@@ -57,8 +57,8 @@ public class CuentaService implements UserDetailsService {
     @Transactional
     public void crear(String usuario, String clave, Rol rol) throws MiException {
         try {
-            Util.sonLetras(usuario); //modificar
-            Util.sonLetras(clave);
+            Util.validarUsuario(usuario); //verificar
+            Util.validarClave(clave);
             cuentaRepository.save(new Cuenta(usuario, encoder.encode(clave), rol));
         } catch (MiException e){
             throw e;
@@ -94,8 +94,8 @@ public class CuentaService implements UserDetailsService {
 
     public void modificar(Integer id, String usuario, String clave) throws MiException {
         try {
-            Util.sonLetras(usuario); //modificar
-            Util.sonLetras(clave);
+            Util.validarUsuario(usuario); //verificar
+            Util.validarClave(clave);
             Cuenta cuenta = buscarPorId(id);
             if(cuenta != null){
                 cuenta.setId(id);
