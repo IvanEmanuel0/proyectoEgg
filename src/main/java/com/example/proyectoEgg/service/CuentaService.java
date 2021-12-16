@@ -65,8 +65,11 @@ public class CuentaService implements UserDetailsService {
     @Transactional
     public void crear(String usuario, String clave, Rol rol) throws MiException {
         try {
-            Util.validarUsuario(usuario); //verificar
-            Util.validarClave(clave);
+            //Util.validarUsuario(usuario); //verificar
+            //Util.validarClave(clave);
+            if(6<5){
+                throw new MiException("nonono");
+            }
             cuentaRepository.save(new Cuenta(usuario, encoder.encode(clave), rol));
         } catch (MiException e){
             throw e;

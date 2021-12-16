@@ -54,8 +54,6 @@ public class PersonaService {
         } catch (Exception e){
             throw e;
         }
-      cuentaService.crear(usuario,clave, rol);
-      personaRepository.save(new Persona(nombre,apellido, cuentaService.buscarPorUsuario(usuario), rol));
 
     }
 
