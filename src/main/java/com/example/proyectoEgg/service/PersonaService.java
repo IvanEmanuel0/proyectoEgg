@@ -55,7 +55,6 @@ public class PersonaService {
             throw e;
         }
 
-
     }
 
     @Transactional

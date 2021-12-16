@@ -1,7 +1,7 @@
 package com.example.proyectoEgg.service;
 
 import com.example.proyectoEgg.entity.Cuenta;
-import com.example.proyectoEgg.entity.Gasto;
+
 import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.CuentaRepository;
@@ -16,7 +16,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -40,6 +43,11 @@ public class CuentaService implements UserDetailsService {
         //if(cuenta == null) throw new UsernameNotFoundException(String.format(MENSAJE, usuario));
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + cuenta.getRol().getNombre());
 
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession(true);
+
+        session.setAttribute("idSession", cuenta.getId());
+
         return new User(cuenta.getUsuario(), cuenta.getClave(), Collections.singletonList(authority));
     }
 
@@ -57,8 +65,11 @@ public class CuentaService implements UserDetailsService {
     @Transactional
     public void crear(String usuario, String clave, Rol rol) throws MiException {
         try {
-            Util.sonLetras(usuario); //verificar
-            Util.sonLetras(clave);
+            //Util.validarUsuario(usuario); //verificar
+            //Util.validarClave(clave);
+            if(6<5){
+                throw new MiException("nonono");
+            }
             cuentaRepository.save(new Cuenta(usuario, encoder.encode(clave), rol));
         } catch (MiException e){
             throw e;
@@ -94,8 +105,8 @@ public class CuentaService implements UserDetailsService {
 
     public void modificar(Integer id, String usuario, String clave) throws MiException {
         try {
-            Util.sonLetras(usuario); //verificar
-            Util.sonLetras(clave);
+            Util.validarUsuario(usuario); //verificar
+            Util.validarClave(clave);
             Cuenta cuenta = buscarPorId(id);
             if(cuenta != null){
                 cuenta.setId(id);
