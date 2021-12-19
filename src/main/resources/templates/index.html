@@ -6,6 +6,8 @@
 </head>
 <body>
 <h1 th:text="| La cuenta conectada tiene el id: ${sesion} |"> </h1>
+<h2 th:text="| El dueño de la cuenta se llama: ${persona.nombre} ${persona.apellido} |"></h2>
+<h2 th:text="| La cantidad de dinero restante es: $${plata} |"></h2>
 <a th:href="@{/logout}" class="btn btn-secondary">Cerrar Sesión</a><br>
 <a th:href="@{/personas/crear}" class="btn btn-secondary">Crear persona</a><br>
 <a th:href="@{/personas}" class="btn btn-secondary">Lista personas</a><br>

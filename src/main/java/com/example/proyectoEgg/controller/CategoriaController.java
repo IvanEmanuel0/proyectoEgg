@@ -3,6 +3,7 @@ package com.example.proyectoEgg.controller;
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
+import com.example.proyectoEgg.service.PersonaService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -21,18 +23,26 @@ import java.util.Map;
 public class CategoriaController {
     @Autowired
     private CategoriaService categoriaService;
+    @Autowired
+    private PersonaService personaService;
 
     @GetMapping()
-    public ModelAndView mostrarCategorias(HttpServletRequest request){
+    public ModelAndView mostrarCategorias(HttpServletRequest request, HttpSession session){
         ModelAndView mav = new ModelAndView("categoria-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        try {
+            mav.addObject("categorias", categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession"))));
+
+        } catch(MiException e){
+            System.out.println("error");
+        }
 
         if(flashMap != null){
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
         }
         mav.addObject("accion", "eliminar");
-        mav.addObject("categorias", categoriaService.buscarHabilitados());
+
         mav.addObject("titulo", "Lista de categorias");
         return mav;
     }
@@ -80,10 +90,11 @@ public class CategoriaController {
 
     @PostMapping("/guardar")
     @PreAuthorize("hasAnyRole('USERPRO', 'ADMIN')")
-    public RedirectView guardarCategoria(@RequestParam String nombre, RedirectAttributes redirectAttributes){
+    public RedirectView guardarCategoria(@RequestParam String nombre, HttpSession session,  RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/categorias");
         try{
-            categoriaService.crear(nombre);
+
+            categoriaService.crear(nombre, personaService.buscarPorCuenta((Integer)session.getAttribute("idSession")));
             redirectAttributes.addFlashAttribute("exito", "Categoria creada correctamente.");
         }catch(MiException e){
             redirectAttributes.addFlashAttribute("nombre", nombre);

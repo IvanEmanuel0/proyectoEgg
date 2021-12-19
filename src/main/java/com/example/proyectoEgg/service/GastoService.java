@@ -6,13 +6,13 @@ import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.GastoRepository;
 
 import com.example.proyectoEgg.utilities.Util;
+import org.apache.tomcat.util.digester.ArrayStack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -79,9 +79,9 @@ public class GastoService {
 
 
     @Transactional(readOnly = true)
-    public List<Gasto> buscarHabilitados(){
+    public List<Gasto> buscarHabilitados(Categoria categoria){
 
-        return gastoRepository.gastosDeAlta();
+        return gastoRepository.gastosDeAlta(categoria);
     }
 
 
@@ -102,5 +102,34 @@ public class GastoService {
             throw e;
         }
     }
+
+    @Transactional
+    public Map<String, Double> calcularGastosPorCategoria(List<Categoria> categorias) {
+        Map<String, Double> gastosPorCategoria = new HashMap<String, Double>();
+        Double total = 0.0;
+
+        for(Categoria categoria: categorias) {
+            List<Gasto> gastos = gastoRepository.gastosDeAlta(categoria);
+            for (Gasto gasto: gastos) {
+                total += gasto.getMontoPagado();
+            }
+            if(total != 0.0) {
+                gastosPorCategoria.put(categoria.getNombre(), total);
+            }
+            total = 0.0;
+        }
+        return gastosPorCategoria;
+    }
+
+    @Transactional
+    public Double calcularTotalGastos (List<Categoria> categorias) {
+        Map<String, Double> gastos = calcularGastosPorCategoria(categorias);
+        Double total = 0.0;
+        for (Map.Entry<String, Double> entry : gastos.entrySet()) {
+            total += entry.getValue();
+        }
+        return total;
+    }
+
 }
 
