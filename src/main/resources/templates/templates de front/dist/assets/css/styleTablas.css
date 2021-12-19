@@ -1,0 +1,10 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    box-shadow:5px 5px 5px grey;
+}
+table{
+    margin: 3%;
+    margin-left: 3%;
+    align-content: stretch;
+}
