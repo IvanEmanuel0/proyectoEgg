@@ -1,6 +1,7 @@
 package com.example.proyectoEgg.service;
 
 import com.example.proyectoEgg.entity.Categoria;
+import com.example.proyectoEgg.entity.Gasto;
 import com.example.proyectoEgg.entity.Ingreso;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.IngresoRepository;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -23,9 +26,9 @@ public class IngresoService {
     @Transactional
     public Ingreso buscarPorId(Integer id) throws MiException {
 
-        try{
+        try {
             Util.esNumero(Integer.toString(id));
-        }catch(MiException e){
+        } catch (MiException e) {
             throw e;
         }
         Optional<Ingreso> ingresoOptional = ingresoRepository.findById(id);
@@ -33,18 +36,18 @@ public class IngresoService {
     }
 
     @Transactional(readOnly = true)
-    public List<Ingreso> buscarHabilitados(){
-        return ingresoRepository.IngresosDeAlta();
+    public List<Ingreso> buscarHabilitados(Categoria categoria) {
+        return ingresoRepository.ingresosDeAlta(categoria);
     }
 
     @Transactional(readOnly = true)
-    public List<Ingreso> buscarDeshabilitados(){
-        return ingresoRepository.IngresosDeBaja();
+    public List<Ingreso> buscarDeshabilitados() {
+        return ingresoRepository.ingresosDeBaja();
     }
 
     @Transactional
-    public void crear(Categoria categoria, Double montoIngresado, String detalle) throws MiException{
-        try{
+    public void crear(Categoria categoria, Double montoIngresado, String detalle) throws MiException {
+        try {
             Util.esNumero(Double.toString(montoIngresado));
             Ingreso i = new Ingreso();
             i.setCategoria(categoria);
@@ -52,7 +55,7 @@ public class IngresoService {
             i.setDetalle(detalle);
             ingresoRepository.save(i);
 
-        }catch(MiException e){
+        } catch (MiException e) {
             throw e;
         }
 
@@ -60,48 +63,75 @@ public class IngresoService {
     }
 
     @Transactional
-    public void modificar(Integer id, Double montoIngresado, String detalle) throws MiException{
-        try{
+    public void modificar(Integer id, Double montoIngresado, String detalle) throws MiException {
+        try {
             Util.esNumero(Integer.toString(id));
             Ingreso i = buscarPorId(id);
             i.setMontoIngresado(montoIngresado);
             i.setDetalle(detalle);
             ingresoRepository.save(i);
-        }catch(MiException e){
+        } catch (MiException e) {
             throw e;
         }
 
     }
 
     @Transactional
-    public void eliminar(Integer id) throws MiException{
-        try{
+    public void eliminar(Integer id) throws MiException {
+        try {
             Util.esNumero(Integer.toString(id));
             ingresoRepository.deleteById(id);
-        }catch(MiException e){
+        } catch (MiException e) {
             throw e;
-        }catch(Exception e){
+        } catch (Exception e) {
             throw e;
         }
 
     }
 
     @Transactional
-    public void habilitar(Integer id) throws MiException{
-        try{
+    public void habilitar(Integer id) throws MiException {
+        try {
             Util.esNumero(Integer.toString(id));
             Ingreso i = buscarPorId(id);
             i.setAlta(true);
             ingresoRepository.save(i);
-        }catch(MiException e){
-            throw e ;
-        }catch(Exception e){
+        } catch (MiException e) {
+            throw e;
+        } catch (Exception e) {
             throw e;
         }
 
-
     }
 
+    @Transactional
+    public Map<String, Double> calcularIngresosPorCategoria(List<Categoria> categorias) {
+        Map<String, Double> ingresosPorCategoria = new HashMap<String, Double>();
+        Double total = 0.0;
+
+        for(Categoria categoria: categorias) {
+            List<Ingreso> ingresos = ingresoRepository.ingresosDeAlta(categoria);
+            for (Ingreso ingreso: ingresos) {
+                total += ingreso.getMontoIngresado();
+            }
+            if(total != 0.0) {
+                ingresosPorCategoria.put(categoria.getNombre(), total);
+            }
+            total = 0.0;
+        }
+        return ingresosPorCategoria;
     }
+
+    @Transactional
+    public Double calcularTotalIngresos (List<Categoria> categorias) {
+        Map<String, Double> gastos = calcularIngresosPorCategoria(categorias);
+        Double total = 0.0;
+        for (Map.Entry<String, Double> entry : gastos.entrySet()) {
+            total += entry.getValue();
+        }
+        return total;
+    }
+
+}
 
 

@@ -27,31 +27,22 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Monto Pagado</th>
-            <th scope="col">Detalle</th>
-            <th scope="col">Alta</th>
-            <th scope="col">Fecha de creacion</th>
-            <th scope="col">Fecha de modificacion</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Total</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="g : ${gastos}">
-            <td th:text="${g.id}"></td>
-            <td th:text="${g.montoPagado}"></td>
-            <td th:text="${g.detalle}"></td>
-            <td th:text="${g.alta}"></td>
-            <td th:text="${g.fechaDeCreacion}"></td>
-            <td th:text="${g.fechaDeModificacion}"></td>
-
-            <td><a th:if="${accion == 'eliminar'}" class="btn btn-secondary btn-sm" th:href="@{/gastos/editar/__${g.id}__}">Editar</a>
+            <td th:text="${g.key}"></td>
+            <td th:text="${g.value}"></td>
+            <!--<td><a th:if="${accion == 'eliminar'}" class="btn btn-secondary btn-sm" th:href="@{/gastos/editar/__${g.id}__}">Editar</a>
                 <form method="post" th:action="@{/gastos/__${accion}__/__${g.id}__}">
                     <button th:text="${accion == 'eliminar'} ? 'Deshabilitar' : 'Habilitar'"
                             th:classappend="${accion == 'eliminar'} ? 'btn-danger' : 'btn-success'"
                             class="btn btn-sm" type="submit">
                     </button>
                 </form>
-            </td>
+            </td>-->
         </tr>
         </tbody>
     </table>
