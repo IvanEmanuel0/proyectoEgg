@@ -18,6 +18,10 @@ public class PersonaService {
     private PersonaRepository personaRepository;
     @Autowired
     private CuentaService cuentaService;
+    @Autowired
+    private IngresoService ingresoService;
+    @Autowired
+    private GastoService gastoService;
 
     @Transactional(readOnly = true)
     public List<Persona> buscarHabilitados(){
@@ -40,6 +44,11 @@ public class PersonaService {
         return optionalPersona.orElse(null);
     }
 
+    @Transactional(readOnly = true)
+    public Persona buscarPorCuenta(Integer id) throws MiException{
+        return personaRepository.buscarPersonaPorCuenta(cuentaService.buscarPorId(id));
+    }
+
     @Transactional
     public void crear(String nombre, String apellido, String usuario, String clave, Rol rol) throws MiException{
 
@@ -54,7 +63,6 @@ public class PersonaService {
         } catch (Exception e){
             throw e;
         }
-
     }
 
     @Transactional
@@ -74,18 +82,17 @@ public class PersonaService {
         }catch (Exception e){
             throw e;
         }
-
     }
+
     @Transactional
     public void eliminar(Integer id) throws MiException{
         try {
             Util.esNumero(Integer.toString(id));
             personaRepository.deleteById(id);
-
         } catch (MiException e){
             throw e;
         }
-        }
+    }
 
     @Transactional
     public void habilitar(Integer id) throws MiException{
@@ -97,10 +104,11 @@ public class PersonaService {
         } catch (MiException e) {
             throw e;
         }
-
     }
 
-
-
+    @Transactional
+    public Double calcularDineroDisponible(List<Categoria> categorias){
+        return ingresoService.calcularTotalIngresos(categorias) - gastoService.calcularTotalGastos(categorias);
+    }
 
 }

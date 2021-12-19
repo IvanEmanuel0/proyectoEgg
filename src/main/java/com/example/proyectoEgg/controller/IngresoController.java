@@ -6,6 +6,7 @@ import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.IngresoService;
 
+import com.example.proyectoEgg.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -26,19 +28,28 @@ public class IngresoController {
     private IngresoService ingresoService;
 
     @Autowired
+    private PersonaService personaService;
+
+    @Autowired
     private CategoriaService categoriaService;
 
     @GetMapping
-    public ModelAndView mostrarTodos(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("ingreso-lista");
+    public ModelAndView mostrarTodos(HttpServletRequest request, HttpSession session){
+        ModelAndView mav = new ModelAndView("ingreso-categoria-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        try {
+            List<Categoria> categorias = categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession")));
+            mav.addObject("ingresos", ingresoService.calcularIngresosPorCategoria(categorias));//SEGUIR DE ACA BUSCAR LA CATEGORIA EN PARTICULAR QUE QUIERO MOSTRAR
+        } catch (MiException e) {
+            mav.addObject("error-ingreso", e.getMessage());
+        }
 
         if (flashMap != null){
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
         }
         mav.addObject("accion", "eliminar");
-        mav.addObject("ingresos", ingresoService.buscarHabilitados());
         mav.addObject("titulo", "Lista de Ingresos");
         return mav;
 
@@ -61,11 +72,14 @@ public class IngresoController {
     }
 
     @GetMapping("/crear")
-    public ModelAndView crearIngreso(){
+    public ModelAndView crearIngreso(HttpSession session){
         ModelAndView mav = new ModelAndView("ingreso-formulario");
-
+        try {
+            mav.addObject("categorias", categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession"))));
+        } catch (MiException e) {
+            System.out.println("error");
+        }
         mav.addObject("ingreso", new Ingreso());
-        mav.addObject("categorias", categoriaService.buscarHabilitados());
         mav.addObject("titulo", "Crear Ingreso");
         mav.addObject("accion", "guardar");
 

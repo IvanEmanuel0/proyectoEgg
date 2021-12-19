@@ -3,8 +3,10 @@ package com.example.proyectoEgg.controller;
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Gasto;
 import com.example.proyectoEgg.exception.MiException;
+import com.example.proyectoEgg.repository.PersonaRepository;
 import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.GastoService;
+import com.example.proyectoEgg.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -25,26 +29,32 @@ public class GastoController {
     private GastoService gastoService;
 
     @Autowired
+    private PersonaService personaService;
+
+    @Autowired
     private CategoriaService categoriaService;
 
     @GetMapping()
-    public ModelAndView mostrarGastos(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("gasto-lista");
-         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+    public ModelAndView mostrarGastosPorCategoria(HttpServletRequest request, HttpSession session){
+        ModelAndView mav = new ModelAndView("gasto-categoria-lista");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        try {
+            List<Categoria> categorias = categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession")));
+            mav.addObject("gastos", gastoService.calcularGastosPorCategoria(categorias));//SEGUIR DE ACA BUSCAR LA CATEGORIA EN PARTICULAR QUE QUIERO MOSTRAR
+        } catch (MiException e) {
+            mav.addObject("error-gasto", e.getMessage());
+        }
 
        if(flashMap != null){
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
 
-        }
-        mav.addObject("accion", "eliminar");
-        mav.addObject("gastos", gastoService.buscarHabilitados());
-        mav.addObject("titulo", "Lista de Gastos");
+       }
+       mav.addObject("accion", "eliminar");
+       mav.addObject("titulo", "Lista de Gastos");
 
-        return mav;
-
-
-
+       return mav;
 
     }
 
@@ -69,11 +79,17 @@ public class GastoController {
     }
 
     @GetMapping("/crear")
-    public ModelAndView crearGasto(){
+    public ModelAndView crearGasto(HttpSession session){
         ModelAndView mav = new ModelAndView("gasto-formulario");
 
+        try {
+            mav.addObject("categorias", categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession"))));
+        } catch (MiException e) {
+            System.out.println("error");
+        }
+
         mav.addObject("gasto", new Gasto());
-        mav.addObject("categorias", categoriaService.buscarHabilitados());
+
         mav.addObject("titulo", "Crear Gasto");
         mav.addObject("accion", "guardar");
         return mav;

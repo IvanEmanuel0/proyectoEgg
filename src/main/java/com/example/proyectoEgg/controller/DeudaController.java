@@ -6,6 +6,7 @@ import com.example.proyectoEgg.entity.Gasto;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.DeudaService;
+import com.example.proyectoEgg.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -22,6 +24,9 @@ public class DeudaController {
 
     @Autowired
     private DeudaService deudaService;
+
+    @Autowired
+    private PersonaService personaService;
 
     @Autowired
     private CategoriaService categoriaService;
@@ -61,10 +66,15 @@ public class DeudaController {
     }
 
     @GetMapping("/crear")
-    public ModelAndView crearDeuda() {
+    public ModelAndView crearDeuda(HttpSession session) {
         ModelAndView mav = new ModelAndView("deuda-formulario");
+        try {
+            mav.addObject("categorias", categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession"))));
+        } catch (MiException e) {
+            System.out.println("error");
+        }
         mav.addObject("deuda", new Deuda());
-        mav.addObject("categorias", categoriaService.buscarHabilitados());
+
         mav.addObject("titulo", "Crear Deuda");
         mav.addObject("accion", "guardar");
         return mav;

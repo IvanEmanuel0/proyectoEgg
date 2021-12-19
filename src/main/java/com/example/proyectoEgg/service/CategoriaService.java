@@ -2,6 +2,7 @@ package com.example.proyectoEgg.service;
 
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Ingreso;
+import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.CategoriaRepository;
 import com.example.proyectoEgg.utilities.Util;
@@ -9,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 @Service
 public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
+
+
 
     @Transactional
     public Categoria buscarPorId(Integer id) throws MiException{
@@ -29,8 +33,8 @@ public class CategoriaService {
     }
 
     @Transactional(readOnly = true)
-    public List<Categoria> buscarHabilitados() {
-        return categoriaRepository.categoriasDeAlta();
+    public List<Categoria> buscarHabilitados(Persona persona) {
+        return categoriaRepository.categoriasDeAlta(persona);
     }
 
 
@@ -40,11 +44,12 @@ public class CategoriaService {
     }
     ///---------
 
-    public void crear(String nombre) throws MiException{
+    public void crear(String nombre, Persona persona) throws MiException{
         try{
         Util.sonLetras(nombre);
             Categoria c = new Categoria();
             c.setNombre(nombre);
+            c.setPersona(persona);
             categoriaRepository.save(c);
         }catch(MiException e){
             throw e;
