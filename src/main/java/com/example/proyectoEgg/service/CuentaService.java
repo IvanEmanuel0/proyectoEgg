@@ -77,7 +77,7 @@ public class CuentaService implements UserDetailsService {
             cuenta.setClave(encoder.encode(clave));
             cuenta.setRol(rol);
             if (cuentaRepository.findAll().isEmpty()) {
-                cuenta.setRol(rol); //// cuenta.getRol().ADMIN
+                cuenta.setRol(rol); //// arreglar
             }else{
                 cuenta.setRol(rol);
             }
@@ -86,12 +86,6 @@ public class CuentaService implements UserDetailsService {
             emailService.enviarThread(usuario);
             cuentaRepository.save(cuenta);
             }
-
-
-
-
-
-
 
 /*Usuario usuario = new Usuario();
 

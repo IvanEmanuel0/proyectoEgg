@@ -19,7 +19,7 @@ public class EmailService {
     private static final String SUBJECT = "Correo de bienvenida";
     private static final String TEXT = "Bienvenido a nuestra página. Gracias por registrarte";
 
-    @Async
+   /* @Async
     public void enviar(String to) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
@@ -27,7 +27,7 @@ public class EmailService {
         message.setSubject(SUBJECT);
         message.setText(TEXT);
         sender.send(message);
-    }
+    }*/
 
     public void enviarThread(String to) {
         new Thread(() -> {
