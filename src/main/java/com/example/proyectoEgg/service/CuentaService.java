@@ -34,6 +34,9 @@ public class CuentaService implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    @Autowired
+    private EmailService emailService;
+
     private final String MENSAJE = "El usuario ingresado no existe %s";
 
     @Override
@@ -64,21 +67,46 @@ public class CuentaService implements UserDetailsService {
 
     @Transactional
     public void crear(String usuario, String clave, Rol rol) throws MiException {
-        try {
-            //Util.validarUsuario(usuario); //verificar
-            //Util.validarClave(clave);
-            if(6<5){
-                throw new MiException("nonono");
-            }
-            cuentaRepository.save(new Cuenta(usuario, encoder.encode(clave), rol));
-        } catch (MiException e){
-            throw e;
-        } catch (Exception e){
-            throw e;
+
+        if(cuentaRepository.existsCuentaByUsuario(usuario)){
+        throw new MiException("Ya existe el usuario ingresado.");
         }
 
+            Cuenta cuenta = new Cuenta(); //?????
+            cuenta.setUsuario(usuario);
+            cuenta.setClave(encoder.encode(clave));
+            cuenta.setRol(rol);
+            if (cuentaRepository.findAll().isEmpty()) {
+                cuenta.setRol(rol); //// cuenta.getRol().ADMIN
+            }else{
+                cuenta.setRol(rol);
+            }
 
-    }
+            cuenta.setAlta(true);
+            emailService.enviarThread(usuario);
+            cuentaRepository.save(cuenta);
+            }
+
+
+
+
+
+
+
+/*Usuario usuario = new Usuario();
+
+        usuario.setCorreo(dto.getCorreo());
+        usuario.setClave(encoder.encode(dto.getClave()));
+        if (usuarioRepository.findAll().isEmpty()) {
+            usuario.setRol(Rol.ADMIN);
+        } else {
+            usuario.setRol(dto.getRol());
+        }
+        usuario.setAlta(true);
+        emailService.enviarThread(dto.getCorreo());
+        usuarioRepository.save(usuario);
+    }*/
+
 
     @Transactional
     public void eliminar(Integer id) throws MiException {
@@ -104,6 +132,7 @@ public class CuentaService implements UserDetailsService {
     }
 
     public void modificar(Integer id, String usuario, String clave) throws MiException {
+
         try {
             Util.validarUsuario(usuario); //verificar
             Util.validarClave(clave);
