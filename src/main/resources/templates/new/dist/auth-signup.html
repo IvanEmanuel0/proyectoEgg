@@ -43,19 +43,32 @@
 						<img src="assets/images/logo-dark.svg" alt="" class="img-fluid mb-4">
 						<h4 class="mb-3 f-w-400">Registro</h4>
 						<form method="POST" autocomplete="off" class="needs-validation" id="formulario"
-     					 th:action="@{/cuentas/__${accion}__}" th:object="${cuenta}">
+     					 th:action="@{/personas/__${accion}__}">
 						<div th:if="${error != null}" th:text="${error}" class="col-4 small alert-danger fade show" role="alert"></div>
-						<input th:field="*{id}" type="hidden"/>
+						<input th:value="${id}" type="hidden"/>
 						<div class="input-group mb-3">
 							<span class="input-group-text"><i data-feather="user"></i></span>
-							<input type="text" class="form-control" placeholder="Usuario" th:field="*{usuario}" required>
+							<input type="text" class="form-control" placeholder="Nombre" th:value="${nombre}" name="nombre" required>
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text"><i data-feather="user"></i></span>
+							<input type="text" class="form-control" placeholder="Apellido" th:field="${apellido}" name="apellido" required>
+						</div>
+							<hr>
+						<div class="input-group mb-3">
+							<span class="input-group-text"><i data-feather="user"></i></span>
+							<input type="text" class="form-control" placeholder="Usuario" th:value="${usuario}" name="usuario" required>
 						</div>
 						<div class="input-group mb-4">
 							<span class="input-group-text"><i data-feather="lock"></i></span>
-							<input type="password" class="form-control" placeholder="Contraseña" th:field="*{clave}" required>
+							<input type="password" class="form-control" placeholder="Contraseña" th:value="${clave}" name="clave" required>
 						</div>
+						<select id="rol" name="rol">
+							<option selected value="">Elegir rol</option>
+							<option th:each="rol : ${roles}" th:text="${rol.nombre}"  th:value="${rol.id}"></option>
+						</select>
 						<button class="btn btn-primary btn-block mb-4" type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
-						<p class="mb-2">¿Ya tienes una cuenta? <a href="auth-signin.html" class="f-w-400">Iniciar sesión</a></p>
+						<p class="mb-2">¿Ya tienes una cuenta? <a th:href="@{/login}" class="f-w-400">Iniciar sesión</a></p>
 					</form>
 					</div>
 				</div>

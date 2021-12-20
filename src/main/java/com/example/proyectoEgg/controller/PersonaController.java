@@ -73,7 +73,7 @@ public class PersonaController {
 
     @GetMapping("/crear")
     public ModelAndView crearPersonas(){
-        ModelAndView mav = new ModelAndView("persona-formulario");
+        ModelAndView mav = new ModelAndView("auth-signup");
         //mav.addObject("persona" , new Persona());
         mav.addObject("roles", rolService.buscarTodos());
         mav.addObject("titulo", "Crear Persona");

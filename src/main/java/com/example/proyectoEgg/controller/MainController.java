@@ -1,6 +1,8 @@
 package com.example.proyectoEgg.controller;
 
 import com.example.proyectoEgg.entity.Categoria;
+import com.example.proyectoEgg.entity.Cuenta;
+import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.PersonaService;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping
@@ -25,8 +28,13 @@ public class MainController {
     public ModelAndView inicio(HttpSession session){
         ModelAndView mav = new ModelAndView("index");
         try {
-            mav.addObject("persona", personaService.buscarPorCuenta((Integer)session.getAttribute("idSession")));
-            mav.addObject("plata", personaService.calcularDineroDisponible(categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession")))));
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("persona", persona);
+            mav.addObject("dineroDisponible", personaService.calcularDineroDisponible(categorias));
+            mav.addObject("gastoTotal", personaService.calcularTotalGastos(categorias));
+            mav.addObject("ingresoTotal", personaService.calcularTotalIngresos(categorias));
         } catch(MiException e){
             System.out.println("error");
         }

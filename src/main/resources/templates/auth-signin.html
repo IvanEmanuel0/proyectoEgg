@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+
+	<title>DashboardKit Bootstrap 5 Admin Template</title>
+	<!--[if lt IE 11]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	<!-- Meta -->
+	<meta charset="utf-8">
+
+	<!-- Favicon icon -->
+	<link rel="icon" th:href="@{/img/favicon.svg}" type="image/x-icon">
+
+	<!-- font css -->
+	<link rel="stylesheet" th:href="@{/fonts/feather.css}">
+	<link rel="stylesheet" th:href="@{/fonts/fontawesome.css}">
+	<link rel="stylesheet" th:href="@{/fonts/material.css}">
+
+	<!-- vendor css -->
+	<link rel="stylesheet" th:href="@{/css/style.css}" id="main-style-link">
+
+
+</head>
+
+<!-- [ auth-signin ] start -->
+<div class="auth-wrapper">
+	<div class="auth-content">
+		<div class="card">
+			<div class="row align-items-center text-center">
+				<div class="col-md-12">
+					<div class="card-body">
+						<img th:src="@{/img/logo-dark.svg}" alt="" class="img-fluid mb-4">
+						<h4 class="mb-3 f-w-400">Iniciar sesión</h4>
+						<div th:if="${error}" >
+							<div th:text="${error}" ></div>
+						</div>
+						<div th:if="${logout}" >
+							<div th:text="${logout}" ></div>
+						</div>
+						<form th:action="@{/logincheck}" method="POST">
+						<div class="input-group mb-3">
+							<span class="input-group-text"><i data-feather="user"></i></span>
+							<input type="text" class="form-control" placeholder="Usuario" name="username" required>
+						</div>
+						<div class="input-group mb-4">
+							<span class="input-group-text"><i data-feather="lock"></i></span>
+							<input type="password" class="form-control" placeholder="Contraseña" name="password" required>
+						</div>
+						<div class="form-group text-left mt-2">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+								<label class="form-check-label" for="flexCheckChecked">
+									Recordar cuenta
+								</label>
+							</div>
+						</div>
+						<button class="btn btn-block btn-primary mb-4" type="submit">Iniciar sesión</button>
+						<p class="mb-0 text-muted">¿No tienes una cuenta? <a th:href="@{/personas/crear}" class="f-w-400">Registrarse</a></p>
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- [ auth-signin ] end -->
+
+<!-- Required Js -->
+<script th:src="@{/js/vendor-all.min.js}"></script>
+<script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/feather.min.js}"></script>
+<script th:src="@{/js/pcoded.min.js}"></script>
+
+
+
+</body>
+
+</html>

@@ -1,5 +1,5 @@
 package com.example.proyectoEgg.service;
-
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,7 +27,7 @@ public class EmailService {
         message.setSubject(SUBJECT);
         message.setText(TEXT);
         sender.send(message);
-    }*/
+    }
 
     public void enviarThread(String to) {
         new Thread(() -> {
@@ -40,3 +40,4 @@ public class EmailService {
         }).start();
     }
 }
+*/
