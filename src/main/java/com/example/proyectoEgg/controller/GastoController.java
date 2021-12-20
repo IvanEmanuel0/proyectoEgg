@@ -36,7 +36,7 @@ public class GastoController {
 
     @GetMapping()
     public ModelAndView mostrarGastosPorCategoria(HttpServletRequest request, HttpSession session){
-        ModelAndView mav = new ModelAndView("gasto-categoria-lista");
+        ModelAndView mav = new ModelAndView("Lista-Gasto");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try {
@@ -80,7 +80,7 @@ public class GastoController {
 
     @GetMapping("/crear")
     public ModelAndView crearGasto(HttpSession session){
-        ModelAndView mav = new ModelAndView("gasto-formulario");
+        ModelAndView mav = new ModelAndView("form_elements_gastos");
 
         try {
             mav.addObject("categorias", categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession"))));

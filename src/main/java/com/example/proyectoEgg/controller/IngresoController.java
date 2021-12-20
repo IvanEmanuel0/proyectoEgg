@@ -2,6 +2,7 @@ package com.example.proyectoEgg.controller;
 
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Ingreso;
+import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.IngresoService;
@@ -39,7 +40,10 @@ public class IngresoController {
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try {
-            List<Categoria> categorias = categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession")));
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("persona", persona);
             mav.addObject("ingresos", ingresoService.calcularIngresosPorCategoria(categorias));//SEGUIR DE ACA BUSCAR LA CATEGORIA EN PARTICULAR QUE QUIERO MOSTRAR
         } catch (MiException e) {
             mav.addObject("error-ingreso", e.getMessage());
@@ -75,7 +79,7 @@ public class IngresoController {
 
     @GetMapping("/crear")
     public ModelAndView crearIngreso(HttpSession session){
-        ModelAndView mav = new ModelAndView("ingreso-formulario");
+        ModelAndView mav = new ModelAndView("form_elements_ingresos");
         try {
             mav.addObject("categorias", categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession"))));
         } catch (MiException e) {
