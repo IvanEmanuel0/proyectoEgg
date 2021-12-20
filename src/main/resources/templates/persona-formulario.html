@@ -7,7 +7,7 @@
 <body>
 <div class="col-12 p-5 bg-contenido">
     <h1>Registro</h1>
-    <form method="POST" th:action="@{/personas/__${accion}__}">
+    <form method="POST" th:action="@{/personas/__${accion}__}" enctype="multipart/form-data">
         <input th:value="${id}" type="hidden">
         <div th:if="${error != null}" th:text="${error}" ></div>
 
@@ -17,6 +17,9 @@
 
         <input placeholder="Apellido" required name="apellido" th:value="${apellido}" class="form-control" id="apellido" type="text">
         <label for="apellido"></label>
+
+        <input type="file" name="foto" accept="image/*">
+        <label for="foto" name="foto">Cargar foto</label>
 
         <h2>Datos de la cuenta</h2>
 

@@ -46,11 +46,12 @@ public class Persona {
         this.alta = true;
     }
 
-    public Persona(String nombre, String apellido, Cuenta cuenta, Rol rol) {
+    public Persona(String nombre, String apellido, Cuenta cuenta, Rol rol, String imagen) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.montoDisponible = 0.0;
         this.cuenta = cuenta;
         this.alta = true;
+        this.imagen = imagen;
     }
 }

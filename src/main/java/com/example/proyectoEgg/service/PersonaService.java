@@ -7,8 +7,8 @@ import com.example.proyectoEgg.utilities.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +22,8 @@ public class PersonaService {
     private IngresoService ingresoService;
     @Autowired
     private GastoService gastoService;
+    @Autowired
+    private FotoService fotoService;
 
     @Transactional(readOnly = true)
     public List<Persona> buscarHabilitados(){
@@ -50,14 +52,14 @@ public class PersonaService {
     }
 
     @Transactional
-    public void crear(String nombre, String apellido, String usuario, String clave, Rol rol) throws MiException{
+    public void crear(String nombre, String apellido, String usuario, String clave, Rol rol , MultipartFile foto) throws MiException{
 
         try {
             Util.sonLetras(nombre);
             Util.sonLetras(apellido);
 
             cuentaService.crear(usuario,clave, rol);
-            personaRepository.save(new Persona(nombre, apellido, cuentaService.buscarPorUsuario(usuario),rol));
+            personaRepository.save(new Persona(nombre, apellido, cuentaService.buscarPorUsuario(usuario),rol, fotoService.copiar(foto)));
         } catch (MiException e){
             throw e;
         } catch (Exception e){
@@ -66,7 +68,7 @@ public class PersonaService {
     }
 
     @Transactional
-    public void modificar(Integer id, String nombre, String apellido) throws MiException {
+    public void modificar(Integer id, String nombre, String apellido, MultipartFile foto) throws MiException {
         try {
             Util.sonLetras(nombre);
             Util.sonLetras(apellido);
@@ -75,6 +77,7 @@ public class PersonaService {
                 persona.setId(id);
                 persona.setNombre(nombre);
                 persona.setApellido(apellido);
+                persona.setImagen(fotoService.copiar(foto));
                 personaRepository.save(persona);
             }
         }catch (MiException e){

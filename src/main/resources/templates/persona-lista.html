@@ -21,6 +21,32 @@
 </head>
 <body>
 
+  <div class="col-3" th:each="persona : ${personas}">
+    <div class="card mb-4 shadow">
+        <div class="card-body text-center my-2">
+            <img class="rounded-circle"
+                 th:src="${persona.imagen != null} ? @{/uploads/__${persona.imagen}__} : @{/uploads/nodisponible.png}"
+                 width="165">
+        </div>
+        <div class="card-footer">
+            <div th:text="|Nombre: ${persona.nombre}|"></div>
+            <div th:text="|Apellido: ${persona.apellido}|"></div>
+            <div th:text="|Alta: ${persona.alta}|"></div>
+            <div class="d-flex justify-content-start my-2">
+              <a th:if="${accion == 'eliminar'}" class="btn btn-secondary btn-sm" th:href="@{/personas/editar/__${persona.id}__}">Editar</a>
+              <form method="post" th:action="@{/personas/__${accion}__/__${persona.id}__}">
+                <button th:text="${accion == 'eliminar'} ? 'Deshabilitar' : 'Habilitar'"
+                        th:classappend="${accion == 'eliminar'} ? 'btn-danger' : 'btn-success'"
+                        class="btn btn-sm" type="submit">
+                </button>
+              </form>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
 <table class="table table-striped">
   <thead>
   <tr>
@@ -52,6 +78,7 @@
   </tr>
   </tbody>
 </table>
+-->
 
 
 

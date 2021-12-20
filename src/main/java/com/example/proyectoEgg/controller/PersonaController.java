@@ -10,6 +10,7 @@ import com.example.proyectoEgg.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -52,7 +53,7 @@ public class PersonaController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView personasDesahilitadas(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("???");
+        ModelAndView mav = new ModelAndView("persona-lista");
          Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null){
@@ -82,7 +83,7 @@ public class PersonaController {
 
     @GetMapping("/editar/{id}")
     public ModelAndView editarPersona(@PathVariable Integer id){
-        ModelAndView mav = new ModelAndView("???");
+        ModelAndView mav = new ModelAndView("persona-formulario");
         try{
             mav.addObject("persona", personaService.buscarPorId(id));
         }catch(MiException e){
@@ -95,11 +96,11 @@ public class PersonaController {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardarPersona(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes){
+    public RedirectView guardarPersona(@RequestParam MultipartFile foto, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/personas");
         try {
-            personaService.crear(nombre, apellido, usuario, clave,rol);
-            redirectAttributes.addFlashAttribute("éxito", "La persona se registró correctatamente.");
+            personaService.crear(nombre, apellido, usuario, clave,rol, foto);
+            redirectAttributes.addFlashAttribute("exito", "La persona se registró correctatamente.");
 
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("nombre", nombre);
@@ -113,15 +114,15 @@ public class PersonaController {
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificarPersona(@RequestParam Integer id,@RequestParam String nombre,@RequestParam String apellido, RedirectAttributes redirectAttributes){
+    public RedirectView modificarPersona(@RequestParam MultipartFile foto, @RequestParam Integer id,@RequestParam String nombre,@RequestParam String apellido, RedirectAttributes redirectAttributes){
         try {
-            personaService.modificar(id, nombre, apellido);
+            personaService.modificar(id, nombre, apellido, foto);
             redirectAttributes.addFlashAttribute("exito", "La persona se modificó correctamente.");
         } catch (MiException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
-        return new RedirectView("???");
+        return new RedirectView("/personas");
     }
 
     @PostMapping("/eliminar/{id}")
@@ -133,7 +134,7 @@ public class PersonaController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
-        return new RedirectView("??");
+        return new RedirectView("/personas");
     }
 
 
@@ -146,7 +147,7 @@ public class PersonaController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
 
-        return new RedirectView("???");
+        return new RedirectView("/personas");
     }
 
 
