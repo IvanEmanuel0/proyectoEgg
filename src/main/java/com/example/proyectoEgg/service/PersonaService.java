@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +23,7 @@ public class PersonaService {
     @Autowired
     private GastoService gastoService;
     @Autowired
-    private FotoServicio fotoServicio;
+    private FotoService fotoService;
 
     @Transactional(readOnly = true)
     public List<Persona> buscarHabilitados(){
@@ -60,7 +59,7 @@ public class PersonaService {
             Util.sonLetras(apellido);
 
             cuentaService.crear(usuario,clave, rol);
-            personaRepository.save(new Persona(nombre, apellido, cuentaService.buscarPorUsuario(usuario),rol,fotoServicio.copiar(foto)));
+            personaRepository.save(new Persona(nombre, apellido, cuentaService.buscarPorUsuario(usuario),rol, fotoService.copiar(foto)));
         } catch (MiException e){
             throw e;
         } catch (Exception e){
@@ -78,7 +77,7 @@ public class PersonaService {
                 persona.setId(id);
                 persona.setNombre(nombre);
                 persona.setApellido(apellido);
-                persona.setImagen(fotoServicio.copiar(foto));
+                persona.setImagen(fotoService.copiar(foto));
                 personaRepository.save(persona);
             }
         }catch (MiException e){
