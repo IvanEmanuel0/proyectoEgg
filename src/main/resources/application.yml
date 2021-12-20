@@ -37,4 +37,4 @@ logging:
       springframework:
         web: debug
 my:
-property: ${DIRECTORY}
+  property: ${DIRECTORY}
