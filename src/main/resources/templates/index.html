@@ -1,26 +1,271 @@
 <!DOCTYPE html>
+<!-- <html lang="en" xmlns:th="http://www.thymeleaf.org"></html> -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1 th:text="| La cuenta conectada tiene el id: ${sesion} |"> </h1>
-<h2 th:text="| El dueño de la cuenta se llama: ${persona.nombre} ${persona.apellido} |"></h2>
-<h2 th:text="| La cantidad de dinero restante es: $${plata} |"></h2>
-<a th:href="@{/logout}" class="btn btn-secondary">Cerrar Sesión</a><br>
-<a th:href="@{/personas/crear}" class="btn btn-secondary">Crear persona</a><br>
-<a th:href="@{/personas}" class="btn btn-secondary">Lista personas</a><br>
-<a th:href="@{/ingresos/crear}" class="btn btn-secondary">Crear ingreso</a><br>
-<a th:href="@{/ingresos}" class="btn btn-secondary">Lista ingresos</a><br>
-<a th:href="@{/gastos/crear}" class="btn btn-secondary">Crear gasto</a><br>
-<a th:href="@{/gastos}" class="btn btn-secondary">Lista gastos</a><br>
-<a th:href="@{/deudas/crear}" class="btn btn-secondary">Crear deuda</a><br>
-<a th:href="@{/deudas}" class="btn btn-secondary">Lista deudas</a><br>
-<a sec:authorize="hasAnyRole('USERPRO', 'ADMIN')" th:href="@{/categorias/crear}" class="btn btn-secondary">Crear categoria</a><br>
-<a th:href="@{/categorias}" class="btn btn-secondary">Lista categorias</a><br>
-<a sec:authorize="hasRole('ADMIN')" th:href="@{/roles/crear}" class="btn btn-secondary">Crear rol</a><br>
-<a sec:authorize="hasRole('ADMIN')" th:href="@{/roles}" class="btn btn-secondary">Lista rol</a><br>
 
+<head>
+    <title>teamWallet</title>
+    <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 11]>
+    	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<!-- Favicon icon -->
+	<link rel="icon" th:href="@{/img/favicon.svg}" type="image/x-icon">
+
+	<!-- font css -->
+	<link rel="stylesheet" th:href="@{/fonts/feather.css}">
+	<link rel="stylesheet" th:href="@{/fonts/fontawesome.css}">
+	<link rel="stylesheet" th:href="@{/fonts/material.css}">
+
+	<!-- vendor css -->
+	<link rel="stylesheet" th:href="@{/css/style.css}" id="main-style-link">
+
+</head>
+
+<body class="">
+	<!-- [ Pre-loader ] start -->
+	<div class="loader-bg">
+		<div class="loader-track">
+			<div class="loader-fill"></div>
+		</div>
+	</div>
+	<!-- [ Pre-loader ] End -->
+	<!-- [ Mobile header ] start -->
+	<div class="pc-mob-header pc-header">
+		<div class="pcm-logo">
+			<img th:src="@{/img/logo.svg}" alt="" class="logo logo-lg">
+		</div>
+		<div class="pcm-toolbar">
+			<a href="#!" class="pc-head-link" id="mobile-collapse">
+				<div class="hamburger hamburger--arrowturn">
+					<div class="hamburger-box">
+						<div class="hamburger-inner"></div>
+					</div>
+				</div>
+			</a>
+			<a href="#!" class="pc-head-link" id="headerdrp-collapse">
+				<i data-feather="align-right"></i>
+			</a>
+			<a href="#!" class="pc-head-link" id="header-collapse">
+				<i data-feather="more-vertical"></i>
+			</a>
+		</div>
+	</div>
+	<!-- [ Mobile header ] End -->
+
+	<!-- [ navigation menu ] start -->
+	<nav class="pc-sidebar ">
+		<div class="navbar-wrapper">
+			<div class="m-header">
+				<a href="index.html" class="b-brand">
+					<!-- ========   change your logo hear   ============ -->
+					<img src="https://i.ibb.co/yF83MSG/team-wallet.png" alt="" class="logo logo-lg responsivelogazo">
+					<img src="https://i.ibb.co/yF83MSG/team-wallet.png" alt="" class="logo logo-sm responsivelogazo">
+				</a>
+			</div>
+			<div class="navbar-content">
+				<ul class="pc-navbar">
+                    
+					<li class="pc-item pc-caption">
+						<label th:text="| ¡Bienvenido, ${persona.nombre} ${persona.apellido}! |"></label>
+					</li>
+					<li class="pc-item">
+						<a href="index.html" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">home</i></span><span class="pc-mtext">Home</span></a>
+					</li>
+                    <li class="pc-item pc-caption">
+						<label>Mi billetera</label>
+						<span>Home</span>
+					</li>
+					<li class="pc-item pc-hasmenu">
+						<a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Mi billetera</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+						<ul class="pc-submenu">
+                            <li class="pc-item"><a class="pc-link" href="#">Resumen de cuenta</a></li>
+                            <li class="pc-item"><a class="pc-link" th:href="@{/ingresos}">Ingresos</a></li>
+                            <li class="pc-item"><a class="pc-link" th:href="@{/gastos}">Gastos</a></li>
+                            <li class="pc-item"><a class="pc-link" th:href="@{/deudas}">Deudas</a></li>
+							<!-- <li class="pc-item"><a class="pc-link" href="form_elements_gastos.html">Nuevo gasto</a></li>
+							<li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li> -->
+						</ul>
+					</li>
+
+					<li class="pc-item pc-hasmenu">
+						<a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Billetera compartida</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+						<ul class="pc-submenu">
+                            <li class="pc-item"><a class="pc-link" href="#">Resumen compartido</a></li>
+                            <li class="pc-item"><a class="pc-link" href="#">Ingresos compartidos</a></li>
+                            <li class="pc-item"><a class="pc-link" href="#">Gastos compartidos</a></li>
+                            <li class="pc-item"><a class="pc-link" href="#">Deudas compartidas</a></li>
+							<!-- <li class="pc-item"><a class="pc-link" href="form_elements_gastos.html">Nuevo gasto</a></li>
+							<li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li> -->
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- [ navigation menu ] end -->
+	
+	<!-- HEADER -->
+	<header class="pc-header ">
+		<div class="header-wrapper">
+			<div class="ml-auto">
+				<ul class="list-unstyled">
+ 
+					<li class="dropdown pc-h-item">
+                        
+						<a class="pc-head-link dropdown-toggle arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+							<img th:src="@{/img/user/avatar-2.jpg}" alt="user-image" class="user-avtar">
+							<span>
+								<span class="user-name" th:text="| ${persona.nombre} ${persona.apellido} |"></span>
+								<span class="user-desc">Administrador</span>
+							</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right pc-h-dropdown">
+
+							<div class=" dropdown-header">
+								<h5 class="text-overflow m-0"><span class="badge bg-light-primary"><a href="https://gumroad.com/dashboardkit" target="_blank">Actualizar a versión Pro</a></span></h5>
+							</div>
+				
+							<a href="html de mi cuenta" class="dropdown-item">
+								<i class="material-icons-two-tone">account_circle</i>
+								<span>Mi cuenta</span>
+							</a>
+							<a href="html de configuración" class="dropdown-item">
+								<i class="material-icons-two-tone">settings</i>
+								<span>Configuración</span>
+							</a>
+							<a href="auth-signin.html" class="dropdown-item">
+								<i class="material-icons-two-tone">chrome_reader_mode</i>
+								<span>Ayuda</span>
+							</a>
+							<a href="@{/logout}" class="dropdown-item">
+								<i class="material-icons-two-tone">chrome_reader_mode</i>
+								<span>Cerrar sesión</span>
+							</a>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</header>
+
+    
+<!-- BREADCRUM START -->
+<div class="pc-container">
+    <div class="pcoded-content">
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Mi billetera</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                            <li class="breadcrumb-item">Mi billetera</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- BREADCRUM END -->
+		
+
+<!-- TABLA GASTOS, INGRESOS, DEUDAS START -->
+        <div class="row">
+            <div class="col-xl-6 col-md-12">
+                <div class="card flat-card">
+                    <div class="row-table">
+                        <div class="col-sm-6 card-body br">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <i class="material-icons-two-tone text-primary mb-1">group</i>
+                                </div>
+                                <div th scope="col" class="col-sm-8 text-md-center">
+                                    <h5 th:text="| $${gastoTotal} |"></h5>
+                                    <span>Gastos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 d-none d-md-table-cell d-lg-table-cell d-xl-table-cell card-body br">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <i class="material-icons-two-tone text-primary mb-1">language</i>
+                                </div>
+                                <div th scope="col" class="col-sm-8 text-md-center">
+                                    <h5> falta hacer </h5>
+                                    <span>Deudas</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 card-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <i class="material-icons-two-tone text-primary mb-1">unarchive</i>
+                                </div>
+                                <div th scope="col" class="col-sm-8 text-md-center">
+									<h5 th:text="| $${ingresoTotal} |"></h5>
+                                    <span>Ingresos</span>
+                                </div>
+                            </div>
+                        </div>
+						
+                    </div>
+                </div>
+            </div>
+<!-- TABLA GASTOS, INGRESOS, DEUDAS END -->
+
+
+<!-- GRÁFICO DE BARRAS START -->
+			<div class="row">
+			    <div class="col-xl-6 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Resumen de consumos del mes</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row pb-2">
+                                <div class="col-auto m-b-10">
+                                    <h3 class="mb-1">$2.252</h3>
+                                    <span>Total de consumos</span>
+                                </div>
+                                <div class="col-auto m-b-10">
+                                    <h3 class="mb-1">$1935,6</h3>
+                                    <span>Promedio de consumos</span>
+                                </div>
+                            </div>
+                        <div id="account-chart"></div>
+                        </div>
+                    </div>
+                </div>        
+		    </div>
+<!-- GRÁFICO DE BARRAS END -->  
+    	</div>
+    </div>
+</div>
+
+<!-- Required Js -->
+    <script th:src="@{/js/vendor-all.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/feather.min.js}"></script>
+    <script th:src="@{/js/pcoded.min.js}"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> -->
+    <!-- <script src="assets/js/plugins/clipboard.min.js"></script> -->
+    <!-- <script src="assets/js/uikit.min.js"></script> -->
+
+<!-- Apex Chart -->
+<script th:src="@{/js/plugins/apexcharts.min.js}"></script>
+<script>
+    $("body").append('<div class="fixed-button active"><a href="https://gumroad.com/dashboardkit" target="_blank" class="btn btn-md btn-success"><i class="material-icons-two-tone text-white">shopping_cart</i> Upgrade To Pro</a> </div>');
+</script>
+
+<!-- custom-chart js -->
+<script th:src="@{/js/pages/dashboard-sale.js}"></script>
 </body>
 </html>

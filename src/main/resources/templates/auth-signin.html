@@ -20,42 +20,53 @@
 
 
 	<!-- Favicon icon -->
-	<link rel="icon" href="assets/images/favicon.svg" type="image/x-icon">
+	<link rel="icon" th:href="@{/img/favicon.svg}" type="image/x-icon">
 
 	<!-- font css -->
-	<link rel="stylesheet" href="assets/fonts/feather.css">
-	<link rel="stylesheet" href="assets/fonts/fontawesome.css">
-	<link rel="stylesheet" href="assets/fonts/material.css">
+	<link rel="stylesheet" th:href="@{/fonts/feather.css}">
+	<link rel="stylesheet" th:href="@{/fonts/fontawesome.css}">
+	<link rel="stylesheet" th:href="@{/fonts/material.css}">
 
 	<!-- vendor css -->
-	<link rel="stylesheet" href="assets/css/style.css" id="main-style-link">
+	<link rel="stylesheet" th:href="@{/css/style.css}" id="main-style-link">
 
 
 </head>
 
-<!-- [ auth-signup ] start -->
+<!-- [ auth-signin ] start -->
 <div class="auth-wrapper">
 	<div class="auth-content">
 		<div class="card">
 			<div class="row align-items-center text-center">
 				<div class="col-md-12">
 					<div class="card-body">
-						<img src="assets/images/logo-dark.svg" alt="" class="img-fluid mb-4">
-						<h4 class="mb-3 f-w-400">Registro</h4>
-						<form method="POST" autocomplete="off" class="needs-validation" id="formulario"
-     					 th:action="@{/cuentas/__${accion}__}" th:object="${cuenta}">
-						<div th:if="${error != null}" th:text="${error}" class="col-4 small alert-danger fade show" role="alert"></div>
-						<input th:field="*{id}" type="hidden"/>
+						<img th:src="@{/img/logo-dark.svg}" alt="" class="img-fluid mb-4">
+						<h4 class="mb-3 f-w-400">Iniciar sesión</h4>
+						<div th:if="${error}" >
+							<div th:text="${error}" ></div>
+						</div>
+						<div th:if="${logout}" >
+							<div th:text="${logout}" ></div>
+						</div>
+						<form th:action="@{/logincheck}" method="POST">
 						<div class="input-group mb-3">
 							<span class="input-group-text"><i data-feather="user"></i></span>
-							<input type="text" class="form-control" placeholder="Usuario" th:field="*{usuario}" required>
+							<input type="text" class="form-control" placeholder="Usuario" name="username" required>
 						</div>
 						<div class="input-group mb-4">
 							<span class="input-group-text"><i data-feather="lock"></i></span>
-							<input type="password" class="form-control" placeholder="Contraseña" th:field="*{clave}" required>
+							<input type="password" class="form-control" placeholder="Contraseña" name="password" required>
 						</div>
-						<button class="btn btn-primary btn-block mb-4" type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
-						<p class="mb-2">¿Ya tienes una cuenta? <a href="auth-signin.html" class="f-w-400">Iniciar sesión</a></p>
+						<div class="form-group text-left mt-2">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+								<label class="form-check-label" for="flexCheckChecked">
+									Recordar cuenta
+								</label>
+							</div>
+						</div>
+						<button class="btn btn-block btn-primary mb-4" type="submit">Iniciar sesión</button>
+						<p class="mb-0 text-muted">¿No tienes una cuenta? <a th:href="@{personas/crar}" class="f-w-400">Registrarse</a></p>
 					</form>
 					</div>
 				</div>
@@ -63,7 +74,7 @@
 		</div>
 	</div>
 </div>
-<!-- [ auth-signup ] end -->
+<!-- [ auth-signin ] end -->
 
 <!-- Required Js -->
 <script src="assets/js/vendor-all.min.js"></script>

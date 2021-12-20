@@ -34,8 +34,8 @@ public class CuentaService implements UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    @Autowired
-    private EmailService emailService;
+    /*@Autowired
+    private EmailService emailService;*/
 
     private final String MENSAJE = "El usuario ingresado no existe %s";
 
@@ -83,7 +83,7 @@ public class CuentaService implements UserDetailsService {
             }
 
             cuenta.setAlta(true);
-            emailService.enviarThread(usuario);
+            //emailService.enviarThread(usuario);
             cuentaRepository.save(cuenta);
             }
 

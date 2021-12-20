@@ -35,7 +35,7 @@ public class IngresoController {
 
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request, HttpSession session){
-        ModelAndView mav = new ModelAndView("ingreso-categoria-lista");
+        ModelAndView mav = new ModelAndView("Lista-Ingreso");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try {
@@ -49,8 +49,10 @@ public class IngresoController {
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
         }
+
         mav.addObject("accion", "eliminar");
         mav.addObject("titulo", "Lista de Ingresos");
+
         return mav;
 
     }

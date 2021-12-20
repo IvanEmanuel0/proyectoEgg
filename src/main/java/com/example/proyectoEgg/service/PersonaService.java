@@ -108,7 +108,17 @@ public class PersonaService {
 
     @Transactional
     public Double calcularDineroDisponible(List<Categoria> categorias){
-        return ingresoService.calcularTotalIngresos(categorias) - gastoService.calcularTotalGastos(categorias);
+        return  calcularTotalIngresos(categorias)-calcularTotalGastos(categorias);
+    }
+
+    @Transactional
+    public Double calcularTotalIngresos(List<Categoria> categorias){
+        return ingresoService.calcularTotalIngresos(categorias);
+    }
+
+    @Transactional
+    public Double calcularTotalGastos(List<Categoria> categorias){
+        return gastoService.calcularTotalGastos(categorias);
     }
 
 }
