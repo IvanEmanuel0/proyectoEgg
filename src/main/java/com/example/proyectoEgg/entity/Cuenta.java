@@ -20,11 +20,13 @@ public class Cuenta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Integer id;
     @Column(nullable = false, unique = true)
-    String usuario;
+    private String usuario;
     @Column(nullable = false)
-    String clave;
+    private String clave;
+    @Column(nullable = false, unique = true)
+    private String correo;
     @ManyToOne
     @JoinColumn(nullable = false)
     private Rol rol;
@@ -39,9 +41,10 @@ public class Cuenta {
         this.alta = true;
     }
 
-    public Cuenta(String usuario, String clave, Rol rol) {
+    public Cuenta(String usuario, String clave, String correo, Rol rol) {
         this.usuario = usuario;
         this.clave = clave;
+        this.correo = correo;
         this.rol = rol;
         this.alta = true;
     }
