@@ -74,10 +74,10 @@ public class CuentaController {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardar(@RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes){
+    public RedirectView guardar(@RequestParam String usuario, @RequestParam String clave, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/login");
         try {
-            cuentaService.crear(usuario, clave, rol);
+            cuentaService.crear(usuario, clave);
             redirectAttributes.addFlashAttribute("exito", "La cuenta fue creada correctamente.");
         } catch(MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
