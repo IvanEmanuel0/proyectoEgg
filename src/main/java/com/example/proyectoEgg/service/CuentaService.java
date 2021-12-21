@@ -32,6 +32,9 @@ public class CuentaService implements UserDetailsService {
     private CuentaRepository cuentaRepository;
 
     @Autowired
+    private RolService rolService;
+
+    @Autowired
     private BCryptPasswordEncoder encoder;
 
     @Autowired
@@ -66,23 +69,27 @@ public class CuentaService implements UserDetailsService {
     }
 
     @Transactional
-    public void crear(String usuario, String clave, String correo, Rol rol) throws MiException {
+    public void crear(String usuario, String clave, String correo) throws MiException {
 
         if(cuentaRepository.existsCuentaByUsuario(usuario)){
         throw new MiException("Ya existe el usuario ingresado.");
         }
 
-            Cuenta cuenta = new Cuenta(); //?????
+            Cuenta cuenta = new Cuenta();
             cuenta.setUsuario(usuario);
             cuenta.setClave(encoder.encode(clave));
-            cuenta.setRol(rol);
             cuenta.setCorreo(correo);
-            if (cuentaRepository.findAll().isEmpty()) {
-                cuenta.setRol(rol); //// arreglar
-            }else{
-                cuenta.setRol(rol);
-            }
 
+            Rol rol;
+
+
+            if (cuentaRepository.findAll().isEmpty()) {
+                rol = rolService.buscarRolPorNombre("ADMIN");
+
+            }else{
+                rol = rolService.buscarRolPorNombre("USER");
+            }
+            cuenta.setRol(rol);
             cuenta.setAlta(true);
             cuentaRepository.save(cuenta);
            // emailService.enviar(correo);

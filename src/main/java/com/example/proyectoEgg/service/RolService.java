@@ -25,4 +25,9 @@ public class RolService {
     public List<Rol> buscarTodos() {
         return rolRepository.findAll();
     }
+
+    @Transactional
+    public Rol buscarRolPorNombre(String nombre){
+        return rolRepository.buscarPorNombre(nombre);
+    }
 }

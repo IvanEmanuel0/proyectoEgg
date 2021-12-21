@@ -69,10 +69,10 @@
 							<span class="input-group-text"><i data-feather="lock"></i></span>
 							<input type="password" class="form-control" placeholder="Contraseña" th:value="${clave}" name="clave" required>
 						</div>
-						<select id="rol" name="rol">
+						<!--<select id="rol" name="rol">
 							<option selected value="">Elegir rol</option>
 							<option th:each="rol : ${roles}" th:text="${rol.nombre}"  th:value="${rol.id}"></option>
-						</select>
+						</select>-->
 						<button class="btn btn-primary btn-block mb-4" type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
 						<p class="mb-2">¿Ya tienes una cuenta? <a th:href="@{/login}" class="f-w-400">Iniciar sesión</a></p>
 					</form>

@@ -46,7 +46,7 @@ public class Persona {
         this.alta = true;
     }
 
-    public Persona(String nombre, String apellido, Cuenta cuenta, Rol rol, String imagen) {
+    public Persona(String nombre, String apellido, Cuenta cuenta, String imagen) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.montoDisponible = 0.0;
@@ -55,3 +55,4 @@ public class Persona {
         this.imagen = imagen;
     }
 }
+    

@@ -52,14 +52,14 @@ public class PersonaService {
     }
 
     @Transactional
-    public void crear(String nombre, String apellido, String usuario, String clave, String correo, Rol rol , MultipartFile foto) throws MiException{
+    public void crear(String nombre, String apellido, String usuario, String clave, String correo , MultipartFile foto) throws MiException{
 
         try {
             Util.sonLetras(nombre);
             Util.sonLetras(apellido);
 
-            cuentaService.crear(usuario,clave, correo, rol);
-            personaRepository.save(new Persona(nombre, apellido, cuentaService.buscarPorUsuario(usuario),rol, fotoService.copiar(foto)));
+            cuentaService.crear(usuario,clave, correo);
+            personaRepository.save(new Persona(nombre, apellido, cuentaService.buscarPorUsuario(usuario), fotoService.copiar(foto)));
         } catch (MiException e){
             throw e;
         } catch (Exception e){
