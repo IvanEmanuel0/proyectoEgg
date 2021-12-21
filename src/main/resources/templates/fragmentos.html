@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -52,32 +52,43 @@
                             <label th:text="| ¡Bienvenido, ${persona.nombre} ${persona.apellido}! |"></label>
                         </li>
                         <li class="pc-item">
-                            <a href="index.html" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">home</i></span><span class="pc-mtext">Home</span></a>
+                            <a th:href="@{/}" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">home</i></span><span class="pc-mtext">Home</span></a>
                         </li>
                         <li class="pc-item pc-caption">
                             <label>Mi billetera</label>
                             <span>Home</span>
                         </li>
                         <li class="pc-item pc-hasmenu">
-                            <a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Mi billetera</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+                            <a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Agregar</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
                             <ul class="pc-submenu">
-                                <li class="pc-item"><a class="pc-link" href="#">Resumen de cuenta</a></li>
+                                <!--<li class="pc-item"><a class="pc-link" href="#">Resumen de cuenta</a></li>-->
+                                <li class="pc-item"><a class="pc-link" th:href="@{/gastos/crear}">Gasto</a></li>
+                                <li class="pc-item"><a class="pc-link" th:href="@{/ingresos/crear}">Ingreso</a></li>
+                                <li class="pc-item"><a class="pc-link" th:href="@{/categorias/crear}">Categoría</a></li>
+                                <!--<li class="pc-item"><a class="pc-link" href="form_elements_gastos.html">Nuevo gasto</a></li>
+                                <li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li> -->
+                            </ul>
+                        </li>
+                        <li class="pc-item pc-hasmenu">
+                            <a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Ver</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+                            <ul class="pc-submenu">
+                                <!--<li class="pc-item"><a class="pc-link" href="#">Resumen de cuenta</a></li>-->
                                 <li class="pc-item"><a class="pc-link" th:href="@{/ingresos}">Ingresos</a></li>
                                 <li class="pc-item"><a class="pc-link" th:href="@{/gastos}">Gastos</a></li>
-                                <li class="pc-item"><a class="pc-link" th:href="@{/deudas}">Deudas</a></li>
-                                <!-- <li class="pc-item"><a class="pc-link" href="form_elements_gastos.html">Nuevo gasto</a></li>
+                                <!-- <li class="pc-item"><a class="pc-link" th:href="@{/deudas}">Deudas</a></li>
+                                <li class="pc-item"><a class="pc-link" href="form_elements_gastos.html">Nuevo gasto</a></li>
                                 <li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li> -->
                             </ul>
                         </li>
 
                         <li class="pc-item pc-hasmenu">
-                            <a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Billetera compartida</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+                            <a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Configuración</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
                             <ul class="pc-submenu">
-                                <li class="pc-item"><a class="pc-link" href="#">Resumen compartido</a></li>
-                                <li class="pc-item"><a class="pc-link" href="#">Ingresos compartidos</a></li>
+                                <li class="pc-item"><a class="pc-link" th:href="@{/categorias}">Categorias</a></li>
+                                <!--<li class="pc-item"><a class="pc-link" href="#">Ingresos compartidos</a></li>
                                 <li class="pc-item"><a class="pc-link" href="#">Gastos compartidos</a></li>
                                 <li class="pc-item"><a class="pc-link" href="#">Deudas compartidas</a></li>
-                                <!-- <li class="pc-item"><a class="pc-link" href="form_elements_gastos.html">Nuevo gasto</a></li>
+                                <li class="pc-item"><a class="pc-link" href="form_elements_gastos.html">Nuevo gasto</a></li>
                                 <li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li> -->
                             </ul>
                         </li>

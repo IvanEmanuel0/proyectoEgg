@@ -81,7 +81,11 @@ public class IngresoController {
     public ModelAndView crearIngreso(HttpSession session){
         ModelAndView mav = new ModelAndView("form_elements_ingresos");
         try {
-            mav.addObject("categorias", categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession"))));
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("persona", persona);
+            mav.addObject("categorias", categorias);
         } catch (MiException e) {
             System.out.println("error");
         }

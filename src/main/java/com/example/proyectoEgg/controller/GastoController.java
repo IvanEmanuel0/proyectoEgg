@@ -2,6 +2,7 @@ package com.example.proyectoEgg.controller;
 
 import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Gasto;
+import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.PersonaRepository;
 import com.example.proyectoEgg.service.CategoriaService;
@@ -40,8 +41,11 @@ public class GastoController {
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try {
-            List<Categoria> categorias = categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession")));
-            mav.addObject("gastos", gastoService.calcularGastosPorCategoria(categorias));//SEGUIR DE ACA BUSCAR LA CATEGORIA EN PARTICULAR QUE QUIERO MOSTRAR
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("persona", persona);
+            mav.addObject("gastos", gastoService.calcularGastosPorCategoria(categorias));
         } catch (MiException e) {
             mav.addObject("error-gasto", e.getMessage());
         }
@@ -83,7 +87,11 @@ public class GastoController {
         ModelAndView mav = new ModelAndView("form_elements_gastos");
 
         try {
-            mav.addObject("categorias", categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession"))));
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("persona", persona);
+            mav.addObject("categorias", categorias);
         } catch (MiException e) {
             System.out.println("error");
         }
@@ -163,7 +171,7 @@ public class GastoController {
 
           return new RedirectView("/gastos/deshabilitados");
     }
-    }
+}
 
 
 
