@@ -96,16 +96,16 @@ public class PersonaController {
     }
 
     @PostMapping("/guardar")
-    public RedirectView guardarPersona(@RequestParam MultipartFile foto, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String usuario, @RequestParam String clave, RedirectAttributes redirectAttributes){
+    public RedirectView guardarPersona(@RequestParam MultipartFile foto, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String usuario, @RequestParam String clave, @RequestParam String correo, RedirectAttributes redirectAttributes){
         RedirectView redirectView = new RedirectView("/personas");
         try {
-            personaService.crear(nombre, apellido, usuario, clave, foto);
+            personaService.crear(nombre, apellido, usuario, clave, correo, foto);
             redirectAttributes.addFlashAttribute("exito", "La persona se registró correctatamente.");
 
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("nombre", nombre);
             redirectAttributes.addFlashAttribute("apellido", apellido);
-
+            redirectAttributes.addFlashAttribute("correo", correo)
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             redirectView.setUrl("/personas/crear");
         }
