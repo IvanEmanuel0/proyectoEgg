@@ -57,23 +57,34 @@
 							<span class="input-group-text"><i data-feather="user"></i></span>
 							<input type="text" class="form-control" placeholder="Correo" th:value="${correo}" name="correo" required>
 						</div>
-						<div class="input-group mb-3 form-group" >
-							<input class="btn" type="file" th:value="${foto}" name="foto" id="foto" accept="image/*">
+
+					<!-- Botón para subir imagen, versión violetita -->
+						<div style="text-align:center;"> <!-- class="input-group mb-3 form-group" -->
+							<input id="file-upload" type="file" th:value="${foto}" name="foto" accept="image/*"/>
+							<label for="file-upload" class="custom-file-upload">
+								Subir imagen
+							</label>
 						</div>
-							<hr>
-						<div class="input-group mb-3">
-							<span class="input-group-text"><i data-feather="user"></i></span>
-							<input type="text" class="form-control" placeholder="Usuario" th:value="${usuario}" name="usuario" required>
-						</div>
-						<div class="input-group mb-4">
-							<span class="input-group-text"><i data-feather="lock"></i></span>
-							<input type="password" class="form-control" placeholder="Contraseña" th:value="${clave}" name="clave" required>
-						</div>
-						<!--<select id="rol" name="rol">
-							<option selected value="">Elegir rol</option>
-							<option th:each="rol : ${roles}" th:text="${rol.nombre}"  th:value="${rol.id}"></option>
-						</select>-->
-						<button class="btn btn-primary btn-block mb-4" type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
+
+					<!-- Botón para subir imagen, versión original -->
+					<!--<div class="input-group mb-3 form-group" >
+                        	<input class="btn" type="file" th:value="${foto}" name="foto" id="foto" accept="image/*">
+                        </div>-->
+
+                                <hr>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i data-feather="user"></i></span>
+                                <input type="text" class="form-control" placeholder="Usuario" th:value="${usuario}" name="usuario" required>
+                            </div>
+                            <div class="input-group mb-4">
+                                <span class="input-group-text"><i data-feather="lock"></i></span>
+                                <input type="password" class="form-control" placeholder="Contraseña" th:value="${clave}" name="clave" required>
+                            </div>
+                            <!--<select id="rol" name="rol">
+                                <option selected value="">Elegir rol</option>
+                                <option th:each="rol : ${roles}" th:text="${rol.nombre}"  th:value="${rol.id}"></option>
+                            </select>-->
+						<button class="btn btn-primary mb-4" type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
 						<p class="mb-2">¿Ya tienes una cuenta? <a th:href="@{/login}" class="f-w-400">Iniciar sesión</a></p>
 					</form>
 					</div>
