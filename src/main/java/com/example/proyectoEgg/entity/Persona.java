@@ -55,3 +55,4 @@ public class Persona {
         this.imagen = imagen;
     }
 }
+    

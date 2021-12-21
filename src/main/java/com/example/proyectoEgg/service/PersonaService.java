@@ -59,7 +59,7 @@ public class PersonaService {
             Util.sonLetras(apellido);
 
             cuentaService.crear(usuario,clave, correo);
-            personaRepository.save(new Persona(nombre, apellido, cuentaService.buscarPorUsuario(usuario),rol, fotoService.copiar(foto)));
+            personaRepository.save(new Persona(nombre, apellido, cuentaService.buscarPorUsuario(usuario), fotoService.copiar(foto)));
         } catch (MiException e){
             throw e;
         } catch (Exception e){

@@ -105,7 +105,7 @@ public class PersonaController {
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("nombre", nombre);
             redirectAttributes.addFlashAttribute("apellido", apellido);
-            redirectAttributes.addFlashAttribute("correo", correo)
+            redirectAttributes.addFlashAttribute("correo", correo);
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             redirectView.setUrl("/personas/crear");
         }
