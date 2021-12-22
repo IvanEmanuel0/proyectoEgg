@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,11 +59,20 @@
                 <thead class="table-dark">
                 <tr>
                     <th scope="col">Nombre de categoría</th>
+                    <th sec:authorize="hasAnyRole('ADMIN', 'USERPRO')" scope="col">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="c : ${categorias}">
                     <td th:text="${c.nombre}"></td>
+                    <td sec:authorize="hasAnyRole('ADMIN', 'USERPRO')"><a th:if="${accion == 'eliminar'}" class="btn btn-secondary btn-sm" th:href="@{/categorias/editar/__${c.id}__}">Editar</a>
+                        <form method="post" th:action="@{/categorias/__${accion}__/__${c.id}__}">
+                            <button th:text="${accion == 'eliminar'} ? 'Deshabilitar' : 'Habilitar'"
+                                    th:classappend="${accion == 'eliminar'} ? 'btn-danger' : 'btn-success'"
+                                    class="btn btn-sm" type="submit">
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
