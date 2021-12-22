@@ -74,6 +74,9 @@ public class CuentaService implements UserDetailsService {
         if(cuentaRepository.existsCuentaByUsuario(usuario)){
         throw new MiException("Ya existe el usuario ingresado.");
         }
+            Util.validarUsuario(usuario);
+            Util.validarClave(clave);
+            //Util.validarEmail(correo);
 
             Cuenta cuenta = new Cuenta();
             cuenta.setUsuario(usuario);
@@ -81,7 +84,6 @@ public class CuentaService implements UserDetailsService {
             cuenta.setCorreo(correo);
 
             Rol rol;
-
 
             if (cuentaRepository.findAll().isEmpty()) {
                 rol = rolService.buscarRolPorNombre("ADMIN");
