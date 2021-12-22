@@ -20,7 +20,7 @@
 
 
     <!-- Favicon icon -->
-    <link rel="icon" th:href="@{/img/favicon.svg}" type="image/x-icon">
+    <link rel="icon" href="https://i.ibb.co/jZQ6BXV/favicon.png" type="image/x-icon">
 
     <!-- font css -->
     <link rel="stylesheet" th:href="@{/fonts/feather.css}">
@@ -37,8 +37,8 @@
     <div th:replace="fragmentos::navbar"></div>
     <div th:replace="fragmentos::sidebar"></div>
     <div th:replace="fragmentos::header"></div>
-<!-- [ auth-signup ] start -->
 
+    <!-- [ Main Content ] start -->
     <section class="pc-container">
         <div class="pcoded-content">
             <!-- [ breadcrumb ] start -->
@@ -47,36 +47,33 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Estás en...</h5>
+                                <h5 class="m-b-10">Mi billetera</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#!">Cargar info</a></li>
-                                <li class="breadcrumb-item">Nuevo ingreso</li>
+                                <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="index.html">Mi cuenta</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- [ breadcrumb ] end -->
-            <!-- [ Main Content ] start -->
+            <h1 class="headerPersonalizado">Mi cuenta</h1>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
-                        <!--<div class="card-header">
-                            <h5>Basic Component</h5>
-                        </div>-->
+                    <div class="card2">
                         <div class="card-body">
-                            <h5>¡Cargá tus ingresos!</h5>
+                            <h5>Información de mi cuenta</h5>
                             <hr>
                             <form method="POST" autocomplete="off" class="needs-validation" id="formulario"
                                   th:action="@{/personas/__${accion}__}" enctype="multipart/form-data" th:object="${persona}">
                                 <div th:if="${error != null}" th:text="${error}" class="col-4 small alert-danger fade show" role="alert"></div>
+                                <label class="form-label">Nombre</label>
                                 <input th:field="*{id}" name="id" type="hidden"/>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i data-feather="user"></i></span>
                                     <input type="text" class="form-control" placeholder="Nombre" th:field="*{nombre}" name="nombre" required>
                                 </div>
+                                <label class="form-label">Apellido</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i data-feather="user"></i></span>
                                     <input type="text" class="form-control" placeholder="Apellido" th:field="*{apellido}" name="apellido" required>
@@ -86,7 +83,8 @@
                                     <input type="text" class="form-control" placeholder="Correo" th:field="*{correo}" name="correo" required>
                                 </div>-->
 
-                                <div class="input-group mb-3">
+                                <label class="form-label">Cambiar contraseña</label>
+                                <div class="input-group mb-4">
                                     <span class="input-group-text"><i data-feather="lock"></i></span>
                                     <input type="password" class="form-control" placeholder="Contraseña" th:value="${clave}" name="clave" required>
                                 </div>
@@ -94,9 +92,9 @@
                                     <option selected value="">Elegir rol</option>
                                     <option th:each="rol : ${roles}" th:text="${rol.nombre}"  th:value="${rol.id}"></option>
                                 </select>-->
-                                <span title="Click aquí para crear una cuenta">
-						<button class="btn btn-primary mb-3" type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
-						</span>
+                                <span title="Click aquí para guardar los cambios">
+						        <button class="btn btn-primary" type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
+                                </span>
                             </form>
 
                         </div>
