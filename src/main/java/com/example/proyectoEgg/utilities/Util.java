@@ -13,6 +13,22 @@ public class Util {
 
     }
 
+    public static void validarTresNumeros(String clave) throws MiException{
+        noEsVacio(clave);
+        if(!clave.matches("^[0-9]{3,3}$")) throw  new MiException("La clave debe ser de 3 digitos");
+
+    }
+
+    public static void validarDosNumeros(String dato) throws MiException {
+        noEsVacio(dato);
+        if(!dato.matches("^[0-9]{2,2}$")) throw new MiException("Mes o año deben ser 2 digitos");
+    }
+
+    public static void validarNumeroTarjeta(String numeroTarjeta) throws MiException {
+        noEsVacio(numeroTarjeta);
+        if (!numeroTarjeta.matches("^[0-9]{16,16}")) throw new MiException("Numero de tarjeta invalido");
+    }
+
     /*public static void esNumeroPositivo(String numero) throws MiException{
         noEsVacio(numero);
         if(!numero.matches("^[0-9]+$")) throw new MiException("Solo se de deben ingresar números positivos");

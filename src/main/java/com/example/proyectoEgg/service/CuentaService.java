@@ -151,6 +151,22 @@ public class CuentaService implements UserDetailsService {
     }
 
     @Transactional
+    public void actualizarRol(Integer id) throws MiException{
+        try {
+            Cuenta cuenta = buscarPorId(id);
+            if(cuenta != null){
+                cuenta.setId(id);
+                cuenta.setRol(rolService.buscarRolPorNombre("USERPRO"));
+                cuentaRepository.save(cuenta);
+            }
+        }catch (MiException e){
+            throw e;
+        }catch (Exception e){
+            throw e;
+        }
+    }
+
+    @Transactional
     public List<Cuenta> buscarHabilitados() {
         return cuentaRepository.usuariosHabilitados();
     }
