@@ -31,6 +31,7 @@ public class MainController {
             Integer idCuenta = (Integer)session.getAttribute("idSession");
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            if(categorias.isEmpty()) categoriaService.crearCategoriasBase(persona);
             mav.addObject("persona", persona);
             mav.addObject("dineroDisponible", personaService.calcularDineroDisponible(categorias));
             mav.addObject("gastoTotal", personaService.calcularTotalGastos(categorias));

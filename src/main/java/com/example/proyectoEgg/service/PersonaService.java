@@ -39,7 +39,7 @@ public class PersonaService {
     public Persona buscarPorId(Integer id) throws MiException{
         try {
             Util.esNumero(Integer.toString(id));
-        } catch (MiException e){
+        } catch (MiException e) {
             throw e;
         }
         Optional<Persona> optionalPersona = personaRepository.findById(id);
@@ -137,5 +137,4 @@ public class PersonaService {
     public Double calcularTotalGastos(List<Categoria> categorias){
         return gastoService.calcularTotalGastos(categorias);
     }
-
 }

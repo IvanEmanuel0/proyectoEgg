@@ -5,9 +5,11 @@ import com.example.proyectoEgg.entity.Gasto;
 import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.exception.MiException;
+import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.PersonaService;
 import com.example.proyectoEgg.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +31,7 @@ public class PersonaController {
 
     @Autowired
     private RolService rolService;
+
 
     @GetMapping
     public ModelAndView mostrarPersonas(HttpServletRequest request){
@@ -79,7 +82,7 @@ public class PersonaController {
         return mav;
     }
 
-    @GetMapping("/editar/{id}")
+    @PostMapping("/editar/{id}")
     public ModelAndView editarPersona(@PathVariable Integer id){
         ModelAndView mav = new ModelAndView("persona-formulario");
         try{
@@ -90,7 +93,6 @@ public class PersonaController {
         mav.addObject("titulo", "Editar persona");
         mav.addObject("accion", "modificar");
         return mav;
-
     }
 
     @PostMapping("/guardar")
@@ -147,7 +149,6 @@ public class PersonaController {
 
         return new RedirectView("/personas");
     }
-
 
 }
 
