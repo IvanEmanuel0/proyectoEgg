@@ -74,6 +74,9 @@ public class CuentaService implements UserDetailsService {
         if(cuentaRepository.existsCuentaByUsuario(usuario)){
         throw new MiException("Ya existe el usuario ingresado.");
         }
+            Util.validarUsuario(usuario);
+            Util.validarClave(clave);
+            //Util.validarEmail(correo);
 
             Cuenta cuenta = new Cuenta();
             cuenta.setUsuario(usuario);
@@ -81,7 +84,6 @@ public class CuentaService implements UserDetailsService {
             cuenta.setCorreo(correo);
 
             Rol rol;
-
 
             if (cuentaRepository.findAll().isEmpty()) {
                 rol = rolService.buscarRolPorNombre("ADMIN");
@@ -91,24 +93,9 @@ public class CuentaService implements UserDetailsService {
             }
             cuenta.setRol(rol);
             cuenta.setAlta(true);
-            emailService.enviar(correo);
             cuentaRepository.save(cuenta);
+           // emailService.enviar(correo);
             }
-
-/*Usuario usuario = new Usuario();
-
-        usuario.setCorreo(dto.getCorreo());
-        usuario.setClave(encoder.encode(dto.getClave()));
-        if (usuarioRepository.findAll().isEmpty()) {
-            usuario.setRol(Rol.ADMIN);
-        } else {
-            usuario.setRol(dto.getRol());
-        }
-        usuario.setAlta(true);
-        emailService.enviarThread(dto.getCorreo());
-        usuarioRepository.save(usuario);
-    }*/
-
 
     @Transactional
     public void eliminar(Integer id) throws MiException {

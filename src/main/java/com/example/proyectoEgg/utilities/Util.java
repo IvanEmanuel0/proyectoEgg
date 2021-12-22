@@ -25,13 +25,18 @@ public class Util {
     }
 
     public static void validarClave(String clave) throws MiException{
-        esNumero(clave);
-        if(!clave.matches("(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S{8,16}+$")) throw new MiException("La clave debe tener entre 8 y 16 carácteres, al menos un dígito,  al menos una minúscula, y al menos una mayúscula.");
+        noEsVacio(clave);
+        if(!clave.matches("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,16}$")) throw new MiException("La clave debe tener entre 8 y 16 carácteres, al menos una letra, un número y un caracter especial.");
     }
 
     public static void validarUsuario(String usuario) throws MiException{
-        esNumero(usuario);
-        if(!usuario.matches("^ [A-Za-z] \\\\ w {5,29}+$")) throw new MiException("La clave debe tener entre 6 y 15 carácteres alfanúmericos. La primer letra debe ser alfábetica.");
+        noEsVacio(usuario);
+        if(!usuario.matches("^(?!.*[-_]{2,})(?=^[^-_].*[^-_]$)[\\w\\s-]{5,12}$")) throw new MiException("El usuario debe tener entre 5 y 12 carácteres alfanúmericos. Solo puede contener guiones bajos y medios.");
+    }
+
+    public static void validarEmail(String correo) throws MiException{
+        noEsVacio(correo);
+        if(!correo.matches("^(.+)@(.+)$")) throw new MiException("Ingrese un email válido");
     }
 
 
