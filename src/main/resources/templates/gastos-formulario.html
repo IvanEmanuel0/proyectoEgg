@@ -68,6 +68,7 @@
                         <hr>
                         <form th:action="@{/gastos/__${accion}__}" th:object="${gasto}" method="post">
 							<div class="row">
+								<input th:field="*{id}" type="hidden">
 								<div class="col-md-12">
 									<label for="validationTooltip01" class="form-label">Detalle de gasto</label>
 									<input type="text" class="mb-3 form-control form-control-lg" th:field="*{detalle}" id="validationTooltip01" placeholder="Detalle" required>
