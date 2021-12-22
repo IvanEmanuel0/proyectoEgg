@@ -35,15 +35,19 @@
      <thead class="table-dark">
      <tr>
          <th scope="col">Categoria</th>
-         <th scope="col">Categoria</th>
-         <th scope="col">Categoria</th>
          <th scope="col">Total</th>
      </tr>
      </thead>
      <tbody>
      <tr th:each="g : ${gastos}">
+         <td>
+             <form th:action="@{/gastos/__${g.key.id}__}" method="post">
+                <button class="btn" th:text="${g.key.nombre}" type="submit">
 
-         <td> <a th:text="${g.key.nombre}" th:href='@{/gastos/__${g.key.id}__}'></a> </td>
+                </button>
+             </form>
+             <!--<a th:text="${g.key.nombre}" th:href='@{/gastos/__${g.key.id}__}'></a>-->
+         </td>
          <td th:text="${g.value}"></td>
      </tr>
      </tbody>

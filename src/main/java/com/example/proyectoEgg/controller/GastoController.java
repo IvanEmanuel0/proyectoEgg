@@ -62,6 +62,32 @@ public class GastoController {
 
     }
 
+    @GetMapping("/{id}")
+    public ModelAndView gastosDeUnaCategoria(@PathVariable Integer id, HttpServletRequest request, HttpSession session) {
+        ModelAndView mav = new ModelAndView("gasto-categoria-lista");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        try {
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            Categoria categoria = categoriaService.buscarPorId(id);
+            mav.addObject("persona", persona);
+            mav.addObject("gastos", gastoService.buscarHabilitados(categoria));
+        } catch (MiException e) {
+            mav.addObject("error-gasto", e.getMessage());
+        }
+
+        if(flashMap != null){
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+
+        }
+        mav.addObject("accion", "eliminar");
+        mav.addObject("titulo", "Lista de Gastos");
+
+        return mav;
+    }
+
     @GetMapping("/deshabilitados")
     public ModelAndView gastosDeshabilitados(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("gasto-lista");
