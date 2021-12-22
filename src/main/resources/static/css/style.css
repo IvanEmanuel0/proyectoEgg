@@ -658,7 +658,6 @@ progress {
 }
 
 .row {
-    --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
     display: flex;
     flex-wrap: wrap;
@@ -19275,6 +19274,14 @@ padding-bottom: 15px;
 .h1Login {
 padding-left: 138px;
 color: #FFFFFF;
+}
+
+.grafico1 {
+padding-left: 30px;
+}
+
+.grafico2 {
+padding-left: 45px;
 }
 
 

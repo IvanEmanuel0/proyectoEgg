@@ -1,9 +1,6 @@
 package com.example.proyectoEgg.controller;
 
-import com.example.proyectoEgg.entity.Categoria;
-import com.example.proyectoEgg.entity.Gasto;
-import com.example.proyectoEgg.entity.Persona;
-import com.example.proyectoEgg.entity.Rol;
+import com.example.proyectoEgg.entity.*;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.CuentaService;
@@ -155,6 +152,36 @@ public class PersonaController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return new RedirectView("/personas");
+    }
+
+    @GetMapping("/actualizarRol/{id}")
+    public ModelAndView actualizarRol(@PathVariable Integer id, HttpSession session) {
+        ModelAndView mav = new ModelAndView("tarjeta-formulario");
+        try{
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
+            mav.addObject("persona", persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
+
+        } catch (MiException e){
+            System.out.println(e.getMessage());
+        }
+        return mav;
+    }
+
+    @PostMapping("/actualizarRol")
+    public RedirectView actualizarRol(HttpSession session, Integer id, String nombre, String numeroTajeta, String mesVencimiento, String anioVencimiento, String clave, RedirectAttributes redirectAttributes){
+        try{
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Cuenta cuenta = cuentaService.buscarPorId(idCuenta);
+            personaService.agregarTarjeta(cuenta, numeroTajeta, mesVencimiento, anioVencimiento, clave, nombre);
+            redirectAttributes.addFlashAttribute("exito", "Ahora sos un usuario pro :)");
+        } catch (MiException e){
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+        return new RedirectView("/");
     }
 
 }

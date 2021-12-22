@@ -125,6 +125,22 @@ public class PersonaService {
     }
 
     @Transactional
+    public void agregarTarjeta(Cuenta cuenta, String numeroTarjeta, String mes, String anio, String clave, String nombre) throws MiException {
+        try {
+            Util.validarTresNumeros(clave);
+            Util.validarDosNumeros(anio);
+            Util.validarDosNumeros(mes);
+            Util.sonLetras(nombre);
+            Util.validarNumeroTarjeta(numeroTarjeta);
+
+            cuentaService.actualizarRol(cuenta.getId());
+
+        } catch (MiException e) {
+            throw e;
+        }
+    }
+
+    @Transactional
     public Double calcularDineroDisponible(List<Categoria> categorias){
         return  calcularTotalIngresos(categorias)-calcularTotalGastos(categorias);
     }
