@@ -124,9 +124,9 @@ public class PersonaController {
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificarPersona(@RequestParam MultipartFile foto, @RequestParam Integer id,@RequestParam String nombre,@RequestParam String apellido, RedirectAttributes redirectAttributes){
+    public RedirectView modificarPersona(@RequestParam MultipartFile foto, @RequestParam Integer id,@RequestParam String nombre,@RequestParam String apellido, @RequestParam String clave, RedirectAttributes redirectAttributes){
         try {
-            personaService.modificar(id, nombre, apellido, foto);
+            personaService.modificar(id, nombre, apellido, foto, clave);
             redirectAttributes.addFlashAttribute("exito", "La persona se modificó correctamente.");
         } catch (MiException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());

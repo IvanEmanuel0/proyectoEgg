@@ -89,9 +89,9 @@ public class CuentaController {
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam Integer id, @RequestParam String usuario, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes) {
+    public RedirectView modificar(@RequestParam Integer id, @RequestParam String clave, @RequestParam Rol rol, RedirectAttributes redirectAttributes) {
         try {
-            cuentaService.modificar(id, usuario, clave);
+            cuentaService.modificar(id, clave);
             redirectAttributes.addFlashAttribute("exito", "La cuenta se modifico correctamente.");
         } catch (MiException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());

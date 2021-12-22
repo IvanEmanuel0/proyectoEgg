@@ -80,7 +80,7 @@ public class PersonaService {
     }
 
     @Transactional
-    public void modificar(Integer id, String nombre, String apellido, MultipartFile foto) throws MiException {
+    public void modificar(Integer id, String nombre, String apellido, MultipartFile foto, String clave) throws MiException {
         try {
             Util.sonLetras(nombre);
             Util.sonLetras(apellido);
@@ -92,6 +92,7 @@ public class PersonaService {
                 if(!foto.isEmpty()){
                     persona.setImagen(fotoService.copiar(foto));
                 }
+                cuentaService.modificar(id, clave);
                 personaRepository.save(persona);
             }
         }catch (MiException e){
