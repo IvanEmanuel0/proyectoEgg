@@ -1,6 +1,7 @@
 package com.example.proyectoEgg.controller;
 
 import com.example.proyectoEgg.entity.Categoria;
+import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
 import com.example.proyectoEgg.service.PersonaService;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -31,7 +33,11 @@ public class CategoriaController {
         ModelAndView mav = new ModelAndView("categoria-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
         try {
-            mav.addObject("categorias", categoriaService.buscarHabilitados(personaService.buscarPorCuenta((Integer)session.getAttribute("idSession"))));
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("persona", persona);
+            mav.addObject("categorias", categorias);
 
         } catch(MiException e){
             System.out.println("error");
@@ -64,8 +70,16 @@ public class CategoriaController {
 
     @GetMapping("/crear")
     @PreAuthorize("hasAnyRole('USERPRO', 'ADMIN')")
-    public ModelAndView crear(){
+    public ModelAndView crear(HttpSession session){
         ModelAndView mav = new ModelAndView("categoria-formulario");
+        try {
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("persona", persona);
+        } catch (MiException e) {
+            System.out.println("error");
+        }
         mav.addObject("categoria" , new Categoria());
         mav.addObject("titulo", "Crear Categoria");
         mav.addObject("accion", "guardar");

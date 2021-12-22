@@ -105,8 +105,8 @@ public class IngresoService {
     }
 
     @Transactional
-    public Map<String, Double> calcularIngresosPorCategoria(List<Categoria> categorias) {
-        Map<String, Double> ingresosPorCategoria = new HashMap<String, Double>();
+    public Map<Categoria, Double> calcularIngresosPorCategoria(List<Categoria> categorias) {
+        Map<Categoria, Double> ingresosPorCategoria = new HashMap<Categoria, Double>();
         Double total = 0.0;
 
         for(Categoria categoria: categorias) {
@@ -115,7 +115,7 @@ public class IngresoService {
                 total += ingreso.getMontoIngresado();
             }
             if(total != 0.0) {
-                ingresosPorCategoria.put(categoria.getNombre(), total);
+                ingresosPorCategoria.put(categoria, total);
             }
             total = 0.0;
         }
@@ -124,9 +124,9 @@ public class IngresoService {
 
     @Transactional
     public Double calcularTotalIngresos (List<Categoria> categorias) {
-        Map<String, Double> gastos = calcularIngresosPorCategoria(categorias);
+        Map<Categoria, Double> gastos = calcularIngresosPorCategoria(categorias);
         Double total = 0.0;
-        for (Map.Entry<String, Double> entry : gastos.entrySet()) {
+        for (Map.Entry<Categoria, Double> entry : gastos.entrySet()) {
             total += entry.getValue();
         }
         return total;

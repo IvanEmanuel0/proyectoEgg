@@ -30,6 +30,7 @@
 	<!-- vendor css -->
 	<link rel="stylesheet" th:href="@{/css/style.css}" id="main-style-link">
 
+
 </head>
 
 <!-- [ auth-signup ] start -->
@@ -37,10 +38,9 @@
 	<div class="auth-content">
 		<div class="card">
 			<div class="row align-items-center text-center">
-				<div class="col-md-12">
 					<div class="card-body">
-						<img src="assets/images/logo-dark.svg" alt="" class="img-fluid mb-4">
-						<h4 class="mb-3 f-w-400">Registro</h4>
+						<!-- <img src="https://i.ibb.co/Sc5kjZM/icononuevo.png" alt="" class="img-fluid logoSW"> -->
+						<h4 class="mb-4 f-w-400">Registro de cuenta</h4>
 						<form method="POST" autocomplete="off" class="needs-validation" id="formulario"
      					 th:action="@{/personas/__${accion}__}" enctype="multipart/form-data">
 						<div th:if="${error != null}" th:text="${error}" class="col-4 small alert-danger fade show" role="alert"></div>
@@ -57,26 +57,39 @@
 							<span class="input-group-text"><i data-feather="user"></i></span>
 							<input type="text" class="form-control" placeholder="Correo" th:value="${correo}" name="correo" required>
 						</div>
-						<div class="input-group mb-3 form-group" >
-							<input class="btn" type="file" th:value="${foto}" name="foto" id="foto" accept="image/*">
+
+					<!-- Botón para subir imagen, versión violetita -->
+						<div style="text-align:center;">
+							<span title="Click aquí para subir una imagen de perfil">
+								<input id="file-upload" type="file" th:value="${foto}" name="foto" accept="image/*"/>
+								<label for="file-upload" class="btn btn-primary mb-4 custom-file-upload">Subir imagen</label>
+							</span>
 						</div>
-							<hr>
-						<div class="input-group mb-3">
-							<span class="input-group-text"><i data-feather="user"></i></span>
-							<input type="text" class="form-control" placeholder="Usuario" th:value="${usuario}" name="usuario" required>
-						</div>
-						<div class="input-group mb-4">
-							<span class="input-group-text"><i data-feather="lock"></i></span>
-							<input type="password" class="form-control" placeholder="Contraseña" th:value="${clave}" name="clave" required>
-						</div>
-						<!--<select id="rol" name="rol">
-							<option selected value="">Elegir rol</option>
-							<option th:each="rol : ${roles}" th:text="${rol.nombre}"  th:value="${rol.id}"></option>
-						</select>-->
-						<button class="btn btn-primary btn-block mb-4" type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
-						<p class="mb-2">¿Ya tienes una cuenta? <a th:href="@{/login}" class="f-w-400">Iniciar sesión</a></p>
+
+					<!-- Botón para subir imagen, versión original -->
+					<!--<div class="input-group mb-3 form-group" >
+                        	<input class="btn" type="file" th:value="${foto}" name="foto" id="foto" accept="image/*">
+                        </div>-->
+
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i data-feather="user"></i></span>
+                                <input type="text" class="form-control" placeholder="Usuario" th:value="${usuario}" name="usuario" required>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text"><i data-feather="lock"></i></span>
+                                <input type="password" class="form-control" placeholder="Contraseña" th:value="${clave}" name="clave" required>
+                            </div>
+                            <!--<select id="rol" name="rol">
+                                <option selected value="">Elegir rol</option>
+                                <option th:each="rol : ${roles}" th:text="${rol.nombre}"  th:value="${rol.id}"></option>
+                            </select>-->
+						<span title="Click aquí para crear una cuenta">
+						<button class="btn btn-primary mb-3" type="submit" th:text="${accion == 'guardar'} ? 'Crear cuenta' : 'Guardar cambios'"></button>
+						</span>
+						<hr>
+						<p class="mb-2">¿Ya tienes una cuenta? <a th:href="@{/login}" class="f-w-400 violeta"><span title="Click aquí para iniciar sesión">Iniciar sesión</span></a></p>
 					</form>
-					</div>
 				</div>
 			</div>
 		</div>

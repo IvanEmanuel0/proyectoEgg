@@ -55,5 +55,9 @@ public class Categoria {
         this.alta = true;
     }
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }
 

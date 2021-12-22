@@ -33,7 +33,7 @@
         </thead>
         <tbody>
         <tr th:each="g : ${gastos}">
-            <td th:text="${g.key}"></td>
+            <td th:text="${g.key.nombre}"><a th:href="@{/gastos/__${g.key.id}__}"></a></td>
             <td th:text="${g.value}"></td>
             <!--<td><a th:if="${accion == 'eliminar'}" class="btn btn-secondary btn-sm" th:href="@{/gastos/editar/__${g.id}__}">Editar</a>
                 <form method="post" th:action="@{/gastos/__${accion}__/__${g.id}__}">
