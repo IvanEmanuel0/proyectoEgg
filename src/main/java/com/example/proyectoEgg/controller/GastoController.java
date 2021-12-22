@@ -154,7 +154,7 @@ public class GastoController {
         RedirectView redirectView = new RedirectView("/gastos");
          try {
              gastoService.crear(categoria, montoPagado, detalle);
-             redirectAttributes.addFlashAttribute("éxito", "El gasto se registró correctamente.");
+             redirectAttributes.addFlashAttribute("exito", "El gasto se registró correctamente.");
 
          }catch (MiException e){
              redirectAttributes.addFlashAttribute("categoria", categoria);
@@ -172,7 +172,7 @@ public class GastoController {
     public RedirectView modificarGasto(@RequestParam Integer id, @RequestParam Double montoPagado, @RequestParam String detalle, RedirectAttributes redirectAttributes){
         try {
             gastoService.modificar(id, montoPagado, detalle);
-            redirectAttributes.addAttribute("éxito", "El gasto se modificó correctamente.");
+            redirectAttributes.addAttribute("exito", "El gasto se modificó correctamente.");
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -183,7 +183,7 @@ public class GastoController {
     public RedirectView eliminarGasto(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         try {
             gastoService.eliminar(id);
-            redirectAttributes.addFlashAttribute("éxito", "El gasto se dió de baja correctamente.");
+            redirectAttributes.addFlashAttribute("exito", "El gasto se dió de baja correctamente.");
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
@@ -195,7 +195,7 @@ public class GastoController {
     public RedirectView habilitar(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         try {
             gastoService.habilitar(id);
-            redirectAttributes.addFlashAttribute("éxito", "El gasto se dió de alta correctamente.");
+            redirectAttributes.addFlashAttribute("exito", "El gasto se dió de alta correctamente.");
         }catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
