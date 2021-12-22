@@ -49,48 +49,46 @@
                 <div class="row align-items-center">
                     <div class="col-md-12">
                         <div class="page-header-title">
-                            <h5 class="m-b-10">Estás en...</h5>
+                            <h5 class="m-b-10">Mi billetera</h5>
                         </div>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#!">Cargar info</a></li>
-                            <li class="breadcrumb-item">Nuevo ingreso</li>
+                            <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Mi billetera</a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Agregar</a></li>
+                            <li class="breadcrumb-item">Ingresos</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- [ breadcrumb ] end -->
-        <!-- [ Main Content ] start -->
+        <h1 class="headerPersonalizado">¡Cargá tus ingresos!</h1>
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
-                    <!--<div class="card-header">
-                        <h5>Basic Component</h5>
-                    </div>-->
+                <div class="card2">
                     <div class="card-body">
-                        <h5>¡Cargá tus ingresos!</h5>
-                        <hr>
+                        <h5>Nuevo ingreso</h5>
+                        <hr class="mb-4"> <!-- hasta acá pegué -->
                         <form th:action="@{/ingresos/__${accion}__}" th:object="${ingreso}" method="post">
 							<div class="row">
                                 <input th:field="*{id}" type="hidden">
-								<div class="col-md-6">
-									<label for="validationTooltip01" class="form-label">Detalle de Ingreso</label>
+                                <div class="col-md-12">
+									<label for="validationTooltip01" class="form-label">Detalle del ingreso</label>
 									<input type="text" class="mb-3 form-control form-control-lg" th:field="*{detalle}" id="validationTooltip01" placeholder="Detalle" required>
 								</div>
+                                <label class="form-label">Importe</label>
 								<div class="input-group mb-3">
 									<span class="input-group-text">$</span>
 									<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" th:field="*{montoIngresado}" required>
 								</div>
-								<div class="form-group">
-									<label class="form-label">Lista de categorías</label>
+                                <div class="col-md-12 mb-4">
+                                    <label class="form-label">Lista de categorías</label>
 									<select aria-label="Seleccionar categoria" id="dataListOptions" class="form-select" th:field="*{categoria}" required>
-										<option selected value="">Seleccionar categoria</option>
+										<option selected value="">Seleccionar categoría</option>
 										<option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
 									</select>
 								</div>
 								<div class="col-12">
-									<button class="btn btn-primary" type="submit">Cargar ingreso</button>
+									<button class="btn btn-primary" type="submit">Crear ingreso</button>
 								</div>
 							</div>
                         </form>

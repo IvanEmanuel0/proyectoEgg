@@ -27,6 +27,7 @@
     <div th:replace="fragmentos::sidebar"></div>
     <div th:replace="fragmentos::header"></div>
 
+    <!-- [ Main Content ] start -->
     <section class="pc-container">
         <div class="pcoded-content">
             <!-- [ breadcrumb ] start -->
@@ -35,29 +36,31 @@
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="page-header-title">
-                                <h5 class="m-b-10">Estás en...</h5>
+                                <h5 class="m-b-10">Mi billetera</h5>
                             </div>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item"><a href="#!">Cargar info...</a></li>
-                                <li class="breadcrumb-item">Nuevo gasto</li>
+                                <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                                <li class="breadcrumb-item"><a href="index.html">Mi billetera</a></li>
+                                <li class="breadcrumb-item"><a href="index.html">Agregar</a></li>
+                                <li class="breadcrumb-item">Categoría</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            <h1 class="headerPersonalizado">¡Creá tus categorías personalizadas!</h1>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
+                    <div class="card2">
                         <div class="card-body">
-                            <h5>¡Cargá tus gastos!</h5>
-                            <hr>
+                            <h5>Nueva categoría</h5>
+                            <hr class="mb-4">
                             <form th:action="@{/categorias/__${accion}__}" th:object="${categoria}" method="post">
                                 <input th:field="*{id}" type="hidden"/>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label for="validationTooltip01" class="form-label">Nombre de categoría</label>
-                                        <input type="text" class="mb-3 form-control form-control-lg" th:field="*{nombre}" id="validationTooltip01" name="nombre" placeholder="Detalle"  required>
+                                        <input type="text" class="mb-3 form-control form-control-lg" th:field="*{nombre}" id="validationTooltip01" name="nombre" placeholder="Categoría"  required>
                                     </div>
 
                                     <div class="col-12">

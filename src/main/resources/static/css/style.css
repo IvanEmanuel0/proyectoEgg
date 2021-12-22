@@ -15368,8 +15368,12 @@ body:not(.minimenu) .pc-sidebar .pc-submenu .pc-submenu .pc-submenu > .pc-item:b
     min-height: calc(100vh - 70px);
 }
 
+.pc-container2 {
+    position: relative;
+    top: 70px;
+}
+
 .pc-container .pcoded-content {
-    padding-left: 30px;
     padding-right: 30px;
     padding-top: 30px;
 }
@@ -19197,6 +19201,13 @@ color: #48349A;
 margin-left: 95px;
 }
 
+.headerPersonalizado2 {
+margin-bottom: 25px;
+font-size: 45px;
+color: #48349A;
+margin-left: 105px;
+}
+
 .margenLogout {
     margin-bottom: 25px;
 }
@@ -19218,6 +19229,15 @@ margin-left: 95px;
     font-size: 0.875rem;
     border-radius: 4px;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.row2 {
+    --bs-gutter-x: -60rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(var(--bs-gutter-y) * -1);
+    margin-right: calc(var(--bs-gutter-x) / -2);
 }
 
 

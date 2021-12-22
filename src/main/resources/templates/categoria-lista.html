@@ -27,13 +27,36 @@
 <div th:replace="fragmentos::sidebar"></div>
 <div th:replace="fragmentos::header"></div>
 
-<!-- [ Main Content ] start -->
+<!-- BREADCRUM START -->
 <div class="pc-container">
     <div class="pcoded-content">
-        <div class="row">
-            <!--   Tabla Ingreso -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Mi billetera</h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                            <li class="breadcrumb-item">Mi billetera</li>
+                            <li class="breadcrumb-item">Ver</li>
+                            <li class="breadcrumb-item">Categorías</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- BREADCRUM END -->
+
+<!-- [ Main Content ] start -->
+<div class="pc-container2">
+    <div class="pcoded-content">
+        <h1 class="headerPersonalizado2">Categorías personalizadas</h1>
+        <div class="row2">
+            <!-- TABLA INGRESOS START -->
             <table class="table">
-                <thead>
+                <thead class="table-dark">
                 <tr>
                     <th scope="col">Nombre de categoría</th>
                 </tr>
@@ -44,6 +67,7 @@
                 </tr>
                 </tbody>
             </table>
+            <!-- TABLA GASTOS END -->
         </div>
     </div>
 </div>

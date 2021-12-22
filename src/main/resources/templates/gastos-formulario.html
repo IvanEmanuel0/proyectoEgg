@@ -52,6 +52,8 @@
                             <h5 class="m-b-10">Mi billetera</h5>
                         </div>
                         <ul class="breadcrumb">
+							<li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+							<li class="breadcrumb-item"><a href="index.html">Mi billetera</a></li>
                             <li class="breadcrumb-item"><a href="index.html">Agregar</a></li>
                             <li class="breadcrumb-item">Gastos</li>
                         </ul>
@@ -59,12 +61,12 @@
                 </div>
             </div>
         </div>
-		<h1 class="headerPersonalizado">¡Agregá tus gastos!</h1>
+		<h1 class="headerPersonalizado">¡Cargá tus gastos!</h1>
         <div class="row">
             <div class="col-md-12">
                 <div class="card2">
                     <div class="card-body">
-                        <h5>Ingresá tu gasto</h5>
+                        <h5>Nuevo gasto</h5>
                         <hr class="mb-4">
                         <form th:action="@{/gastos/__${accion}__}" th:object="${gasto}" method="post">
 							<div class="row">
@@ -86,12 +88,12 @@
 								<div class="col-md-12 mb-4">
 									<label class="form-label">Lista de categorías</label>
 									<select aria-label="Seleccionar categoria" class="form-select" th:field="*{categoria}" id="dataListOptions" required>
-										<option selected value="">Seleccionar categoria</option>
+										<option selected value="">Seleccionar categoría</option>
 										<option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
 									</select>
 								</div>
 								<div class="col-12">
-									<button class="btn btn-primary" type="submit">Cargar gasto</button>
+									<button class="btn btn-primary" type="submit">Crear gasto</button>
 								</div>
 							</div>
 						</form>

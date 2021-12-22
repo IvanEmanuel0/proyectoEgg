@@ -27,37 +27,57 @@
     <div th:replace="fragmentos::sidebar"></div>
     <div th:replace="fragmentos::header"></div>
 
-<!-- [ Main Content ] start -->
-<div class="pc-container">
-    <div class="pcoded-content">
-        <div class="row">  
- <!--   Tabla Ingreso -->
- <table class="table">
-    <thead class="table-dark">
-     <tr>
-         <th scope="col">Categoria</th>
-         <th scope="col">Total</th>
-      </tr>
-    </thead>
-    <tbody>
-         
-        <tr th:each="i : ${ingresos}">
-            <td>
-                <form th:action="@{/ingresos/__${i.key.id}__}" method="post">
-                    <button class="btn" th:text="${i.key.nombre}" type="submit"></button>
-                </form>
-            </td>
-            <td th:text="${i.value}"></td>
+<!-- BREADCRUM START -->
+    <div class="pc-container">
+        <div class="pcoded-content">
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Mi billetera</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
+                                <li class="breadcrumb-item">Mi billetera</li>
+                                <li class="breadcrumb-item">Ver</li>
+                                <li class="breadcrumb-item">Ingresos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!-- BREADCRUM END -->
 
-    <!--<td><button type="button" class="btn btn-info">añadir</button>
-    <button type="button" class="btn btn-warning">modificar</button>
-    <button type="button" class="btn btn-danger">eliminar</button>
-    </td>-->
-  </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+<!-- [ Main Content ] start -->
+            <div class="pc-container2">
+                <div class="pcoded-content">
+                    <h1 class="headerPersonalizado2">Resumen de ingresos</h1>
+                    <div class="row2">
+
+<!-- TABLA INGRESOS START -->
+            <table class="table">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="i : ${ingresos}">
+                    <td>
+                        <form th:action="@{/ingresos/__${i.key.id}__}" method="post">
+                            <button class="btn" th:text="${i.key.nombre}" type="submit"></button>
+                        </form>
+                    </td>
+                    <td th:text="${i.value}"></td>
+                </tr>
+                </tbody>
+            </table>
+<!-- TABLA INGRESOS END -->
+
+        </div>
+    </div>
 </div>
  
 
