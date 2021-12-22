@@ -64,7 +64,7 @@
                                 <!--<li class="pc-item"><a class="pc-link" href="#">Resumen de cuenta</a></li>-->
                                 <li class="pc-item"><a class="pc-link" th:href="@{/gastos/crear}">Gasto</a></li>
                                 <li class="pc-item"><a class="pc-link" th:href="@{/ingresos/crear}">Ingreso</a></li>
-                                <li class="pc-item"><a class="pc-link" th:href="@{/categorias/crear}">Categoría</a></li>
+                                <li sec:authorize="hasAnyRole('USERPRO', 'ADMIN')" class="pc-item"><a class="pc-link" th:href="@{/categorias/crear}">Categoría</a></li>
                                 <!--<li class="pc-item"><a class="pc-link" href="gastos-formulario.html">Nuevo gasto</a></li>
                                 <li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li> -->
                             </ul>
@@ -75,23 +75,23 @@
                                 <!--<li class="pc-item"><a class="pc-link" href="#">Resumen de cuenta</a></li>-->
                                 <li class="pc-item"><a class="pc-link" th:href="@{/ingresos}">Ingresos</a></li>
                                 <li class="pc-item"><a class="pc-link" th:href="@{/gastos}">Gastos</a></li>
+                                <li class="pc-item"><a class="pc-link" th:href="@{/categorias}">Categorias</a></li>
                                 <!-- <li class="pc-item"><a class="pc-link" th:href="@{/deudas}">Deudas</a></li>
                                 <li class="pc-item"><a class="pc-link" href="gastos-formulario.html">Nuevo gasto</a></li>
                                 <li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li> -->
                             </ul>
                         </li>
 
-                        <li class="pc-item pc-hasmenu">
-                            <a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Configuración</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
-                            <ul class="pc-submenu">
-                                <li class="pc-item"><a class="pc-link" th:href="@{/categorias}">Categorias</a></li>
-                                <!--<li class="pc-item"><a class="pc-link" href="#">Ingresos compartidos</a></li>
+                        <!--<li class="pc-item pc-hasmenu">
+                        <a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Configuración</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
+                        <ul class="pc-submenu">
+                                <li class="pc-item"><a class="pc-link" href="#">Ingresos compartidos</a></li>
                                 <li class="pc-item"><a class="pc-link" href="#">Gastos compartidos</a></li>
                                 <li class="pc-item"><a class="pc-link" href="#">Deudas compartidas</a></li>
                                 <li class="pc-item"><a class="pc-link" href="gastos-formulario.html">Nuevo gasto</a></li>
-                                <li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li> -->
+                                <li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
@@ -121,10 +121,11 @@
                                     <h5 class="text-overflow m-0"><span class="badge bg-light-primary"><a href="https://gumroad.com/dashboardkit" target="_blank">Actualizar a versión Pro</a></span></h5>
                                 </div>
 
-                                <a href="html de mi cuenta" class="dropdown-item">
+                                <form th:action="@{/personas/editar/__${persona.id}__}" method="post">
                                     <i class="material-icons-two-tone">account_circle</i>
-                                    <span>Mi cuenta</span>
-                                </a>
+                                    <button class="btn" type="submit">Mi cuenta</button>
+                                </form>
+
                                 <a href="html de configuración" class="dropdown-item">
                                     <i class="material-icons-two-tone">settings</i>
                                     <span>Configuración</span>

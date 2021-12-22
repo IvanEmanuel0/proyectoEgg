@@ -107,6 +107,19 @@ public class CategoriaService {
     }
     */
 
-
+    @Transactional
+    public void crearCategoriasBase(Persona persona) {
+        try {
+            crear("Servicios", persona);
+            crear("Entretenimiento", persona);
+            crear("Alimentación", persona);
+            crear("Educación", persona);
+            crear("Viáticos", persona);
+            crear("Cuidado personal", persona);
+            crear("Salud", persona);
+        } catch(MiException e){
+            System.out.println(e.getMessage());
+        }
+    }
 
 }
