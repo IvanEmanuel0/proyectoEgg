@@ -59,6 +59,17 @@
             <div class="col-xl-6 col-md-12">
                 <div class="card flat-card">
                     <div class="row-table">
+                        <div class="col-sm-6 card-body">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <i class="material-icons-two-tone text-primary mb-1">unarchive</i>
+                                </div>
+                                <div th scope="col" class="col-sm-8 text-md-center">
+                                    <h5 th:text="| $${ingresoTotal} |"></h5>
+                                    <span>Ingresos</span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-sm-6 card-body br">
                             <div class="row">
                                 <div class="col-sm-4">
@@ -76,30 +87,14 @@
                                     <i class="material-icons-two-tone text-primary mb-1">language</i>
                                 </div>
                                 <div scope="col" class="col-sm-8 text-md-center">
-                                    <h5> falta hacer </h5>
-                                    <span>Deudas</span>
+                                    <h5 th:text="| $${dineroDisponible} |"></h5>
+                                    <span>Disponible</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 card-body">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <i class="material-icons-two-tone text-primary mb-1">unarchive</i>
-                                </div>
-                                <div th scope="col" class="col-sm-8 text-md-center">
-									<h5 th:text="| $${ingresoTotal} |"></h5>
-                                    <span>Ingresos</span>
-                                </div>
-                            </div>
-                        </div>
-						
                     </div>
                 </div>
             </div>
-<!-- TABLA GASTOS, INGRESOS, DEUDAS END -->
-
-
-<!-- GRÁFICO DE BARRAS START -->
 			<div class="row">
 			    <div class="col-xl-6 col-md-12">
                     <div class="card">
@@ -122,12 +117,11 @@
                     </div>
                 </div>        
 		    </div>
-<!-- GRÁFICO DE BARRAS END -->  
     	</div>
     </div>
 </div>
 
-<!-- Required Js -->
+
     <script th:src="@{/js/vendor-all.min.js}"></script>
     <script th:src="@{/js/plugins/bootstrap.min.js}"></script>
     <script th:src="@{/js/plugins/feather.min.js}"></script>

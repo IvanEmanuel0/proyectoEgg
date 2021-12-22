@@ -4,6 +4,7 @@ import com.example.proyectoEgg.entity.Categoria;
 import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
+import com.example.proyectoEgg.service.CuentaService;
 import com.example.proyectoEgg.service.PersonaService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ public class CategoriaController {
     private CategoriaService categoriaService;
     @Autowired
     private PersonaService personaService;
+    @Autowired
+    private CuentaService cuentaService;
 
     @GetMapping()
     public ModelAndView mostrarCategorias(HttpServletRequest request, HttpSession session){
@@ -36,6 +39,7 @@ public class CategoriaController {
             Integer idCuenta = (Integer)session.getAttribute("idSession");
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("persona", persona);
             mav.addObject("categorias", categorias);
 
@@ -76,6 +80,7 @@ public class CategoriaController {
             Integer idCuenta = (Integer)session.getAttribute("idSession");
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("persona", persona);
         } catch (MiException e) {
             System.out.println("error");
@@ -88,11 +93,17 @@ public class CategoriaController {
 
     @GetMapping("/editar/{id}")
     @PreAuthorize("hasAnyRole('USERPRO', 'ADMIN')")
-    public ModelAndView editarCategoria(@PathVariable Integer id){
+    public ModelAndView editarCategoria(@PathVariable Integer id, HttpSession session){
         ModelAndView mav = new ModelAndView("categoria-formulario");
         try{
             Categoria categoria = categoriaService.buscarPorId(id);
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
+            mav.addObject("persona", persona);
             mav.addObject("categoria", categoria);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
         }catch(MiException e){
             mav.addObject("error", e.getMessage());
         }
