@@ -15378,6 +15378,12 @@ body:not(.minimenu) .pc-sidebar .pc-submenu .pc-submenu .pc-submenu > .pc-item:b
     padding-top: 30px;
 }
 
+.pc-container .pcoded-content2 {
+    padding-right: 30px;
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
 .pc-container .page-header + .row {
     padding-top: 50px;
 }
