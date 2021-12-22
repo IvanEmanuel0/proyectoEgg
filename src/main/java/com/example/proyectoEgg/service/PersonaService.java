@@ -51,6 +51,7 @@ public class PersonaService {
         return personaRepository.buscarPersonaPorCuenta(cuentaService.buscarPorId(id));
     }
 
+
     @Transactional
     public void crear(String nombre, String apellido, String usuario, String clave, String correo , MultipartFile foto) throws MiException{
 
@@ -58,8 +59,19 @@ public class PersonaService {
             Util.sonLetras(nombre);
             Util.sonLetras(apellido);
 
+            Persona p = new Persona();
+            p.setNombre(nombre);
+            p.setApellido(apellido);
+
+            if(!foto.isEmpty()){
+                p.setImagen(fotoService.copiar(foto));
+            }
+
             cuentaService.crear(usuario,clave, correo);
-            personaRepository.save(new Persona(nombre, apellido, cuentaService.buscarPorUsuario(usuario), fotoService.copiar(foto)));
+            p.setCuenta(cuentaService.buscarPorUsuario(usuario));
+
+            personaRepository.save(p);
+
         } catch (MiException e){
             throw e;
         } catch (Exception e){
@@ -77,7 +89,9 @@ public class PersonaService {
                 persona.setId(id);
                 persona.setNombre(nombre);
                 persona.setApellido(apellido);
-                persona.setImagen(fotoService.copiar(foto));
+                if(!foto.isEmpty()){
+                    persona.setImagen(fotoService.copiar(foto));
+                }
                 personaRepository.save(persona);
             }
         }catch (MiException e){

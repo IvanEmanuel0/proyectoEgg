@@ -36,7 +36,7 @@ public class IngresoController {
 
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request, HttpSession session){
-        ModelAndView mav = new ModelAndView("Lista-Ingreso");
+        ModelAndView mav = new ModelAndView("ingresosPorCategoria-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try {
@@ -44,7 +44,7 @@ public class IngresoController {
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
             mav.addObject("persona", persona);
-            mav.addObject("ingresos", ingresoService.calcularIngresosPorCategoria(categorias));//SEGUIR DE ACA BUSCAR LA CATEGORIA EN PARTICULAR QUE QUIERO MOSTRAR
+            mav.addObject("ingresos", ingresoService.calcularIngresosPorCategoria(categorias));
         } catch (MiException e) {
             mav.addObject("error-ingreso", e.getMessage());
         }
@@ -61,9 +61,35 @@ public class IngresoController {
 
     }
 
+    @PostMapping("/{id}")
+    public ModelAndView ingresosDeUnaCategoria(@PathVariable Integer id, HttpServletRequest request, HttpSession session) {
+        ModelAndView mav = new ModelAndView("ingresosDeUnaCategoria-lista");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+
+        try {
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            Categoria categoria = categoriaService.buscarPorId(id);
+            mav.addObject("persona", persona);
+            mav.addObject("ingresos", ingresoService.buscarHabilitados(categoria));
+        } catch (MiException e) {
+            mav.addObject("error-ingreso", e.getMessage());
+        }
+
+        if(flashMap != null){
+            mav.addObject("exito", flashMap.get("exito"));
+            mav.addObject("error", flashMap.get("error"));
+
+        }
+        mav.addObject("accion", "eliminar");
+        mav.addObject("titulo", "Lista de Ingresos");
+
+        return mav;
+    }
+
     @GetMapping("/deshabilitados")
     public ModelAndView mostrarDeshabilitados(HttpServletRequest request) {
-        ModelAndView mav = new ModelAndView("ingreso-lista");
+        ModelAndView mav = new ModelAndView("");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null) {
@@ -79,7 +105,7 @@ public class IngresoController {
 
     @GetMapping("/crear")
     public ModelAndView crearIngreso(HttpSession session){
-        ModelAndView mav = new ModelAndView("form_elements_ingresos");
+        ModelAndView mav = new ModelAndView("ingresos-formulario");
         try {
             Integer idCuenta = (Integer)session.getAttribute("idSession");
             Persona persona = personaService.buscarPorCuenta(idCuenta);
@@ -97,14 +123,19 @@ public class IngresoController {
     }
 
     @GetMapping("/editar/{id}")
-    public ModelAndView editarIngreso(@PathVariable Integer id){
-        ModelAndView mav = new ModelAndView("ingreso-formulario");
+    public ModelAndView editarIngreso(@PathVariable Integer id, HttpSession session){
+        ModelAndView mav = new ModelAndView("ingresos-formulario");
         try{
-            mav.addObject("ingreso", ingresoService.buscarPorId(id));
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("persona", persona);
+            mav.addObject("categorias", categorias);
+            Ingreso ingreso = ingresoService.buscarPorId(id);
+            mav.addObject("ingreso", ingreso);
         }catch(MiException e){
             mav.addObject("error", e.getMessage());
         }
-
         mav.addObject("titulo", "Editar Ingreso");
         mav.addObject("accion", "modificar");
         return mav;

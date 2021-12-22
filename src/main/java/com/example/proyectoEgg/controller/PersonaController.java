@@ -59,7 +59,6 @@ public class PersonaController {
         if(flashMap != null){
             mav.addObject("exito", flashMap.get("exito"));
             mav.addObject("error", flashMap.get("error"));
-
         }
 
         mav.addObject("personas", personaService.buscarDeshabilitados());
@@ -68,12 +67,11 @@ public class PersonaController {
 
         return mav;
 
-
     }
 
     @GetMapping("/crear")
     public ModelAndView crearPersonas(){
-        ModelAndView mav = new ModelAndView("auth-signup");
+        ModelAndView mav = new ModelAndView("registro");
         //mav.addObject("persona" , new Persona());
         mav.addObject("roles", rolService.buscarTodos());
         mav.addObject("titulo", "Crear Persona");
