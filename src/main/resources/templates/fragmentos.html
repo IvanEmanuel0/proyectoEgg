@@ -85,11 +85,9 @@
                         <li sec:authorize="hasRole('ADMIN')" class="pc-item pc-hasmenu">
                         <a href="#!" class="pc-link "><span class="pc-micon"><i class="material-icons-two-tone">business_center</i></span><span class="pc-mtext">Configuración</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span></a>
                         <ul class="pc-submenu">
-                                <li class="pc-item"><a class="pc-link" href="#">Ingresos compartidos</a></li>
-                                <li class="pc-item"><a class="pc-link" href="#">Gastos compartidos</a></li>
-                                <li class="pc-item"><a class="pc-link" href="#">Deudas compartidas</a></li>
-                                <li class="pc-item"><a class="pc-link" href="gastos-formulario.html">Nuevo gasto</a></li>
-                                <li class="pc-item"><a class="pc-link" href="form_elements_deuda.html">Deudas pendientes</a></li>
+                                <li class="pc-item"><a class="pc-link" href="#">Lista de personas</a></li>
+                                <li class="pc-item"><a class="pc-link" href="#">Lista de roles</a></li>
+                                <li class="pc-item"><a class="pc-link" href="#">Crear rol</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -118,7 +116,7 @@
                             <div class="dropdown-menu dropdown-menu-right pc-h-dropdown">
 
                                 <div class=" dropdown-header">
-                                    <h5 class="text-overflow m-0"><span class="badge bg-light-primary"><a href="https://gumroad.com/dashboardkit" target="_blank">Actualizar a versión Pro</a></span></h5>
+                                    <h5 class="text-overflow m-0"><span class="badge bg-light-primary"><a th:href="@{/personas/actualizarRol/__${cuenta.id}__}" target="_blank">Actualizar a versión Pro</a></span></h5>
                                 </div>
 
                                 <form th:action="@{/personas/editar/__${persona.id}__}" method="post">

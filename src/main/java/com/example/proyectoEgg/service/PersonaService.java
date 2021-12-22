@@ -80,7 +80,7 @@ public class PersonaService {
     }
 
     @Transactional
-    public void modificar(Integer id, String nombre, String apellido, MultipartFile foto, String clave) throws MiException {
+    public void modificar(Integer id, String nombre, String apellido, String clave) throws MiException {
         try {
             Util.sonLetras(nombre);
             Util.sonLetras(apellido);
@@ -89,9 +89,9 @@ public class PersonaService {
                 persona.setId(id);
                 persona.setNombre(nombre);
                 persona.setApellido(apellido);
-                if(!foto.isEmpty()){
-                    persona.setImagen(fotoService.copiar(foto));
-                }
+                //if(!foto.isEmpty()){
+                //    persona.setImagen(fotoService.copiar(foto));
+               // }
                 cuentaService.modificar(id, clave);
                 personaRepository.save(persona);
             }
@@ -119,6 +119,22 @@ public class PersonaService {
             Persona persona = buscarPorId(id);
             persona.setAlta(true);
             personaRepository.save(persona);
+        } catch (MiException e) {
+            throw e;
+        }
+    }
+
+    @Transactional
+    public void agregarTarjeta(Cuenta cuenta, String numeroTarjeta, String mes, String anio, String clave, String nombre) throws MiException {
+        try {
+            Util.validarTresNumeros(clave);
+            Util.validarDosNumeros(anio);
+            Util.validarDosNumeros(mes);
+            Util.sonLetras(nombre);
+            Util.validarNumeroTarjeta(numeroTarjeta);
+
+            cuentaService.actualizarRol(cuenta.getId());
+
         } catch (MiException e) {
             throw e;
         }
