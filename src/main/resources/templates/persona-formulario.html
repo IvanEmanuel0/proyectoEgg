@@ -86,14 +86,6 @@
                                     <input type="text" class="form-control" placeholder="Correo" th:field="*{correo}" name="correo" required>
                                 </div>-->
 
-                                <!-- Botón para subir imagen, versión violetita -->
-                                <div style="text-align:center;">
-							<span title="Click aquí para subir una imagen de perfil">
-								<input id="file-upload" type="file" th:value="${foto}" name="foto" accept="image/*"/>
-								<label for="file-upload" class="btn btn-primary mb-4 custom-file-upload">Subir imagen</label>
-							</span>
-                                </div>
-
                                 <div class="input-group mb-3">
                                     <span class="input-group-text"><i data-feather="lock"></i></span>
                                     <input type="password" class="form-control" placeholder="Contraseña" th:value="${clave}" name="clave" required>
@@ -139,60 +131,14 @@
 
 <!-- [ auth-signup ] end -->
 
-<!-- Required Js
-<script th:src="{@/js/vendor-all.min.js}"></script>
-<script th:src="{@/js/plugins/bootstrap.min.js}"></script>
-<script th:src="{@/js/plugins/feather.min.js}"></script>
-<script th:src="{@/js/pcoded.min.js}"></script>
- -->
+
+
+    <script th:src="@{/js/vendor-all.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/feather.min.js}"></script>
+    <script th:src="@{/js/pcoded.min.js}"></script>
 
 
 </body>
 
 </html>
-
-<!--
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div class="col-12 p-5 bg-contenido">
-    <h1>Registro</h1>
-    <form method="POST" th:action="@{/personas/__${accion}__}" enctype="multipart/form-data">
-        <input th:value="${id}" type="hidden">
-        <div th:if="${error != null}" th:text="${error}" ></div>
-
-
-        <input placeholder="Nombre" required name="nombre" th:value="${nombre}" class="form-control" id="nombre" type="text">
-        <label for="nombre"></label>
-
-        <input placeholder="Apellido" required name="apellido" th:value="${apellido}" class="form-control" id="apellido" type="text">
-        <label for="apellido"></label>
-
-        <input type="file" name="foto" accept="image/*">
-        <label name="foto">Cargar foto</label>
-
-        <h2>Datos de la cuenta</h2>
-
-        <input placeholder="Usuario" name="usuario" class="form-control" id="usuario" type="text">
-        <label for="usuario"></label>
-
-        <input placeholder="Contraseña" name="clave" class="form-control" id="clave" type="password">
-        <label for="clave"></label>
-
-        <select id="rol" name="rol">
-            <option selected value="">Elegir rol</option>
-            <option th:each="rol : ${roles}" th:text="${rol.nombre}"  th:value="${rol.id}"></option>
-        </select>
-
-        <button class="btn btn-success" th:text="${action == 'guardar'} ? 'Registrar' : 'Guardar cambios'"
-        type="submit"></button>
-
-    </form>
-
-</div>
-</body>
-</html>-->
