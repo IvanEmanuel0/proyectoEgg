@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Bostrap 5 CSS-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/styleTablas.css}">
+    <!-- Favicon icon -->
+    <link rel="icon" th:href="@{/img/favicon.svg}" type="image/x-icon">
+
+    <!-- font css -->
+    <link rel="stylesheet" th:href="@{/fonts/feather.css}">
+    <link rel="stylesheet" th:href="@{/fonts/fontawesome.css}">
+    <link rel="stylesheet" th:href="@{/fonts/material.css}">
+
+    <!-- vendor css -->
+    <link rel="stylesheet" th:href="@{/css/style.css}" id="main-style-link">
+
+
+</head>
+<body>
+
+<div th:replace="fragmentos::navbar"></div>
+<div th:replace="fragmentos::sidebar"></div>
+<div th:replace="fragmentos::header"></div>
+
+<div class="pc-container">
+    <div class="pcoded-content">
+        <div class="row">
+            <!--   Tabla Gasto -->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Monto ingresado</th>
+                    <th scope="col">Detalle</th>
+                    <th scope="col">Fecha</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="i : ${ingresos}">
+                    <td th:text="${i.montoIngresado}"></td>
+                    <td th:text="${i.detalle}"></td>
+                    <td th:text="${i.fechaDeCreacion}"></td>
+                    <td><a th:if="${accion == 'eliminar'}" class="btn btn-secondary btn-sm" th:href="@{/ingresos/editar/__${i.id}__}">Editar</a>
+                        <form method="post" th:action="@{/ingresos/__${accion}__/__${i.id}__}">
+                            <button th:text="${accion == 'eliminar'} ? 'Deshabilitar' : 'Habilitar'"
+                                    th:classappend="${accion == 'eliminar'} ? 'btn-danger' : 'btn-success'"
+                                    class="btn btn-sm" type="submit">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Warning Section Ends -->
+<!-- Required Js -->
+<script th:src="@{/js/vendor-all.min.js}"></script>
+<script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/feather.min.js}"></script>
+<script th:src="@{/js/pcoded.min.js}"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> -->
+<!-- <script src="assets/js/plugins/clipboard.min.js"></script> -->
+<!-- <script src="assets/js/uikit.min.js"></script> -->
+
+<script>
+    $("body").append('<div class="fixed-button active"><a href="https://gumroad.com/dashboardkit" target="_blank" class="btn btn-md btn-success"><i class="material-icons-two-tone text-white">shopping_cart</i> Upgrade To Pro</a> </div>');
+</script>
+
+</body>
+
+</html>

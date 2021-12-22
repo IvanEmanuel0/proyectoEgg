@@ -43,10 +43,8 @@
          <td>
              <form th:action="@{/gastos/__${g.key.id}__}" method="post">
                 <button class="btn" th:text="${g.key.nombre}" type="submit">
-
                 </button>
              </form>
-             <!--<a th:text="${g.key.nombre}" th:href='@{/gastos/__${g.key.id}__}'></a>-->
          </td>
          <td th:text="${g.value}"></td>
      </tr>

@@ -37,7 +37,7 @@ public class GastoController {
 
     @GetMapping()
     public ModelAndView mostrarGastosPorCategoria(HttpServletRequest request, HttpSession session){
-        ModelAndView mav = new ModelAndView("Lista-Gasto");
+        ModelAndView mav = new ModelAndView("gastosPorCategoria-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try {
@@ -62,9 +62,9 @@ public class GastoController {
 
     }
 
-    @GetMapping("/{id}")
+    @PostMapping("/{id}")
     public ModelAndView gastosDeUnaCategoria(@PathVariable Integer id, HttpServletRequest request, HttpSession session) {
-        ModelAndView mav = new ModelAndView("gasto-categoria-lista");
+        ModelAndView mav = new ModelAndView("gastosDeUnaCategoria-lista");
         Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         try {
@@ -90,7 +90,7 @@ public class GastoController {
 
     @GetMapping("/deshabilitados")
     public ModelAndView gastosDeshabilitados(HttpServletRequest request){
-        ModelAndView mav = new ModelAndView("gasto-lista");
+        ModelAndView mav = new ModelAndView("");
          Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
 
         if(flashMap != null){
@@ -110,7 +110,7 @@ public class GastoController {
 
     @GetMapping("/crear")
     public ModelAndView crearGasto(HttpSession session){
-        ModelAndView mav = new ModelAndView("form_elements_gastos");
+        ModelAndView mav = new ModelAndView("gastos-formulario");
 
         try {
             Integer idCuenta = (Integer)session.getAttribute("idSession");
@@ -130,9 +130,14 @@ public class GastoController {
     }
 
     @GetMapping("/editar/{id}")
-    public ModelAndView editarGasto(@PathVariable Integer id){
-            ModelAndView mav = new ModelAndView("gasto-formulario");
+    public ModelAndView editarGasto(@PathVariable Integer id, HttpSession  session){
+        ModelAndView mav = new ModelAndView("gastos-formulario");
         try {
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("persona", persona);
+            mav.addObject("categorias", categorias);
             Gasto gasto = gastoService.buscarPorId(id);
             mav.addObject("gasto", gasto);
         } catch(MiException e) {

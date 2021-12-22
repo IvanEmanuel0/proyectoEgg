@@ -20,7 +20,7 @@ public class LoginController {
 
     @GetMapping
     public ModelAndView login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, Principal principal) {
-        ModelAndView mav = new ModelAndView("auth-signin");
+        ModelAndView mav = new ModelAndView("login");
         mav.addObject("login", true);
         if(error != null) {
             mav.addObject("error", "Usuario o contraseña invalidos.");

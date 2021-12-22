@@ -42,9 +42,13 @@
     <tbody>
          
         <tr th:each="i : ${ingresos}">
-            <td th:text="${i.key}"></td>
+            <td>
+                <form th:action="@{/ingresos/__${i.key.id}__}" method="post">
+                    <button class="btn" th:text="${i.key.nombre}" type="submit"></button>
+                </form>
+            </td>
             <td th:text="${i.value}"></td>
-    
+
     <!--<td><button type="button" class="btn btn-info">añadir</button>
     <button type="button" class="btn btn-warning">modificar</button>
     <button type="button" class="btn btn-danger">eliminar</button>
@@ -56,8 +60,8 @@
 </div>
 </div>
  
- 
- 
+
+
 
 
 
