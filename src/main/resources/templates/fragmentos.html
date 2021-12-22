@@ -122,8 +122,10 @@
                                 </div>
 
                                 <form th:action="@{/personas/editar/__${persona.id}__}" method="post">
-                                    <i class="material-icons-two-tone">account_circle</i>
-                                    <button class="btn" type="submit">Mi cuenta</button>
+                                    <button class="dropdown-item" type="submit">
+                                        <i class="material-icons-two-tone">account_circle</i>
+                                        Mi cuenta
+                                    </button>
                                 </form>
 
                                 <a href="html de configuración" class="dropdown-item">
