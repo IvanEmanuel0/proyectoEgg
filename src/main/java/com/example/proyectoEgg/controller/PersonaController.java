@@ -172,11 +172,11 @@ public class PersonaController {
     }
 
     @PostMapping("/actualizarRol")
-    public RedirectView actualizarRol(HttpSession session, Integer id, String nombre, String numeroTajeta, String mesVencimiento, String anioVencimiento, String clave, RedirectAttributes redirectAttributes){
+    public RedirectView actualizarRol(HttpSession session, Integer id, String nombre, String numeroTarjeta, String mesVencimiento, String anioVencimiento, String clave, RedirectAttributes redirectAttributes){
         try{
             Integer idCuenta = (Integer)session.getAttribute("idSession");
             Cuenta cuenta = cuentaService.buscarPorId(idCuenta);
-            personaService.agregarTarjeta(cuenta, numeroTajeta, mesVencimiento, anioVencimiento, clave, nombre);
+            personaService.agregarTarjeta(cuenta, numeroTarjeta, mesVencimiento, anioVencimiento, clave, nombre);
             redirectAttributes.addFlashAttribute("exito", "Ahora sos un usuario pro :)");
         } catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
