@@ -59,29 +59,30 @@
                 </div>
             </div>
         </div>
-		<h1 class="headerPersonalizado">¡Cargá tus gastos!</h1>
+		<h1 class="headerPersonalizado">¡Agregá tus gastos!</h1>
         <div class="row">
             <div class="col-md-12">
                 <div class="card2">
                     <div class="card-body">
-                        <h5>Nuevo gasto</h5>
-                        <hr>
+                        <h5>Ingresá tu gasto</h5>
+                        <hr class="mb-4">
                         <form th:action="@{/gastos/__${accion}__}" th:object="${gasto}" method="post">
 							<div class="row">
 								<div class="col-md-12">
-									<label for="validationTooltip01" class="form-label">Detalle de gasto</label>
+									<label for="validationTooltip01" class="form-label">Detalle del gasto</label>
 									<input type="text" class="mb-3 form-control form-control-lg" th:field="*{detalle}" id="validationTooltip01" placeholder="Detalle" required>
 									<div class="valid-tooltip">
 										Looks good!
 									</div>
 								</div>
 
+								<label class="form-label">Importe</label>
 								<div class="input-group mb-3">
 									<span class="input-group-text">$</span>
 									<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" th:field="*{montoPagado}" required>
 								</div>
 
-								<div class="form-group">
+								<div class="col-md-12 mb-4">
 									<label class="form-label">Lista de categorías</label>
 									<select aria-label="Seleccionar categoria" class="form-select" th:field="*{categoria}" id="dataListOptions">
 										<option selected value="">Seleccionar categoria</option>
