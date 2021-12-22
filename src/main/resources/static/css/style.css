@@ -4553,6 +4553,19 @@ textarea.form-control-lg {
     border-radius: 4px;
 }
 
+.card2 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    word-wrap: break-word;
+    background-color: #ffffff;
+    background-clip: border-box;
+    border: 0px solid rgba(0, 0, 0, 0.125);
+    border-radius: 4px;
+    margin-left: 95px;
+}
+
 .card > hr {
     margin-right: 0;
     margin-left: 0;
@@ -14731,7 +14744,7 @@ pre[class*="language-"] > code {
 }
 
 .responsivelogazo {
-    width: 85%;
+    width: 100%;
     height: auto;
   }
 
@@ -19172,6 +19185,14 @@ input[type="file"] {
   width: 100%;
   max-width: 50px;
   height: auto;
+}
+
+.headerPersonalizado {
+margin-top: 80px;
+margin-bottom: 50px;
+font-size: 45px;
+color: #48349A;
+margin-left: 95px;
 }
 
 /**====== Botón subir imagen end ======**/

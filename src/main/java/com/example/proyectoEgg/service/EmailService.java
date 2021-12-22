@@ -16,8 +16,10 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String from;
 
-    private static final String SUBJECT = "Correo de bienvenida";
-    private static final String TEXT = "Bienvenido a nuestra página. Gracias por registrarte";
+    private static final String SUBJECT = "¡Bienvenido a Smart Wallet!";
+    private static final String TEXT = "¡Gracias por registrarte en Smart Wallet!\n"
+            + "\nYa puedes disfrutar todos los beneficios que Smart Wallet tiene para ti.\n\n"
+            + "\nEste es un correo generado automáticamente. Por favor, no respondas este correo.";
 
     @Async
     public void enviar(String to) {
