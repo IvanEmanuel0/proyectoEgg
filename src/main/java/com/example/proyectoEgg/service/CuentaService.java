@@ -94,7 +94,7 @@ public class CuentaService implements UserDetailsService {
             cuenta.setRol(rol);
             cuenta.setAlta(true);
             cuentaRepository.save(cuenta);
-           // emailService.enviar(correo);
+            //emailService.enviar(correo);
             }
 
     @Transactional
@@ -120,15 +120,15 @@ public class CuentaService implements UserDetailsService {
         }
     }
 
-    public void modificar(Integer id, String usuario, String clave) throws MiException {
+    public void modificar(Integer id, String clave) throws MiException {
 
         try {
-            Util.validarUsuario(usuario); //verificar
+            //Util.validarUsuario(usuario); //verificar
             Util.validarClave(clave);
             Cuenta cuenta = buscarPorId(id);
             if(cuenta != null){
                 cuenta.setId(id);
-                cuenta.setUsuario(usuario);
+                //cuenta.setUsuario(usuario);
                 cuenta.setClave(encoder.encode(clave));
                 cuentaRepository.save(cuenta);
             }
@@ -150,14 +150,17 @@ public class CuentaService implements UserDetailsService {
 
     }
 
+    @Transactional
     public List<Cuenta> buscarHabilitados() {
         return cuentaRepository.usuariosHabilitados();
     }
 
+    @Transactional
     public List<Cuenta> buscarDeshabilitados() {
         return cuentaRepository.usuariosDeshabilitados();
     }
 
+    @Transactional
     public Cuenta buscarPorUsuario(String usuario) {
         Optional<Cuenta> optionalCuenta = cuentaRepository.findByUsuario(usuario);
         return optionalCuenta.orElse(null);
