@@ -6,6 +6,7 @@ import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.repository.PersonaRepository;
 import com.example.proyectoEgg.service.CategoriaService;
+import com.example.proyectoEgg.service.CuentaService;
 import com.example.proyectoEgg.service.GastoService;
 import com.example.proyectoEgg.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class GastoController {
 
     @Autowired
     private CategoriaService categoriaService;
+
+    @Autowired
+    private CuentaService cuentaService;
 
     @GetMapping()
     public ModelAndView mostrarGastosPorCategoria(HttpServletRequest request, HttpSession session){
@@ -72,6 +76,7 @@ public class GastoController {
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             Categoria categoria = categoriaService.buscarPorId(id);
             mav.addObject("persona", persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("gastos", gastoService.buscarHabilitados(categoria));
         } catch (MiException e) {
             mav.addObject("error-gasto", e.getMessage());
@@ -117,6 +122,7 @@ public class GastoController {
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
             mav.addObject("persona", persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("categorias", categorias);
         } catch (MiException e) {
             System.out.println("error");
@@ -136,6 +142,7 @@ public class GastoController {
             Integer idCuenta = (Integer)session.getAttribute("idSession");
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("persona", persona);
             mav.addObject("categorias", categorias);
             Gasto gasto = gastoService.buscarPorId(id);

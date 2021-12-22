@@ -66,12 +66,6 @@
 							</span>
 						</div>
 
-					<!-- Botón para subir imagen, versión original -->
-					<!--<div class="input-group mb-3 form-group" >
-                        	<input class="btn" type="file" th:value="${foto}" name="foto" id="foto" accept="image/*">
-                        </div>-->
-
-
                             <div class="input-group mb-3">
                                 <span class="input-group-text"><i data-feather="user"></i></span>
                                 <input type="text" class="form-control" placeholder="Usuario" th:value="${usuario}" name="usuario" required>
@@ -97,12 +91,12 @@
 </div>
 <!-- [ auth-signup ] end -->
 
-<!-- Required Js -->
-<script src="assets/js/vendor-all.min.js"></script>
-<script src="assets/js/plugins/bootstrap.min.js"></script>
-<script src="assets/js/plugins/feather.min.js"></script>
-<script src="assets/js/pcoded.min.js"></script>
-
+<!-- Required Js
+<script th:src="{@/js/vendor-all.min.js}"></script>
+<script th:src="{@/js/plugins/bootstrap.min.js}"></script>
+<script th:src="{@/js/plugins/feather.min.js}"></script>
+<script th:src="{@/js/pcoded.min.js}"></script>
+ -->
 
 
 </body>

@@ -5,6 +5,7 @@ import com.example.proyectoEgg.entity.Ingreso;
 import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
+import com.example.proyectoEgg.service.CuentaService;
 import com.example.proyectoEgg.service.IngresoService;
 
 import com.example.proyectoEgg.service.PersonaService;
@@ -34,6 +35,9 @@ public class IngresoController {
     @Autowired
     private CategoriaService categoriaService;
 
+    @Autowired
+    private CuentaService cuentaService;
+
     @GetMapping
     public ModelAndView mostrarTodos(HttpServletRequest request, HttpSession session){
         ModelAndView mav = new ModelAndView("ingresosPorCategoria-lista");
@@ -43,6 +47,7 @@ public class IngresoController {
             Integer idCuenta = (Integer)session.getAttribute("idSession");
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("persona", persona);
             mav.addObject("ingresos", ingresoService.calcularIngresosPorCategoria(categorias));
         } catch (MiException e) {
@@ -111,6 +116,7 @@ public class IngresoController {
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
             mav.addObject("persona", persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("categorias", categorias);
         } catch (MiException e) {
             System.out.println("error");
@@ -130,6 +136,7 @@ public class IngresoController {
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
             mav.addObject("persona", persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("categorias", categorias);
             Ingreso ingreso = ingresoService.buscarPorId(id);
             mav.addObject("ingreso", ingreso);

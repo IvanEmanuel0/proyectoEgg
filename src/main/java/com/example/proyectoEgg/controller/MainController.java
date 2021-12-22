@@ -5,6 +5,7 @@ import com.example.proyectoEgg.entity.Cuenta;
 import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
+import com.example.proyectoEgg.service.CuentaService;
 import com.example.proyectoEgg.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ public class MainController {
     private PersonaService personaService;
     @Autowired
     private CategoriaService categoriaService;
+    @Autowired
+    private CuentaService cuentaService;
 
     @GetMapping
     public ModelAndView inicio(HttpSession session){
@@ -32,6 +35,7 @@ public class MainController {
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
             if(categorias.isEmpty()) categoriaService.crearCategoriasBase(persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("persona", persona);
             mav.addObject("dineroDisponible", personaService.calcularDineroDisponible(categorias));
             mav.addObject("gastoTotal", personaService.calcularTotalGastos(categorias));
