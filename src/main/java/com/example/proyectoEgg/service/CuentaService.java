@@ -94,7 +94,7 @@ public class CuentaService implements UserDetailsService {
             cuenta.setRol(rol);
             cuenta.setAlta(true);
             cuentaRepository.save(cuenta);
-            //emailService.enviar(correo);
+            emailService.enviar(correo);
             }
 
     @Transactional
