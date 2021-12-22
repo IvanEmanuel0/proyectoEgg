@@ -19265,7 +19265,16 @@ margin-left: 105px;
 
 .paddingLogin {
 padding-right: 55px;
-padding-bottom: 260px;
+padding-bottom: 100px;
+}
+
+.paddingLogin2 {
+padding-bottom: 15px;
+}
+
+.h1Login {
+padding-left: 138px;
+color: #FFFFFF;
 }
 
 
