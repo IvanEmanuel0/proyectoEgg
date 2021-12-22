@@ -38,8 +38,9 @@
                     <div th:if="${error}" >
                         <div th:text="${error}" ></div>
                     </div>
+
                     <div th:if="${logout}" >
-                        <div th:text="${logout}" ></div>
+                        <div class="margenLogout" th:text="${logout}" ></div>
                     </div>
                     <form th:action="@{/logincheck}" method="POST">
                     <div class="input-group mb-3">
@@ -61,7 +62,7 @@
                     <span title="Click aquí para iniciar sesión">
                         <button class="btn btn-block btn-primary mb-4" type="submit">Iniciar sesión</button>
                     </span>
-                        <p class="mb-0 text-muted">¿No tienes una cuenta? <a th:href="@{/personas/crear}" class="f-w-400 violeta"><span title="Click aquí para registrarte">Registrarse</span></a></p>
+                        <p class="mb-0 text-muted">¿No tenés una cuenta? <a th:href="@{/personas/crear}" class="f-w-400 violeta"><span title="Click aquí para registrarte">¡Registrate!</span></a></p>
                 </form>
                 </div>
             </div>
