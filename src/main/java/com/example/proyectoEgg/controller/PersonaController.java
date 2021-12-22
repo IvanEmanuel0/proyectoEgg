@@ -6,6 +6,7 @@ import com.example.proyectoEgg.entity.Persona;
 import com.example.proyectoEgg.entity.Rol;
 import com.example.proyectoEgg.exception.MiException;
 import com.example.proyectoEgg.service.CategoriaService;
+import com.example.proyectoEgg.service.CuentaService;
 import com.example.proyectoEgg.service.PersonaService;
 import com.example.proyectoEgg.service.RolService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,11 @@ public class PersonaController {
     @Autowired
     private RolService rolService;
 
+    @Autowired
+    private CuentaService cuentaService;
+
+    @Autowired
+    private CategoriaService categoriaService;
 
     @GetMapping
     public ModelAndView mostrarPersonas(HttpServletRequest request){
@@ -83,10 +90,14 @@ public class PersonaController {
     }
 
     @PostMapping("/editar/{id}")
-    public ModelAndView editarPersona(@PathVariable Integer id){
+    public ModelAndView editarPersona(@PathVariable Integer id, HttpSession session){
         ModelAndView mav = new ModelAndView("persona-formulario");
         try{
-            mav.addObject("persona", personaService.buscarPorId(id));
+            Integer idCuenta = (Integer)session.getAttribute("idSession");
+            Persona persona = personaService.buscarPorCuenta(idCuenta);
+            List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
+            mav.addObject("persona", persona);
         }catch(MiException e){
             mav.addObject("error", e.getMessage());
         }
@@ -109,7 +120,6 @@ public class PersonaController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
             redirectView.setUrl("/personas/crear");
         }
-
         return redirectView;
     }
 
@@ -121,7 +131,6 @@ public class PersonaController {
         } catch (MiException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-
         return new RedirectView("/personas");
     }
 
@@ -133,7 +142,6 @@ public class PersonaController {
         }catch(MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-
         return new RedirectView("/personas");
     }
 
@@ -146,7 +154,6 @@ public class PersonaController {
         }catch(MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-
         return new RedirectView("/personas");
     }
 
