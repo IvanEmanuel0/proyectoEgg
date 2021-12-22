@@ -49,6 +49,7 @@ public class GastoController {
             Persona persona = personaService.buscarPorCuenta(idCuenta);
             List<Categoria> categorias = categoriaService.buscarHabilitados(persona);
             mav.addObject("persona", persona);
+            mav.addObject("cuenta", cuentaService.buscarPorId(idCuenta));
             mav.addObject("gastos", gastoService.calcularGastosPorCategoria(categorias));
         } catch (MiException e) {
             mav.addObject("error-gasto", e.getMessage());
