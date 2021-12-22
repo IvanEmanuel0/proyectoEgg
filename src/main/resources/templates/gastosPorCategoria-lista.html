@@ -31,7 +31,7 @@
     <div class="pcoded-content">
         <h1 class="headerPersonalizado">Resumen de gastos</h1>
         <div class="row">  
- <!--   Tabla Gasto -->
+ <!-- TABLA GASTOS START -->
  <table class="table">
      <thead class="table-dark">
      <tr>
@@ -43,14 +43,15 @@
      <tr th:each="g : ${gastos}">
          <td>
              <form th:action="@{/gastos/__${g.key.id}__}" method="post">
-                <button class="btn" th:text="${g.key.nombre}" type="submit">
+                <button class="btn2 violeta" th:text="${g.key.nombre}" type="submit">
                 </button>
              </form>
          </td>
-         <td th:text="${g.value}"></td>
+         <td th:text="${g.value}"></td>  <!-- $500 -->
      </tr>
      </tbody>
   </table>
+<!-- TABLA GASTOS END -->
 </div>
 </div>
 </div>

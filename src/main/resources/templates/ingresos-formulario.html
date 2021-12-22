@@ -76,7 +76,7 @@
                                 <input th:field="*{id}" type="hidden">
 								<div class="col-md-6">
 									<label for="validationTooltip01" class="form-label">Detalle de Ingreso</label>
-									<input type="text" class="mb-3 form-control form-control-lg" th:field="*{detalle}" id="validationTooltip01" placeholder="Detalle"  required>
+									<input type="text" class="mb-3 form-control form-control-lg" th:field="*{detalle}" id="validationTooltip01" placeholder="Detalle" required>
 								</div>
 								<div class="input-group mb-3">
 									<span class="input-group-text">$</span>
@@ -84,7 +84,7 @@
 								</div>
 								<div class="form-group">
 									<label class="form-label">Lista de categorías</label>
-									<select aria-label="Seleccionar categoria" id="dataListOptions" class="form-select" th:field="*{categoria}">
+									<select aria-label="Seleccionar categoria" id="dataListOptions" class="form-select" th:field="*{categoria}" required>
 										<option selected value="">Seleccionar categoria</option>
 										<option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
 									</select>
