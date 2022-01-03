@@ -104,11 +104,11 @@
                         <div class="card-body">
                             <div class="row pb-2">
                                 <div class="col-auto m-b-10">
-                                    <h3 class="mb-1 grafico1">$2.252</h3>
+                                    <h3 class="mb-1 grafico1" th:text="| $${gastoTotal} |"></h3>
                                     <span class="grafico1">Total de consumos</span>
                                 </div>
                                 <div class="col-auto m-b-10">
-                                    <h3 class="mb-1 grafico2">$1935,6</h3>
+                                    <h3 class="mb-1 grafico2">$0</h3>
                                     <span class="grafico2">Promedio de consumos</span>
                                 </div>
                             </div>
@@ -126,6 +126,104 @@
     <script th:src="@{/js/plugins/bootstrap.min.js}"></script>
     <script th:src="@{/js/plugins/feather.min.js}"></script>
     <script th:src="@{/js/pcoded.min.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+    $(document).ready(function() {
+        setTimeout(function() {
+            floatchart()
+        }, 700);
+
+        var px = new PerfectScrollbar('.feed-scroll', {
+            wheelSpeed: .5,
+            swipeEasing: 0,
+            wheelPropagation: 1,
+            minScrollbarLength: 40,
+        });
+        var px = new PerfectScrollbar('.pro-scroll', {
+            wheelSpeed: .5,
+            swipeEasing: 0,
+            wheelPropagation: 1,
+            minScrollbarLength: 40,
+        });
+    });
+    function floatchart() {
+        var gastoTotal = [[${gastoTotal}]];
+        $(function() {
+            $(function() {
+                var options = {
+                    chart: {
+                        height: 350,
+                        type: 'line',
+                        stacked: false,
+                    },
+                    stroke: {
+                        width: [0, 3],
+                        curve: 'smooth'
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: '50%'
+                        }
+                    },
+                    colors: ['#7267EF', '#c7d9ff'],
+                    series: [{
+                        name: 'Total de consumos',
+                        type: 'column',
+                        data: [gastoTotal],
+                    }, {
+                        name: 'Promedio de consumos',
+                        type: 'line',
+                        data: [30]
+                    }],
+                    fill: {
+                        opacity: [0.85, 1],
+                    },
+                    labels: ['01/01/2003'],
+                    markers: {
+                        size: 0
+                    },
+                    xaxis: {
+                        type: 'datetime'
+                    },
+                    yaxis: {
+                        min: 0
+                    },
+                    tooltip: {
+                        shared: true,
+                        intersect: false,
+                        y: {
+                            formatter: function(y) {
+                                if (typeof y !== "undefined") {
+                                    return "$ " +y.toFixed(0);
+                                }
+                                return y;
+                            }
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            useSeriesColors: true
+                        },
+                        markers: {
+                            customHTML: [
+                                function() {
+                                    return ''
+                                },
+                                function() {
+                                    return ''
+                                }
+                            ]
+                        }
+                    }
+                }
+                var chart = new ApexCharts(
+                    document.querySelector("#account-chart"),
+                    options
+                );
+                chart.render();
+            });
+        });
+    }
+        </script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script> -->
     <!-- <script src="assets/js/plugins/clipboard.min.js"></script> -->
     <!-- <script src="assets/js/uikit.min.js"></script> -->
@@ -137,7 +235,7 @@
         $("body").append('<div class="fixed-button active"><a href="https://gumroad.com/dashboardkit" target="_blank" class="btn btn-md btn-success"><i class="material-icons-two-tone text-white">shopping_cart</i> Actualizar a pro</a> </div>');
     </script> -->
 
-<!-- custom-chart js -->
-<script th:src="@{/js/pages/dashboard-sale.js}"></script>
+<!-- custom-chart js
+<script th:src="@{/js/pages/dashboard-sale.js}"></script>-->
 </body>
 </html>
