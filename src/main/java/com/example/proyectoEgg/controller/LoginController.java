@@ -23,11 +23,11 @@ public class LoginController {
         ModelAndView mav = new ModelAndView("login");
         mav.addObject("login", true);
         if(error != null) {
-            mav.addObject("error", "Usuario o contraseña invalidos.");
+            mav.addObject("error", "Usuario o contraseña inválidos.");
         }
 
         if(logout != null) {
-            mav.addObject("logout", "Ha salido correctamente de la plataforma.");
+            mav.addObject("logout", "Has cerrado sesión correctamente.");
         }
 
         if(principal != null) {

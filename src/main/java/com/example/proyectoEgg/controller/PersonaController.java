@@ -181,7 +181,7 @@ public class PersonaController {
         } catch (MiException e){
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
-        return new RedirectView("/");
+        return new RedirectView("/logout");
     }
 
 }

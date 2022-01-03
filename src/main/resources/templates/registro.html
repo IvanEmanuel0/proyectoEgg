@@ -18,6 +18,8 @@
 	<meta name="keywords" content="DashboardKit, Dashboard Kit, Dashboard UI Kit, Bootstrap 5, Admin Template, Admin Dashboard, CRM, CMS, Free Bootstrap Admin Template">
 	<meta name="author" content="DashboardKit ">
 
+	<script src="https://kit.fontawesome.com/17b41a7788.js" crossorigin="anonymous"></script>
+
 
 	<!-- Favicon icon -->
 	<link rel="icon" href="https://i.ibb.co/jZQ6BXV/favicon.png" type="image/x-icon">
@@ -40,21 +42,21 @@
 			<div class="row align-items-center text-center">
 					<div class="card-body">
 						<!-- <img src="https://i.ibb.co/Sc5kjZM/icononuevo.png" alt="" class="img-fluid logoSW"> -->
-						<h4 class="mb-4 f-w-400">Registro de cuenta</h4>
+						<h4 class="mb-4 f-w-400">Registrarse en Smart Wallet</h4>
 						<form method="POST" autocomplete="off" class="needs-validation" id="formulario"
      					 th:action="@{/personas/__${accion}__}" enctype="multipart/form-data">
 						<div th:if="${error != null}" th:text="${error}" class="col-4 small alert-danger fade show" role="alert"></div>
 						<input th:value="${id}" type="hidden"/>
 						<div class="input-group mb-3">
-							<span class="input-group-text"><i data-feather="user"></i></span>
+							<span class="input-group-text"><i class="fas fa-id-card"></i></span>
 							<input type="text" class="form-control" placeholder="Nombre" th:value="${nombre}" name="nombre" required>
 						</div>
 						<div class="input-group mb-3">
-							<span class="input-group-text"><i data-feather="user"></i></span>
+							<span class="input-group-text"><i class="far fa-id-card"></i></span>
 							<input type="text" class="form-control" placeholder="Apellido" th:value="${apellido}" name="apellido" required>
 						</div>
 						<div class="input-group mb-3">
-							<span class="input-group-text"><i data-feather="user"></i></span>
+							<span class="input-group-text"><i class="fas fa-at"></i></span>
 							<input type="text" class="form-control" placeholder="Correo" th:value="${correo}" name="correo" required>
 						</div>
 
@@ -67,11 +69,11 @@
 						</div>
 
                             <div class="input-group mb-3">
-                                <span class="input-group-text"><i data-feather="user"></i></span>
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 <input type="text" class="form-control" placeholder="Usuario" th:value="${usuario}" name="usuario" required>
                             </div>
                             <div class="input-group mb-3">
-                                <span class="input-group-text"><i data-feather="lock"></i></span>
+                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
                                 <input type="password" class="form-control" placeholder="Contraseña" th:value="${clave}" name="clave" required>
                             </div>
                             <!--<select id="rol" name="rol">
